@@ -1,0 +1,54 @@
+# Copyright 1999-2017 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=6
+
+VALA_MIN_VERSION=0.26
+
+inherit fdo-mime gnome2-utils vala meson
+
+DESCRIPTION="A tiny, simple calculator written in GTK+ and Vala"
+HOMEPAGE="https://github.com/elementary/videos"
+SRC_URI="https://github.com/elementary/videos/archive/${PV}.tar.gz -> ${P}.tar.gz"
+KEYWORDS="amd64"
+
+LICENSE="GPL-3"
+SLOT="0"
+IUSE="nls"
+
+RDEPEND="
+	dev-libs/glib:2
+	dev-libs/granite
+	media-libs/clutter-gst:3.0
+	media-libs/clutter-gtk:1.0
+	media-libs/gstreamer:1.0
+	>=x11-libs/gtk+-3.22:3"
+DEPEND="${RDEPEND}
+	$(vala_depend)"
+
+S=${WORKDIR}/videos-${PV}
+
+src_prepare() {
+	eapply_user
+
+	vala_src_prepare
+}
+
+pkg_preinst() {
+	gnome2_icon_savelist
+	gnome2_schemas_savelist
+}
+
+pkg_postinst() {
+	fdo-mime_desktop_database_update
+	fdo-mime_mime_database_update
+	gnome2_icon_cache_update
+	gnome2_schemas_update
+}
+
+pkg_postrm() {
+	fdo-mime_desktop_database_update
+	fdo-mime_mime_database_update
+	gnome2_icon_cache_update
+	gnome2_schemas_update
+}
