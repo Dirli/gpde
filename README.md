@@ -16,6 +16,5 @@ Not tested
   - switchboard-plug-printers (a network printer is determined)
 
 Bugs, Nonstandard behavior
-  - pantheon-files (does not display thumbnails)
   - pantheon-terminal (does not save open tabs after closing)
   - switchboard-plug-datetime (does not display time zones and stretches the window)
