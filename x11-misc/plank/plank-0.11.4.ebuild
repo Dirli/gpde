@@ -6,7 +6,7 @@ EAPI=6
 VALA_MIN_API_VERSION=0.24
 VALA_USE_DEPEND=vapigen
 
-inherit fdo-mime gnome2-utils autotools vala
+inherit gnome2-utils autotools vala xdg-utils
 
 DESCRIPTION="The dock for elementary Pantheon, stupidly simple"
 HOMEPAGE="https://launchpad.net/plank https://launchpad.net/pantheon-dock"
@@ -21,24 +21,23 @@ CDEPEND="
 	dev-libs/glib:2
 	dbus? ( dev-libs/libdbusmenu[gtk3] )
 	dev-libs/libgee:0.8
-	x11-libs/cairo
+	>=x11-libs/bamf-0.2.92
+	>=x11-libs/cairo-1.10
+	>=x11-libs/gdk-pixbuf-2.26.0
+	>=x11-libs/gtk+-3.10.0:3
 	x11-libs/libX11
 	x11-libs/libwnck:3
-	x11-libs/bamf
-	x11-libs/gtk+:3"
+"
 RDEPEND="${CDEPEND}"
 DEPEND="${CDEPEND}
 	$(vala_depend)
 	dev-util/intltool
 	virtual/pkgconfig
-	gnome-base/gnome-common
 	nls? ( sys-devel/gettext )"
 
 DOCS=( AUTHORS COPYING COPYRIGHT NEWS README )
 
 src_prepare() {
-	#eapply_user
-
 	eautoreconf
 
 	vala_src_prepare
@@ -58,15 +57,14 @@ pkg_preinst() {
 }
 
 pkg_postinst() {
-	#fdo-mime_desktop_database_update
-	#gnome2_icon_cache_update
 	gnome2_gconf_install
 	gnome2_schemas_update
+	gnome2_icon_cache_upadte
 }
 
 pkg_postrm() {
-	#fdo-mime_desktop_database_update
-	#gnome2_icon_cache_update
 	gnome2_gconf_uninstall
 	gnome2_schemas_update
+	gnome2_icon_cache_update
 }
+
