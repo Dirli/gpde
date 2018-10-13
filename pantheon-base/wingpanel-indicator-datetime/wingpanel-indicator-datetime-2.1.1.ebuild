@@ -5,7 +5,7 @@ EAPI=6
 
 VALA_MIN_VERSION=0.40
 
-inherit gnome2-utils vala cmake-utils
+inherit gnome2-utils meson vala
 
 DESCRIPTION="Date & Time indicator for Wingpanel"
 HOMEPAGE="https://github.com/elementary/wingpanel-indicator-datetime"
@@ -13,37 +13,27 @@ SRC_URI="https://github.com/elementary/wingpanel-indicator-datetime/archive/${PV
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="amd64 x86"
-IUSE=""
+KEYWORDS="amd64 ~x86"
+IUSE="nls"
 
 RDEPEND="
 	dev-libs/glib:2
+	dev-libs/granite
+	dev-libs/libical
 	gnome-extra/evolution-data-server[vala]
 	net-libs/libsoup:2.4
 	pantheon-base/wingpanel
 	x11-libs/gtk+:3
-	dev-libs/granite
 "
 DEPEND="${RDEPEND}
-	virtual/pkgconfig
 	>=dev-lang/vala-0.40.3
+	nls? ( sys-devel/gettext )
+	virtual/pkgconfig
 "
 
 src_prepare() {
 	eapply_user
-
 	vala_src_prepare --vala-api-version 0.40
-	cmake-utils_src_prepare
-}
-
-
-src_configure() {
-	mycmakeargs=(
-		-DGSETTINGS_COMPILE=OFF
-		-DVALA_EXECUTABLE=${VALAC}
-	)
-
-	cmake-utils_src_configure
 }
 
 pkg_preinst() {
