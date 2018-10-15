@@ -3,7 +3,7 @@
 
 EAPI=6
 
-inherit vala meson
+inherit gnome2-utils meson vala
 
 DESCRIPTION="A native OS-wide shortcut overlay to be launched by Gala"
 HOMEPAGE="https://github.com/elementary/shortcut-overlay"
@@ -17,6 +17,7 @@ IUSE="nls"
 DEPEND="
 	$(vala_depend)
 	nls? ( sys-devel/gettext )
+	virtual/pkgconfig
 "
 RDEPEND="${DEPEND}
 	dev-libs/glib:2
@@ -28,7 +29,21 @@ RDEPEND="${DEPEND}
 
 src_prepare() {
 	eapply_user
-
+	epatch "${FILESDIR}/shortcut-overlay-${PV}-oldmutter.patch"
 	vala_src_prepare
 }
 
+pkg_preinst() {
+	gnome2_icon_savelist
+	gnome2_schemas_savelist
+}
+
+pkg_postinst() {
+	gnome2_icon_cache_update
+	gnome2_schemas_update
+}
+
+pkg_postrm() {
+	gnome2_icon_cache_update
+	gnome2_schemas_update
+}
