@@ -1,9 +1,6 @@
 Not work
   - switchboard-plug-mouse-touchpad
-  - switchboard-plug-datetime-2.1.4
-  - pantheon-files-9999
   - switchboard-plug-display (if you connect a second display)
-  - shortcut-overlay
   - lightdm-pantheon-greeter (light-gtk-greeter starts the session)
 
 Not tested
@@ -17,4 +14,3 @@ Not tested
 
 Bugs, Nonstandard behavior
   - pantheon-terminal (does not save open tabs after closing)
-  - switchboard-plug-datetime (does not display time zones and stretches the window)

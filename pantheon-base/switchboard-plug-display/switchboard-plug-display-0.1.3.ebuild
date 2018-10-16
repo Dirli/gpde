@@ -5,7 +5,7 @@ EAPI=6
 
 VALA_MIN_API_VERSION=0.22
 
-inherit meson vala
+inherit cmake-utils vala
 
 DESCRIPTION="Switchboard plug to show displays information"
 HOMEPAGE="https://github.com/elementary/switchboard-plug-display"
@@ -13,15 +13,15 @@ SRC_URI="https://github.com/elementary/switchboard-plug-display/archive/${PV}.ta
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="amd64"
 IUSE="nls"
 
 RDEPEND="
 	dev-libs/glib:2
 	dev-libs/granite
+	gnome-base/gnome-desktop:3
 	pantheon-base/switchboard
 	x11-libs/gtk+:3
-	>=x11-wm/mutter-3.25
 "
 DEPEND="${RDEPEND}
 	$(vala_depend)
@@ -31,5 +31,8 @@ DEPEND="${RDEPEND}
 
 src_prepare() {
 	eapply_user
+
+	cmake-utils_src_prepare
 	vala_src_prepare
 }
+
