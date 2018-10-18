@@ -9,7 +9,7 @@ SRC_URI="https://github.com/elementary/session-settings/archive/${PV}.tar.gz -> 
 
 LICENSE="metapackage"
 SLOT="0"
-KEYWORDS="amd64 ~x86"
+KEYWORDS="amd64"
 IUSE=""
 
 DEPEND=""
@@ -26,6 +26,7 @@ RDEPEND="${DEPEND}
 	x11-misc/plank
 	x11-themes/elementary-icons-theme
 	x11-themes/elementary-sound-theme
+	x11-themes/elementary-theme
 	x11-themes/elementary-wallpapers
 	x11-wm/gala
 "
