@@ -5,7 +5,7 @@ EAPI=6
 
 VALA_MIN_API_VERSION=0.22
 
-inherit vala meson
+inherit meson vala
 
 DESCRIPTION="Configure the date & time of the user"
 HOMEPAGE="https://github.com/elementary/switchboard-plug-datetime"
@@ -13,19 +13,21 @@ SRC_URI="https://github.com/elementary/switchboard-plug-datetime/archive/${PV}.t
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="amd64 ~x86"
 IUSE="nls"
 
-RDEPEND="
-	dev-libs/glib:2
-	dev-libs/granite
-	x11-libs/gtk+:3
-	pantheon-base/switchboard"
 DEPEND="${RDEPEND}
 	$(vala_depend)
+	nls? ( sys-devel/gettext )
 	virtual/pkgconfig
-	dev-util/meson
-	nls? ( sys-devel/gettext )"
+"
+
+RDEPEND="${DEPEND}
+	dev-libs/glib:2
+	dev-libs/granite
+	pantheon-base/switchboard
+	x11-libs/gtk+:3
+"
 
 src_prepare() {
 	eapply_user

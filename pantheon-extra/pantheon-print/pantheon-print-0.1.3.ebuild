@@ -3,7 +3,7 @@
 
 EAPI=6
 
-inherit vala meson
+inherit meson vala
 
 DESCRIPTION="Small utility to print documents"
 HOMEPAGE="https://github.com/elementary/print"
@@ -20,13 +20,13 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}
 	$(vala_depend)
+	virtual/pkgconfig
 "
 
 S="${WORKDIR}/print-${PV}"
 
 src_prepare() {
 	eapply_user
-
 	vala_src_prepare
 }
 

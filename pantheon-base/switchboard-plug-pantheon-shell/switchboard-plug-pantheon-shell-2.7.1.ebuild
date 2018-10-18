@@ -5,7 +5,7 @@ EAPI=6
 
 VALA_MIN_API_VERSION=0.20
 
-inherit gnome2-utils xdg-utils vala meson
+inherit gnome2-utils meson vala xdg-utils
 
 DESCRIPTION="Configure the Pantheon desktop environment using Switchboard"
 HOMEPAGE="https://github.com/elementary/switchboard-plug-pantheon-shell"
@@ -21,14 +21,15 @@ RDEPEND="
 	dev-libs/granite
 	media-libs/gexiv2[vala]
 	gnome-base/gnome-desktop:3
+	pantheon-base/switchboard
+	>=x11-libs/gtk+-3.22:3
 	>=x11-misc/plank-0.10.9
-	>=pantheon-base/switchboard-2
-	x11-libs/gtk+:3"
+"
 DEPEND="${RDEPEND}
 	$(vala_depend)
+	nls? ( sys-devel/gettext )
 	virtual/pkgconfig
-	dev-util/meson
-	nls? ( sys-devel/gettext )"
+"
 
 src_prepare() {
 	eapply_user

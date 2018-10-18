@@ -3,7 +3,7 @@
 
 EAPI=6
 
-inherit fdo-mime gnome2-utils vala meson
+inherit gnome2-utils meson vala
 
 DESCRIPTION="The camera app designed for elementary OS"
 HOMEPAGE="https://github.com/elementary/camera"
@@ -17,15 +17,16 @@ IUSE="nls"
 DEPEND="
 	$(vala_depend)
 	nls? ( sys-devel/gettext )
+	virtual/pkgconfig
 "
 RDEPEND="${DEPEND}
 	dev-libs/appstream
 	dev-libs/glib:2
-	dev-libs/granite
+	>=dev-libs/granite-5.1
 	dev-libs/libgee:0.8
-	media-libs/libcanberra
 	media-libs/clutter-gst:3.0
 	media-libs/clutter-gtk:1.0
+	media-libs/libcanberra
 	>=x11-libs/gtk+-3.22:3
 "
 S=${WORKDIR}/camera-${PV}
@@ -41,15 +42,11 @@ pkg_preinst() {
 }
 
 pkg_postinst() {
-	fdo-mime_desktop_database_update
-	fdo-mime_mime_database_update
 	gnome2_icon_cache_update
 	gnome2_schemas_update
 }
 
 pkg_postrm() {
-	fdo-mime_desktop_database_update
-	fdo-mime_mime_database_update
 	gnome2_icon_cache_update
 	gnome2_schemas_update
 }

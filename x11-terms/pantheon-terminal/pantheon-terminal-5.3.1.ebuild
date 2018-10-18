@@ -5,7 +5,7 @@ EAPI=6
 
 VALA_MIN_API_VERSION=0.40
 
-inherit gnome2-utils vala meson
+inherit gnome2-utils meson vala xdg-utils
 
 DESCRIPTION="The terminal of the 21st century"
 HOMEPAGE="https://github.com/elementary/terminal"
@@ -17,17 +17,19 @@ KEYWORDS="amd64 ~arm x86"
 IUSE="nls"
 
 RDEPEND="
+	dev-libs/appstream
 	dev-libs/glib:2
 	dev-libs/granite
-	dev-libs/appstream
 	x11-libs/libnotify
 	x11-libs/gtk+:3
+	x11-libs/libnotify
 	x11-libs/vte:2.91[vala]
 "
 DEPEND="${RDEPEND}
 	dev-lang/vala:0.40
 	nls? ( sys-devel/gettext )
-	virtual/pkgconfig"
+	virtual/pkgconfig
+"
 
 S="${WORKDIR}/terminal-${PV}"
 
@@ -50,9 +52,12 @@ pkg_preinst() {
 pkg_postinst() {
 	gnome2_schemas_update
 	gnome2_icon_cache_update
+	xdg_desktop_database_update
 }
 
 pkg_postrm() {
 	gnome2_schemas_update
 	gnome2_icon_cache_update
+	xdg_desktop_database_update
 }
+

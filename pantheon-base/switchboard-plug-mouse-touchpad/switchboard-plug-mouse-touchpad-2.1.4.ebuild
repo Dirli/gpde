@@ -5,7 +5,7 @@ EAPI=6
 
 VALA_MIN_API_VERSION=0.22
 
-inherit vala meson
+inherit meson vala
 
 DESCRIPTION="Mouse and touchpad settings"
 HOMEPAGE="https://github.com/elementary/switchboard-plug-mouse-touchpad"
@@ -19,12 +19,14 @@ IUSE="nls"
 RDEPEND="
 	dev-libs/glib:2
 	dev-libs/granite
-	x11-libs/gtk+:3
-	>=pantheon-base/switchboard-2"
+	pantheon-base/switchboard
+	x11-libs/gtk+:3	
+"
 DEPEND="${RDEPEND}
 	$(vala_depend)
+	nls? ( sys-devel/gettext )
 	virtual/pkgconfig
-	nls? ( sys-devel/gettext )"
+"
 
 src_prepare() {
 	eapply_user

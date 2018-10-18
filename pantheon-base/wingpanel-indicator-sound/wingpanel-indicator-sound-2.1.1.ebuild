@@ -5,7 +5,7 @@ EAPI=6
 
 VALA_MIN_VERSION=0.26
 
-inherit gnome2-utils vala meson
+inherit gnome2-utils meson vala
 
 DESCRIPTION="Sound indicator for Wingpanel"
 HOMEPAGE="https://github.com/elementary/wingpanel-indicator-sound"
@@ -14,21 +14,21 @@ SRC_URI="https://github.com/elementary/wingpanel-indicator-sound/archive/${PV}.t
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="amd64 ~x86"
-IUSE=""
+IUSE="nls"
 
 RDEPEND="
 	dev-libs/glib:2
+	dev-libs/granite
 	media-libs/libcanberra[gtk]
 	media-sound/pulseaudio[glib]
 	pantheon-base/wingpanel
 	x11-libs/gtk+:3
-	dev-libs/granite
 	x11-libs/libnotify
 "
 DEPEND="${RDEPEND}
 	$(vala_depend)
+	nls? ( sys-devel/gettext )
 	virtual/pkgconfig
-	dev-util/meson
 "
 
 src_prepare() {

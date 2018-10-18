@@ -5,7 +5,7 @@ EAPI=6
 
 VALA_MIN_VERSION=0.22
 
-inherit gnome2-utils vala meson
+inherit gnome2-utils meson vala
 
 DESCRIPTION="Bluetooth indicator for Wingpanel"
 HOMEPAGE="https://github.com/elementary/wingpanel-indicator-bluetooth"
@@ -14,17 +14,18 @@ SRC_URI="https://github.com/elementary/wingpanel-indicator-bluetooth/archive/${P
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="amd64 ~x86"
-IUSE="introspection"
+IUSE="nls"
 
 RDEPEND="
 	dev-libs/glib:2
+	dev-libs/granite
 	pantheon-base/wingpanel
 	x11-libs/gtk+:3
-	dev-libs/granite
 	x11-libs/libnotify
 "
 DEPEND="${RDEPEND}
-	introspection? ( dev-libs/gobject-introspection )
+	$(vala_depend)
+	nls? ( sys-devel/gettext )
 	virtual/pkgconfig
 "
 

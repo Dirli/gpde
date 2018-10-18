@@ -5,7 +5,7 @@ EAPI=6
 
 VALA_MIN_API_VERSION=0.24
 
-inherit fdo-mime gnome2-utils vala cmake-utils
+inherit cmake-utils gnome2-utils vala xdg-utils
 
 DESCRIPTION="Stylish top panel that holds indicators and spawns an application launcher"
 HOMEPAGE="https://github.com/elementary/wingpanel"
@@ -21,20 +21,22 @@ RDEPEND="
 	dev-libs/libgee:0.8
 	dev-libs/granite
 	>=x11-libs/gtk+-3.22:3
-	x11-wm/gala"
+	x11-wm/gala
+"
 DEPEND="${RDEPEND}
 	$(vala_depend)
+	nls? ( sys-devel/gettext )
 	virtual/pkgconfig
-	nls? ( sys-devel/gettext )"
+"
 PDEPEND="
-	pantheon-base/wingpanel-indicator-notifications
-	pantheon-base/wingpanel-indicator-datetime
-	pantheon-base/wingpanel-indicator-session
 	pantheon-base/wingpanel-indicator-ally
 	bluetooth? ( pantheon-base/wingpanel-indicator-bluetooth )
+	pantheon-base/wingpanel-indicator-datetime
 	pantheon-base/wingpanel-indicator-keyboard
 	networkmanager? ( pantheon-base/wingpanel-indicator-network )
+	pantheon-base/wingpanel-indicator-notifications
 	upower? ( pantheon-base/wingpanel-indicator-power )
+	pantheon-base/wingpanel-indicator-session
 	pulseaudio? ( pantheon-base/wingpanel-indicator-sound )
 "
 
@@ -42,7 +44,7 @@ PDEPEND="
 src_prepare() {
 	eapply_user
 
-	use nls || sed -i '/add_subdirectory(po)/d' CMakeLists.txt || die
+	use nls || cmake_comment_add_subdirectory po
 
 	# respect appropriate libdir for gala plugins
 	[[ $(get_libdir) == lib ]] || \
@@ -67,11 +69,11 @@ pkg_preinst() {
 }
 
 pkg_postinst() {
-	fdo-mime_desktop_database_update
+	xdg_desktop_database_update
 	gnome2_schemas_update
 }
 
 pkg_postrm() {
-	fdo-mime_desktop_database_update
+	xdg_desktop_database_update
 	gnome2_schemas_update
 }

@@ -1,6 +1,4 @@
 Not work
-  - switchboard-plug-mouse-touchpad
-  - switchboard-plug-display (if you connect a second display)
   - lightdm-pantheon-greeter (light-gtk-greeter starts the session)
 
 Not tested

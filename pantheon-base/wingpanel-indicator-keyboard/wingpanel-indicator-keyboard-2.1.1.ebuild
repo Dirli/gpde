@@ -5,11 +5,13 @@ EAPI=6
 
 VALA_MIN_VERSION=0.22
 
-inherit cmake-utils gnome2-utils vala
+PYTHON_COMPAT=( python2_7 )
 
-DESCRIPTION="Date & Time indicator for Wingpanel"
-HOMEPAGE="https://github.com/elementary/wingpanel-indicator-datetime"
-SRC_URI="https://github.com/elementary/wingpanel-indicator-datetime/archive/${PV}.tar.gz"
+inherit gnome2-utils meson vala
+
+DESCRIPTION="Keyboard indicator for Wingpanel"
+HOMEPAGE="https://github.com/elementary/wingpanel-indicator-keyboard"
+SRC_URI="https://github.com/elementary/wingpanel-indicator-keyboard/archive/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -19,14 +21,12 @@ IUSE="nls"
 RDEPEND="
 	dev-libs/glib:2
 	dev-libs/granite
-	gnome-extra/evolution-data-server
-	net-libs/libsoup:2.4
 	pantheon-base/wingpanel
 	x11-libs/gtk+:3
-
 "
 DEPEND="${RDEPEND}
-	$(vala_depend)
+	dev-libs/libxml2[python]
+	${PYTHON_DEPS}
 	nls? ( sys-devel/gettext )
 	virtual/pkgconfig
 "
@@ -34,20 +34,7 @@ DEPEND="${RDEPEND}
 src_prepare() {
 	eapply_user
 
-	use nls || cmake_comment_add_subdirectory po
-
 	vala_src_prepare
-	cmake-utils_src_prepare
-}
-
-
-src_configure() {
-	mycmakeargs=(
-		-DGSETTINGS_COMPILE=OFF
-		-DVALA_EXECUTABLE=${VALAC}
-	)
-
-	cmake-utils_src_configure
 }
 
 pkg_preinst() {

@@ -19,7 +19,8 @@ IUSE="demo nls test"
 RDEPEND="
 	dev-libs/glib:2
 	dev-libs/libgee:0.8[introspection]
-	>=x11-libs/gtk+-3.22:3[introspection]"
+	>=x11-libs/gtk+-3.22:3[introspection]
+"
 DEPEND="${RDEPEND}
 	>=dev-lang/vala-0.40.0
 	nls? ( sys-devel/gettext )

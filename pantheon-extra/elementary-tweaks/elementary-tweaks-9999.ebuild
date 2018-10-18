@@ -5,7 +5,7 @@ EAPI=6
 
 VALA_MIN_API_VERSION=0.22
 
-inherit gnome2-utils vala cmake-utils git-r3
+inherit cmake-utils git-r3 gnome2-utils vala
 
 DESCRIPTION="Elementary OS customization tool"
 HOMEPAGE="https://github.com/elementary-tweaks"
@@ -18,21 +18,21 @@ IUSE="nls"
 
 DEPEND="
 	$(vala_depend)
-	virtual/pkgconfig
 	nls? ( sys-devel/gettext )
+	virtual/pkgconfig
 "
 RDEPEND="${DEPEND}
 	dev-libs/glib:2
 	dev-libs/granite
 	dev-libs/libgee:0.8
 	gnome-base/gconf:2
-	x11-libs/gtk+:3
-	sys-auth/polkit
 	pantheon-base/switchboard
+	sys-auth/polkit
+	x11-libs/gtk+:3
 "
 
 src_prepare() {
-	use nls || sed -i '/add_subdirectory (po)/d' CMakeLists.txt
+	use nls || cmake_comment_add_subdirectory po
 
 	cmake-utils_src_prepare
 	vala_src_prepare

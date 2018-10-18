@@ -5,7 +5,7 @@ EAPI=6
 
 VALA_MIN_API_VERSION=0.34
 
-inherit vala gnome2-utils cmake-utils
+inherit cmake-utils gnome2-utils vala
 
 DESCRIPTION="Adjust Locale settings using Switchboard."
 HOMEPAGE="https://github.com/elementary/switchboard-plug-locale"
@@ -19,19 +19,21 @@ IUSE="nls"
 RDEPEND="
 	app-i18n/ibus[vala]
 	dev-libs/glib:2
+	dev-libs/granite
 	gnome-base/gnome-desktop:3
 	pantheon-base/switchboard
 	sys-auth/polkit
 	sys-apps/accountsservice
-	dev-libs/granite
-	x11-libs/gtk+:3"
+	x11-libs/gtk+:3
+"
 DEPEND="${RDEPEND}
 	$(vala_depend)
+	nls? ( sys-devel/gettext )
 	virtual/pkgconfig
-	nls? ( sys-devel/gettext )"
+"
 
 src_prepare() {
-	use nls || sed -i '/add_subdirectory (po)/d' CMakeLists.txt
+	use nls || cmake_comment_add_subdirectory po
 
 	cmake-utils_src_prepare
 	vala_src_prepare

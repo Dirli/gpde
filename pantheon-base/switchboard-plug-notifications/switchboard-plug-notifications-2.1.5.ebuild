@@ -5,7 +5,7 @@ EAPI=6
 
 VALA_MIN_API_VERSION=0.20
 
-inherit vala meson
+inherit meson vala
 
 DESCRIPTION="Configure which apps should be allowed to show notifications"
 HOMEPAGE="https://github.com/elementary/switchboard-plug-notifications"
@@ -19,12 +19,14 @@ IUSE="nls"
 RDEPEND="
 	dev-libs/glib:2
 	dev-libs/granite
+	pantheon-base/switchboard
 	x11-libs/gtk+:3
-	pantheon-base/switchboard"
+"
 DEPEND="${RDEPEND}
 	$(vala_depend)
+	nls? ( sys-devel/gettext )
 	virtual/pkgconfig
-	nls? ( sys-devel/gettext )"
+"
 
 src_prepare() {
 	eapply_user

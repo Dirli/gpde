@@ -5,7 +5,7 @@ EAPI=6
 
 VALA_MIN_API_VERSION=0.26
 
-inherit vala meson
+inherit meson vala
 
 DESCRIPTION="A desktop-wide extension service"
 HOMEPAGE="https://github.com/elementary/contractor"
@@ -17,9 +17,9 @@ KEYWORDS="amd64"
 IUSE="nls"
 
 RDEPEND="
-	sys-apps/dbus
-	dev-libs/libgee:0.8
 	dev-libs/glib:2
+	dev-libs/libgee:0.8
+	sys-apps/dbus
 "
 DEPEND="${RDEPEND}
 	$(vala_depend)

@@ -5,7 +5,7 @@ EAPI=6
 
 VALA_MIN_API_VERSION=0.20
 
-inherit vala meson
+inherit meson vala
 
 DESCRIPTION="Switchboard Sharing Plug"
 HOMEPAGE="https://github.com/elementary/switchboard-plug-sharing"
@@ -17,14 +17,16 @@ KEYWORDS="amd64"
 IUSE="nls"
 
 RDEPEND="
-	dev-libs/granite
 	dev-libs/glib:2
+	dev-libs/granite
+	pantheon-base/switchboard	
 	x11-libs/gtk+:3
-	>=pantheon-base/switchboard-2"
+"
 DEPEND="${RDEPEND}
 	$(vala_depend)
-	virtual/pkgconfig
-	nls? ( sys-devel/gettext )"
+	nls? ( sys-devel/gettext )
+	virtual/pkgconfig	
+"
 
 src_prepare() {
 	eapply_user

@@ -5,7 +5,7 @@ EAPI=6
 
 VALA_MIN_API_VERSION=0.22
 
-inherit vala cmake-utils
+inherit meson vala
 
 DESCRIPTION="Switchboard Universal Access Plug"
 HOMEPAGE="https://github.com/elementary/switchboard-plug-a11y"
@@ -17,24 +17,19 @@ KEYWORDS="amd64"
 IUSE="nls"
 
 RDEPEND="
+	dev-libs/glib:2
 	dev-libs/granite
+	pantheon-base/switchboard
 	x11-libs/gtk+:3
-	pantheon-base/switchboard"
+"
 DEPEND="${RDEPEND}
 	$(vala_depend)
+	nls? ( sys-devel/gettext )
 	virtual/pkgconfig
-	nls? ( sys-devel/gettext )"
+"
 
 src_prepare() {
-	use nls || sed -i '/add_subdirectory (po)/d' CMakeLists.txt
+	eapply_user
 
-	cmake-utils_src_prepare
 	vala_src_prepare
-}
-
-src_configure() {
-	local mycmakeargs=(
-		-DVALA_EXECUTABLE="${VALAC}"
-	)
-	cmake-utils_src_configure
 }

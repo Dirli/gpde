@@ -3,25 +3,28 @@
 
 EAPI=6
 
-VALA_MIN_API_VERSION=0.22
+VALA_MIN_API_VERSION=0.34
 
 inherit meson vala
 
-DESCRIPTION="Adjust keyboard settings from Switchboard"
-HOMEPAGE="https://github.com/elementary/switchboard-plug-keyboard"
-SRC_URI="https://github.com/elementary/switchboard-plug-keyboard/archive/${PV}.tar.gz -> ${P}.tar.gz"
+DESCRIPTION="Switchboard User Accounts Plug."
+HOMEPAGE="https://github.com/elementary/switchboard-plug-useraccounts"
+SRC_URI="https://github.com/elementary/switchboard-plug-useraccounts/archive/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="amd64 x86"
+KEYWORDS="~amd64"
 IUSE="nls"
 
 RDEPEND="
 	dev-libs/glib:2
 	dev-libs/granite
-	dev-libs/libxml2
-	gnome-base/libgnomekbd
+	dev-libs/libgee:0.8
+	dev-libs/libpwquality
+	gnome-base/gnome-desktop:3
 	pantheon-base/switchboard
+	sys-apps/accountsservice
+	>=sys-auth/polkit-0.115
 	x11-libs/gtk+:3
 "
 DEPEND="${RDEPEND}
@@ -32,6 +35,5 @@ DEPEND="${RDEPEND}
 
 src_prepare() {
 	eapply_user
-	epatch "${FILESDIR}/switchboard-plug-keyboard-0.3.3-schema.patch"
 	vala_src_prepare
 }

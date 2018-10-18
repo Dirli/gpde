@@ -5,7 +5,7 @@ EAPI=6
 
 VALA_MIN_VERSION=0.26
 
-inherit fdo-mime gnome2-utils vala meson
+inherit gnome2-utils meson vala xdg-utils
 
 DESCRIPTION="A tiny, simple calculator written in GTK+ and Vala"
 HOMEPAGE="https://github.com/elementary/videos"
@@ -22,15 +22,18 @@ RDEPEND="
 	media-libs/clutter-gst:3.0
 	media-libs/clutter-gtk:1.0
 	media-libs/gstreamer:1.0
-	>=x11-libs/gtk+-3.22:3"
+	>=x11-libs/gtk+-3.22:3
+"
 DEPEND="${RDEPEND}
-	$(vala_depend)"
+	$(vala_depend)
+	nls? ( sys-devel/gettext )
+	virtual/pkgconfig
+"
 
 S=${WORKDIR}/videos-${PV}
 
 src_prepare() {
 	eapply_user
-
 	vala_src_prepare
 }
 
@@ -40,15 +43,13 @@ pkg_preinst() {
 }
 
 pkg_postinst() {
-	fdo-mime_desktop_database_update
-	fdo-mime_mime_database_update
 	gnome2_icon_cache_update
 	gnome2_schemas_update
+	xdg_desktop_database_update
 }
 
 pkg_postrm() {
-	fdo-mime_desktop_database_update
-	fdo-mime_mime_database_update
 	gnome2_icon_cache_update
 	gnome2_schemas_update
+	xdg_desktop_database_update
 }

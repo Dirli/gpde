@@ -5,7 +5,7 @@ EAPI=6
 
 VALA_MIN_VERSION=0.26
 
-inherit fdo-mime gnome2-utils vala meson
+inherit gnome2-utils meson vala
 
 DESCRIPTION="A tiny, simple calculator written in GTK+ and Vala"
 HOMEPAGE="https://github.com/elementary/calculator"
@@ -17,8 +17,8 @@ SLOT="0"
 IUSE="nls"
 
 RDEPEND="
-	dev-libs/glib:2
 	dev-libs/appstream
+	dev-libs/glib:2
 	dev-libs/granite
 	x11-libs/gtk+:3
 "
@@ -40,15 +40,11 @@ pkg_preinst() {
 }
 
 pkg_postinst() {
-	fdo-mime_desktop_database_update
-	fdo-mime_mime_database_update
 	gnome2_icon_cache_update
 	gnome2_schemas_update
 }
 
 pkg_postrm() {
-	fdo-mime_desktop_database_update
-	fdo-mime_mime_database_update
 	gnome2_icon_cache_update
 	gnome2_schemas_update
 }

@@ -10,25 +10,25 @@ SRC_URI="https://github.com/elementary/session-settings/archive/${PV}.tar.gz -> 
 LICENSE="metapackage"
 SLOT="0"
 KEYWORDS="amd64 ~x86"
-IUSE="xscreensaver"
+IUSE=""
 
 DEPEND=""
 RDEPEND="${DEPEND}
-	x11-misc/lightdm[gtk]
 	>=gnome-base/gnome-session-3.0
 	>=gnome-base/gnome-settings-daemon-3.0
-	>=pantheon-base/cerbere-0.2
-	x11-misc/plank
+	media-fonts/dejavu
 	pantheon-base/applications-menu
-	pantheon-base/wingpanel
+	pantheon-base/cerbere
 	pantheon-base/pantheon-settings
+	pantheon-base/wingpanel
+	x11-misc/light-locker
+	x11-misc/lightdm[gtk]
+	x11-misc/plank
 	x11-themes/elementary-icons-theme
 	x11-themes/elementary-sound-theme
 	x11-themes/elementary-wallpapers
 	x11-wm/gala
-	xscreensaver? ( || ( x11-misc/light-locker gnome-extra/gnome-screensaver x11-misc/xscreensaver ) )
 "
-
 
 S="${WORKDIR}/session-settings-${PV}"
 

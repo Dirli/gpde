@@ -5,7 +5,7 @@ EAPI=6
 
 VALA_MIN_VERSION=0.22
 
-inherit gnome2-utils vala meson
+inherit gnome2-utils meson vala
 
 DESCRIPTION="Power indicator for Wingpanel"
 HOMEPAGE="https://github.com/elementary/wingpanel-indicator-power"
@@ -14,19 +14,21 @@ SRC_URI="https://github.com/elementary/wingpanel-indicator-power/archive/${PV}.t
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="amd64 ~x86"
-IUSE=""
+IUSE="nls"
 
 RDEPEND="
 	dev-libs/glib:2
+	dev-libs/granite
 	gnome-base/libgtop:2
 	pantheon-base/wingpanel
+	virtual/libudev
 	x11-libs/bamf
 	x11-libs/gtk+:3
-	dev-libs/granite
 "
 DEPEND="${RDEPEND}
+	$(vala_depend)
+	nls? ( sys-devel/gettext )
 	virtual/pkgconfig
-	dev-util/meson
 "
 
 src_prepare() {

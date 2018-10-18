@@ -5,7 +5,7 @@ EAPI=6
 
 VALA_MIN_API_VERSION=0.22
 
-inherit vala gnome2-utils meson
+inherit gnome2-utils meson vala
 
 DESCRIPTION="Configure various aspects of the security of the system."
 HOMEPAGE="https://github.com/elementary/switchboard-plug-security-privacy"
@@ -13,20 +13,23 @@ SRC_URI="https://github.com/elementary/switchboard-plug-security-privacy/archive
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64"
 IUSE="nls"
 
 RDEPEND="
 	dev-libs/glib:2
+	dev-libs/granite
 	gnome-extra/zeitgeist
 	pantheon-base/switchboard
-	sys-auth/polkit
-	dev-libs/granite
-	x11-libs/gtk+:3"
+	>=sys-auth/polkit-0.115
+	x11-libs/gtk+:3
+	x11-misc/light-locker
+"
 DEPEND="${RDEPEND}
 	$(vala_depend)
+	nls? ( sys-devel/gettext )
 	virtual/pkgconfig
-	nls? ( sys-devel/gettext )"
+"
 
 src_prepare() {
 	eapply_user

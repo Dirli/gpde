@@ -5,7 +5,7 @@ EAPI=6
 
 VALA_MIN_API_VERSION=0.22
 
-inherit xdg-utils gnome2-utils vala meson
+inherit gnome2-utils meson vala xdg-utils
 
 DESCRIPTION="Modular desktop settings hub"
 HOMEPAGE="https://github.com/elementary/switchboard"
@@ -13,21 +13,20 @@ SRC_URI="https://github.com/elementary/switchboard/archive/${PV}.tar.gz -> ${P}.
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="amd64 x86"
+KEYWORDS="amd64 ~x86"
 IUSE="nls example cups bluetooth pulseaudio networkmanager upower"
 
 RDEPEND="
 	>=dev-libs/glib-2.32:2
+	dev-libs/granite
 	dev-libs/libgee:0.8
 	media-libs/clutter-gtk
 	>=x11-libs/gtk+-3.10:3
-	dev-libs/granite
 "
 DEPEND="${RDEPEND}
 	$(vala_depend)
-	virtual/pkgconfig
-	dev-util/meson
 	nls? ( sys-devel/gettext )
+	virtual/pkgconfig
 "
 PDEPEND="
 	pantheon-base/switchboard-plug-a11y

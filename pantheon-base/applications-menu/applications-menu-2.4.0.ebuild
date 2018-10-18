@@ -3,7 +3,7 @@
 
 EAPI=6
 
-inherit gnome2-utils vala cmake-utils
+inherit cmake-utils gnome2-utils vala
 
 VALA_MIN_API_VERSION="0.32"
 
@@ -17,27 +17,27 @@ KEYWORDS="amd64 ~x86"
 IUSE="nls zeitgeist"
 
 DEPEND="
-	$(vala_depend)
-	virtual/pkgconfig
+	$(vala_depend)	
 	nls? ( sys-devel/gettext )
+	virtual/pkgconfig
 "
 RDEPEND="${DEPEND}
 	>=dev-libs/appstream-0.10.0[vala]
 	dev-libs/glib:2
+	>=dev-libs/granite-0.5
 	dev-libs/json-glib
 	dev-libs/libgee:0.8
 	gnome-base/gnome-menus:3
-	net-libs/libsoup:2.4
-	>=dev-libs/granite-0.5
-	>=x11-libs/gtk+-3.12.0:3
 	zeitgeist? ( gnome-extra/zeitgeist )
+	net-libs/libsoup:2.4
 	pantheon-base/wingpanel
+	>=x11-libs/gtk+-3.12.0:3
 "
 
 src_prepare() {
 	eapply_user
 
-	use nls || sed -i '/add_subdirectory (po)/d' CMakeLists.txt
+	use nls || cmake_comment_add_subdirectory po
 
 	cmake-utils_src_prepare
 	vala_src_prepare
