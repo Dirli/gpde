@@ -15,7 +15,12 @@ KEYWORDS="amd64 ~x86"
 IUSE=""
 
 DEPEND=""
-RDEPEND="${DEPEND}"
+RDEPEND="${DEPEND}
+	x11-themes/elementary-icons-theme
+	x11-themes/elementary-sound-theme
+	x11-themes/elementary-theme
+	x11-themes/elementary-wallpapers
+"
 
 S="${WORKDIR}/default-settings-${PV}"
 
@@ -33,18 +38,12 @@ src_prepare() {
 
 src_install() {
 
-	#exeinto /usr/bin/
-	#doexe dpms/elementary-dpms-helper
-
 	#policykit.desktop
 	insinto /usr/share/applications/
 	doins sessioninstaller.desktop
 
 	insinto /usr/share/glib-2.0/schemas/
 	doins debian/elementary-default-settings.gsettings-override
-
-	#insinto /etc/xdg/autostart/
-	#doins dpms/elementary-dpms-helper.desktop 
 
 	insinto /etc/io.elementary.appcenter/
 	doins appcenter.blacklist

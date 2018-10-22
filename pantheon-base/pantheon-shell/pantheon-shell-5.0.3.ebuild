@@ -18,16 +18,15 @@ RDEPEND="${DEPEND}
 	>=gnome-base/gnome-settings-daemon-3.0
 	pantheon-base/applications-menu
 	pantheon-base/cerbere
-	pantheon-base/pantheon-settings
 	pantheon-base/wingpanel
 	pantheon-extra/dpms-helper
 	pantheon-extra/pantheon-agent-polkit
 	x11-misc/plank
-	x11-themes/elementary-icons-theme
-	x11-themes/elementary-sound-theme
-	x11-themes/elementary-theme
-	x11-themes/elementary-wallpapers
 	x11-wm/gala
+"
+
+PDEPEND="
+	pantheon-base/pantheon-settings
 "
 
 S="${WORKDIR}/session-settings-${PV}"
@@ -62,4 +61,3 @@ src_install() {
 
 	dobin "${FILESDIR}/pantheon-session"
 }
-
