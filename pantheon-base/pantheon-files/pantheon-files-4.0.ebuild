@@ -29,12 +29,12 @@ RDEPEND="${DEPEND}
 	dev-libs/libgee:0.8
 	gvfs? ( gnome-base/gvfs )
 	gnome-extra/zeitgeist
-	>=media-libs/libcanberra-0.30	
+	>=media-libs/libcanberra-0.30
 	>=x11-libs/gtk+-3.22:3
 	>=x11-libs/libnotify-0.7.2
 	>=x11-libs/pango-1.1.2
 	x11-misc/plank
-	xfce-extra/tumbler
+	=xfce-extra/tumbler-0.2.1
 "
 
 S="${WORKDIR}/files-${PV}"

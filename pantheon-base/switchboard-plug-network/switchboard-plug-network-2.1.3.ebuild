@@ -5,7 +5,7 @@ EAPI=6
 
 VALA_MIN_API_VERSION=0.22
 
-inherit vala meson
+inherit meson vala
 
 DESCRIPTION="Configure all available networks"
 HOMEPAGE="https://github.com/elementary/switchboard-plug-network"

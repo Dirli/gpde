@@ -13,8 +13,8 @@ SRC_URI="https://github.com/elementary/wingpanel/archive/${PV}.tar.gz -> ${P}.ta
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="amd64 x86"
-IUSE="bluetooth networkmanager upower pulseaudio nls"
+KEYWORDS="amd64"
+IUSE="nls"
 
 RDEPEND="
 	>=dev-libs/glib-2.40:2
@@ -28,18 +28,6 @@ DEPEND="${RDEPEND}
 	nls? ( sys-devel/gettext )
 	virtual/pkgconfig
 "
-PDEPEND="
-	pantheon-base/wingpanel-indicator-ally
-	bluetooth? ( pantheon-base/wingpanel-indicator-bluetooth )
-	pantheon-base/wingpanel-indicator-datetime
-	pantheon-base/wingpanel-indicator-keyboard
-	networkmanager? ( pantheon-base/wingpanel-indicator-network )
-	pantheon-base/wingpanel-indicator-notifications
-	upower? ( pantheon-base/wingpanel-indicator-power )
-	pantheon-base/wingpanel-indicator-session
-	pulseaudio? ( pantheon-base/wingpanel-indicator-sound )
-"
-
 
 src_prepare() {
 	eapply_user

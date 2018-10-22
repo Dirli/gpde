@@ -30,6 +30,7 @@ RDEPEND="${DEPEND}
 	gnome-base/gnome-menus:3
 	zeitgeist? ( gnome-extra/zeitgeist )
 	net-libs/libsoup:2.4
+	pantheon-base/switchboard
 	pantheon-base/wingpanel
 	>=x11-libs/gtk+-3.12.0:3
 "

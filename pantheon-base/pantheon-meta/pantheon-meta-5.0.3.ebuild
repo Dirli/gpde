@@ -4,64 +4,66 @@
 EAPI=6
 
 DESCRIPTION="Pantheon DE meta package"
-HOMEPAGE="https://github.com/elementary/session-settings"
-SRC_URI="https://github.com/elementary/session-settings/archive/${PV}.tar.gz -> ${P}.tar.gz"
+HOMEPAGE="https://elementary.io/"
+SRC_URI=""
 
 LICENSE="metapackage"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE=""
+IUSE="bluetooth cups networkmanager +minimal pulseaudio upower"
 
 DEPEND=""
 RDEPEND="${DEPEND}
-	>=gnome-base/gnome-session-3.0
-	>=gnome-base/gnome-settings-daemon-3.0
-	media-fonts/dejavu
-	pantheon-base/applications-menu
-	pantheon-base/cerbere
-	pantheon-base/pantheon-settings
-	pantheon-base/wingpanel
-	x11-misc/light-locker
-	x11-misc/lightdm[gtk]
-	x11-misc/plank
-	x11-themes/elementary-icons-theme
-	x11-themes/elementary-sound-theme
-	x11-themes/elementary-theme
-	x11-themes/elementary-wallpapers
-	x11-wm/gala
+	bluetooth? (
+		pantheon-base/switchboard-plug-bluetooth
+		pantheon-base/wingpanel-indicator-bluetooth
+	)
+	cups? ( pantheon-base/switchboard-plug-printers )
+	!minimal? (
+		pantheon-extra/pantheon-calculator
+		pantheon-extra/pantheon-calendar
+		pantheon-extra/pantheon-camera
+		pantheon-extra/pantheon-code
+		pantheon-extra/pantheon-music
+		pantheon-extra/pantheon-photos
+		pantheon-extra/pantheon-print
+		pantheon-extra/pantheon-screenshot
+		pantheon-extra/pantheon-videos
+	)
+	networkmanager? (
+		pantheon-base/switchboard-plug-network
+		pantheon-base/wingpanel-indicator-network
+	)
+	pantheon-base/pantheon-files
+	pantheon-base/pantheon-shell
+	pantheon-base/switchboard-plug-a11y
+	pantheon-base/switchboard-plug-about
+	pantheon-base/switchboard-plug-applications
+	pantheon-base/switchboard-plug-datetime
+	pantheon-base/switchboard-plug-display
+	pantheon-base/switchboard-plug-keyboard
+	pantheon-base/switchboard-plug-locale
+	pantheon-base/switchboard-plug-mouse-touchpad
+	pantheon-base/switchboard-plug-notifications
+	pantheon-base/switchboard-plug-pantheon-shell
+	pantheon-base/switchboard-plug-parental-controls
+	pantheon-base/switchboard-plug-security-privacy
+	pantheon-base/switchboard-plug-sharing
+	pantheon-base/switchboard-plug-useraccounts
+	pantheon-base/wingpanel-indicator-ally
+	pantheon-base/wingpanel-indicator-datetime
+	pantheon-base/wingpanel-indicator-keyboard
+	pantheon-base/wingpanel-indicator-notifications
+	pantheon-base/wingpanel-indicator-session
+	pantheon-extra/elementary-tweaks
+	pulseaudio? (
+		pantheon-base/switchboard-plug-sound
+		pantheon-base/wingpanel-indicator-sound
+	)
+	upower? (
+		pantheon-base/switchboard-plug-power
+		pantheon-base/wingpanel-indicator-power
+	)
+	x11-misc/lightdm
+	x11-terms/pantheon-terminal
 "
-
-S="${WORKDIR}/session-settings-${PV}"
-
-src_prepare() {
-	eapply_user
-
-	# Use gnome as fallback instead of ubuntu and mutter instead of gala
-	sed -i -e 's/ubuntu/gnome/' gnome-session/pantheon.session
-
-	# Use gnome-session wrapper that sets XDG_CURRENT_DESKTOP
-	sed -i 's/gnome-session --session=pantheon/pantheon-session/' xsessions/pantheon.desktop
-
-	# Correct paths
-	sed -i 's#/usr/lib/[^/]*/#/usr/libexec/#' autostart/*
-}
-
-src_install() {
-	insinto /usr/share/gnome-session/sessions
-	doins gnome-session/*
-
-	insinto /usr/share/xsessions
-	doins xsessions/*
-
-	insinto /etc/xdg/autostart
-	doins autostart/*
-
-	insinto /usr/share/pantheon
-	doins -r applications
-
-	exeinto /etc/X11/Sessions
-	doexe "${FILESDIR}/Pantheon"
-
-	dobin "${FILESDIR}/pantheon-session"
-}
-

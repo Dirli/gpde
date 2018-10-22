@@ -19,7 +19,7 @@ IUSE="nls"
 RDEPEND="
 	dev-libs/glib:2
 	dev-libs/granite
-	media-libs/libcanberra[gtk]
+	media-libs/libcanberra[gtk3]
 	media-sound/pulseaudio[glib]
 	pantheon-base/wingpanel
 	x11-libs/gtk+:3

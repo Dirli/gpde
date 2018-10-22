@@ -14,8 +14,6 @@ DESCRIPTION="Service to log activities and present to other apps"
 HOMEPAGE="https://launchpad.net/zeitgeist/"
 SRC_URI="https://launchpad.net/zeitgeist/${DIR_PV}/${PV}/+download/${P}.tar.xz"
 
-#https://dev.gentoo.org/~eva/distfiles/${PN}/${P}.tar.xz"
-
 LICENSE="LGPL-2+ LGPL-3+ GPL-2+"
 SLOT="0"
 KEYWORDS="~alpha amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86"
@@ -44,11 +42,6 @@ DEPEND="${RDEPEND}
 	>=sys-devel/gettext-0.19
 	virtual/pkgconfig
 "
-
-#PATCHES=(
-#	# Fix direct invocation of python in configure
-#	"${FILESDIR}"/${PN}-1.0-python-detection.patch
-#)
 
 src_prepare() {
 	# pure-python module is better managed manually, see src_install

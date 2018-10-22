@@ -13,7 +13,7 @@ SRC_URI="https://github.com/elementary/calendar/archive/${PV}.tar.gz -> ${P}.tar
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="amd64 ~x86"
+KEYWORDS="amd64"
 IUSE="nls"
 
 DEPEND="
@@ -22,16 +22,16 @@ DEPEND="
 	virtual/pkgconfig
 "
 RDEPEND="${DEPEND}
-	dev-libs/folks	
+	dev-libs/folks
 	dev-libs/glib:2
-	dev-libs/granite	
+	dev-libs/granite
 	dev-libs/libgee:0.8
-	dev-libs/libical	
+	dev-libs/libical
 	>=gnome-extra/evolution-data-server-3.8	
 	media-libs/clutter:1.0
-	media-libs/clutter-gtk:1.0	
+	media-libs/clutter-gtk:1.0
 	media-libs/libchamplain:0.12[gtk]
-	net-libs/libsoup:2.4	
+	net-libs/libsoup:2.4
 	sci-geosciences/geocode-glib
 	>=x11-libs/gtk+-3.22:3
 "

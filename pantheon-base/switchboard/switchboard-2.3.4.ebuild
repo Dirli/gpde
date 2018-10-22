@@ -14,7 +14,7 @@ SRC_URI="https://github.com/elementary/switchboard/archive/${PV}.tar.gz -> ${P}.
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="amd64 ~x86"
-IUSE="nls example cups bluetooth pulseaudio networkmanager upower"
+IUSE="nls example"
 
 RDEPEND="
 	>=dev-libs/glib-2.32:2
@@ -28,27 +28,6 @@ DEPEND="${RDEPEND}
 	nls? ( sys-devel/gettext )
 	virtual/pkgconfig
 "
-#PDEPEND="
-#	pantheon-base/switchboard-plug-a11y
-#	pantheon-base/switchboard-plug-about
-#	pantheon-base/switchboard-plug-applications
-#	bluetooth? ( pantheon-base/switchboard-plug-bluetooth )
-#	pantheon-base/switchboard-plug-datetime
-#	pantheon-base/switchboard-plug-display
-#	pantheon-base/switchboard-plug-keyboard
-#	pantheon-base/switchboard-plug-locale
-#	pantheon-base/switchboard-plug-mouse-touchpad
-#	networkmanager? ( pantheon-base/switchboard-plug-network )
-#	pantheon-base/switchboard-plug-notifications
-#	pantheon-base/switchboard-plug-pantheon-shell
-#	pantheon-base/switchboard-plug-parental-controls
-#	upower? ( pantheon-base/switchboard-plug-power )
-#	cups? ( pantheon-base/switchboard-plug-printers )
-#	pantheon-base/switchboard-plug-security-privacy
-#	pantheon-base/switchboard-plug-sharing
-#	pulseaudio? ( pantheon-base/switchboard-plug-sound )
-#	pantheon-base/switchboard-plug-useraccounts
-#"
 
 src_prepare() {
 	eapply_user

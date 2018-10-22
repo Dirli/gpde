@@ -13,8 +13,8 @@ SRC_URI="https://github.com/elementary/terminal/archive/${PV}.tar.gz -> ${P}.tar
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="amd64 ~arm x86"
-IUSE="nls"
+KEYWORDS="amd64"
+IUSE="nls patched"
 
 RDEPEND="
 	dev-libs/appstream
@@ -40,7 +40,7 @@ src_prepare() {
 
 src_configure() {
 	local emesonargs=(
-		-Dubuntu-bionic-patched-vte=true
+		-Dubuntu-bionic-patched-vte=$(usex patched true false)
 	)
 	meson_src_configure
 }

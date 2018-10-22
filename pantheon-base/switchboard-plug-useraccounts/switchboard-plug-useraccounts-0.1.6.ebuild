@@ -5,7 +5,7 @@ EAPI=6
 
 VALA_MIN_API_VERSION=0.34
 
-inherit vala cmake-utils
+inherit cmake-utils vala
 
 DESCRIPTION="Switchboard plug to show system information."
 HOMEPAGE="https://github.com/elementary/switchboard-plug-useraccounts"
@@ -17,18 +17,20 @@ KEYWORDS="amd64"
 IUSE="nls"
 
 RDEPEND="
-	dev-libs/libpwquality
 	dev-libs/granite
 	dev-libs/libgee:0.8
+	dev-libs/libpwquality
 	gnome-base/gnome-desktop:3
+	pantheon-base/switchboard
 	sys-apps/accountsservice
 	sys-auth/polkit
 	x11-libs/gtk+:3
-	pantheon-base/switchboard"
+"
 DEPEND="${RDEPEND}
 	$(vala_depend)
+	nls? ( sys-devel/gettext )
 	virtual/pkgconfig
-	nls? ( sys-devel/gettext )"
+"
 
 src_prepare() {
 	use nls || sed -i '/add_subdirectory (po)/d' CMakeLists.txt
