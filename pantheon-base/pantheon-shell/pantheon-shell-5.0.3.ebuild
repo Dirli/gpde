@@ -3,6 +3,8 @@
 
 EAPI=6
 
+inherit eutils
+
 DESCRIPTION="Pantheon DE shell"
 HOMEPAGE="https://github.com/elementary/session-settings"
 SRC_URI="https://github.com/elementary/session-settings/archive/${PV}.tar.gz -> ${P}.tar.gz"
@@ -33,14 +35,13 @@ S="${WORKDIR}/session-settings-${PV}"
 
 src_prepare() {
 	eapply_user
+	epatch "${FILESDIR}/pantheon.session-${PV}.patch"
 
 	# Use gnome-session wrapper that sets XDG_CURRENT_DESKTOP
-	sed -i 's/gnome-session --session=pantheon/pantheon-session/' xsessions/pantheon.desktop
+	#sed -i 's/gnome-session --session=pantheon/pantheon-session/' xsessions/pantheon.desktop
 
 	# Correct paths
 	sed -i 's#/usr/lib/[^/]*/#/usr/libexec/#' autostart/*
-
-	epatch "${FILESDIR}/pantheon.session-5.0.3.patch"
 }
 
 src_install() {

@@ -29,11 +29,11 @@ RDEPEND="${DEPEND}
 	>=dev-libs/libgee-0.8.5:0.8
 	dev-libs/libgit2-glib
 	dev-libs/libpeas[gtk]
-	zeitgeist? ( gnome-extra/zeitgeist )	
+	zeitgeist? ( gnome-extra/zeitgeist )
 	media-libs/fontconfig
 	net-libs/libsoup:2.4
 	net-libs/webkit-gtk:4
-	>=x11-libs/gtk+-3.6:3	
+	>=x11-libs/gtk+-3.6:3
 	>=x11-libs/gtksourceview-3.24:3.0
 	x11-libs/vte:2.91
 "

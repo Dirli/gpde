@@ -20,8 +20,12 @@ RDEPEND="
 	dev-libs/glib:2
 	dev-libs/granite
 	media-libs/clutter-gst:3.0
-	media-libs/clutter-gtk:1.0
+	media-libs/clutter-gtk:1.0[gtk]
+	media-plugins/gst-plugins-meta
 	media-libs/gstreamer:1.0
+	media-libs/libdvbpsi
+	media-libs/libmad
+	media-libs/libsamplerate
 	>=x11-libs/gtk+-3.22:3
 "
 DEPEND="${RDEPEND}
