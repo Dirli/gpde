@@ -3,7 +3,8 @@
 
 EAPI=6
 
-inherit cmake-utils xdg-utils
+inherit cmake-utils vala xdg-utils
+VALA_USE_DEPEND="vapigen"
 
 if [[ ${PV} = 9999 ]]; then
 	inherit git-r3
@@ -41,11 +42,12 @@ DEPEND="${RDEPEND}
 	test? (
 		qt5? ( dev-qt/qttest:5 )
 	)
+	vala? ( $(vala_depend) )
 "
 
 src_prepare() {
 	cmake-utils_src_prepare
-
+	vala_src_prepare --vala-api-version 0.36
 	if ! use test; then
 		pushd qt > /dev/null || die
 		cmake_comment_add_subdirectory tests
