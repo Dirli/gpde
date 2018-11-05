@@ -30,5 +30,6 @@ DEPEND="${RDEPEND}
 
 src_prepare() {
 	eapply_user
+	epatch "${FILESDIR}/${PV}-fix_distro_dependence.patch"
 	vala_src_prepare
 }
