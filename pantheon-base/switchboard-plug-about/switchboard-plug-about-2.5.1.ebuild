@@ -31,5 +31,6 @@ DEPEND="${RDEPEND}
 src_prepare() {
 	eapply_user
 	epatch "${FILESDIR}/${PV}-fix_distro_dependence.patch"
+	epatch "${FILESDIR}/${PV}-check_desktop_exist.patch"
 	vala_src_prepare
 }
