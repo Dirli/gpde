@@ -18,7 +18,7 @@ IUSE="nls"
 
 RDEPEND="
 	dev-libs/glib:2
-	dev-libs/granite
+	>=dev-libs/granite-0.4.1
 	dev-libs/libgee:0.8
 	dev-libs/libpwquality
 	gnome-base/gnome-desktop:3
@@ -35,5 +35,7 @@ DEPEND="${RDEPEND}
 
 src_prepare() {
 	eapply_user
-	vala_src_prepare
+	epatch "${FILESDIR}/${PV}-fix_dm_location.patch"
+	epatch "${FILESDIR}/${PV}-rm_lightdm.patch"
+	vala_src_prepare --vala-api-version 0.40
 }
