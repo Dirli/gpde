@@ -17,7 +17,7 @@ SRC_URI="https://launchpad.net/zeitgeist/${DIR_PV}/${PV}/+download/${P}.tar.xz"
 LICENSE="LGPL-2+ LGPL-3+ GPL-2+"
 SLOT="0"
 KEYWORDS="~alpha amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86"
-IUSE="+datahub downloads-monitor +fts introspection nls sql-debug telepathy"
+IUSE="datahub downloads-monitor fts introspection nls sql-debug telepathy"
 
 REQUIRED_USE="
 	${PYTHON_REQUIRED_USE}
@@ -39,6 +39,7 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}
 	$(vala_depend)
+	sys-devel/automake:1.15
 	>=sys-devel/gettext-0.19
 	virtual/pkgconfig
 "
