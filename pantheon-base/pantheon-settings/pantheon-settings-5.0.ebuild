@@ -9,9 +9,9 @@ DESCRIPTION="Default settings for the Pantheon Desktop Environment"
 HOMEPAGE="https://github.com/elementary/default-settings"
 SRC_URI="https://github.com/elementary/default-settings/archive/${PV}.tar.gz -> ${P}.tar.gz"
 
-LICENSE="XZ"
+LICENSE="no license"
 SLOT="0"
-KEYWORDS="amd64 ~x86"
+KEYWORDS="~amd64"
 IUSE=""
 
 DEPEND=""
