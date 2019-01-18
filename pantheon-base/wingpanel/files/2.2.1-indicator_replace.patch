@@ -1,0 +1,26 @@
+--- src/Widgets/Panel.vala	2018-12-20 15:23:56.000000000 +0300
++++ src/Widgets/Panel.vala	2019-01-15 22:53:57.219453940 +0300
+@@ -140,6 +140,7 @@
+                 }
+ 
+                 break;
++            case "meteo-indicator":
+             case Indicator.DATETIME:
+                 var children = center_menubar.get_children ();
+                 int index = children.index (current);
+@@ -194,6 +195,7 @@
+                 }
+ 
+                 break;
++            case "meteo-indicator":
+             case Indicator.DATETIME:
+                 var children = center_menubar.get_children ();
+                 int index = children.index (current);
+@@ -237,6 +239,7 @@
+                 indicator_entry.set_transition_type (Gtk.RevealerTransitionType.SLIDE_RIGHT);
+                 left_menubar.add (indicator_entry);
+                 break;
++            case "meteo-indicator":
+             case Indicator.DATETIME:
+                 indicator_entry.set_transition_type (Gtk.RevealerTransitionType.SLIDE_DOWN);
+                 center_menubar.add (indicator_entry);

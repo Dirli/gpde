@@ -1,4 +1,4 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -32,7 +32,7 @@ DEPEND="${RDEPEND}
 
 src_prepare() {
 	eapply_user
-	epatch "${FILESDIR}/${PV}-indicator_replace.patch"
+	epatch "${FILESDIR}/2.2.1-indicator_replace.patch"
 	vala_src_prepare
 }
 
