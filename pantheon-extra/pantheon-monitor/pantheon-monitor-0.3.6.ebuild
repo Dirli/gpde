@@ -1,40 +1,44 @@
-# Copyright 2018 Gentoo Authors
+# Copyright 2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
 
-VALA_MIN_API_VERSION=0.40
-
 inherit gnome2-utils meson vala xdg-utils
 
-DESCRIPTION="Manage processes and monitor system resources."
-HOMEPAGE="https://github.com/stsdc/monitor"
-SRC_URI="https://github.com/stsdc/monitor/archive/${PV}.tar.gz -> ${P}.tar.gz"
+DESCRIPTION="Manage processes and monitor system resources in ElementaryOS"
+HOMEPAGE="https://github.com/Dirli/pantheon-monitor"
+SRC_URI="https://github.com/Dirli/pantheon-monitor/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="nls"
+IUSE="+indicator"
 
 DEPEND="
 	>=dev-lang/vala-0.40
-	nls? ( sys-devel/gettext )
+	sys-devel/gettext
 	virtual/pkgconfig
 "
 RDEPEND="${DEPEND}
 	dev-libs/glib:2
 	dev-libs/granite
-	dev-libs/libgee:0.8
 	gnome-base/libgtop:2
 	x11-libs/bamf
+	x11-libs/cairo
 	x11-libs/gtk+:3
 	x11-libs/libwnck:3
 "
 
 src_prepare() {
-	eapply_user
-	epatch "${FILESDIR}/0.3.6-desktop_name.patch"
+	default
 	vala_src_prepare --vala-api-version 0.40
+}
+
+src_configure() {
+	local emesonargs=(
+		-Dindicator=$(usex indicator true false)
+	)
+	meson_src_configure
 }
 
 pkg_preinst() {
