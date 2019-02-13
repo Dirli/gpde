@@ -10,7 +10,7 @@ inherit git-r3 gnome2-utils meson vala
 DESCRIPTION="Pantheon's Window Manager"
 HOMEPAGE="https://github.com/elementary/gala"
 EGIT_REPO_URI="https://github.com/elementary/gala.git"
-EGIT_COMMIT="fe9f48a"
+EGIT_COMMIT="1a96644c6aac405927499dacb308dea13512e919"
 
 LICENSE="GPL-3"
 SLOT="0"

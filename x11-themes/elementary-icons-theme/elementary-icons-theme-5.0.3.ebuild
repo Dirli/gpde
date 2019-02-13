@@ -3,7 +3,7 @@
 
 EAPI=6
 
-inherit gnome2-utils cmake-utils
+inherit gnome2-utils meson
 
 DESCRIPTION="An original set of vector icons designed specifically for elementary OS"
 HOMEPAGE="https://github.com/elementary/icons"
@@ -11,7 +11,7 @@ SRC_URI="https://github.com/elementary/icons/archive/${PV}.tar.gz -> ${P}.tar.gz
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="amd64 ~x86"
+KEYWORDS="~amd64"
 IUSE=""
 
 DEPEND=""
