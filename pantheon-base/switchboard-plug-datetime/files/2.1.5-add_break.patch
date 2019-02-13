@@ -1,0 +1,282 @@
+--- src/Plug.vala	2018-12-11 00:20:43.000000000 +0300
++++ src/Plug.vala	2019-02-13 02:26:14.188192500 +0300
+@@ -26,7 +26,12 @@
+     private CurrentTimeManager ct_manager;
+     private Settings clock_settings;
+     private bool changing_clock_format = false;
+-
++    private Gtk.Label postpone_label;
++    private Gtk.Switch postpone_switch;
++    private Gtk.Label work_time_label;
++    private Gtk.Label break_time_label;
++    private Gtk.SpinButton work_time_val;
++    private Gtk.SpinButton break_time_val;
+     public Plug () {
+         var settings = new Gee.TreeMap<string, string?> (null, null);
+         settings.set ("time", null);
+@@ -78,20 +83,50 @@
+             week_number_switch.valign = Gtk.Align.CENTER;
+             week_number_switch.halign = Gtk.Align.START;
+ 
++            var break_label = new Gtk.Label (_("Enable time break:"));
++            break_label.xalign = 1;
++            var break_switch = new Gtk.Switch ();
++            break_switch.valign = Gtk.Align.CENTER;
++            break_switch.halign = Gtk.Align.START;
++
++            postpone_label = new Gtk.Label (_("Be allowed to postpone a break:"));
++            postpone_label.xalign = 1;
++            postpone_switch = new Gtk.Switch ();
++            postpone_switch.valign = Gtk.Align.CENTER;
++            postpone_switch.halign = Gtk.Align.START;
++
++            break_time_label = new Gtk.Label (_("Break time (min):"));
++            break_time_val = new Gtk.SpinButton.with_range (1, 60, 5);
++            break_time_val.set_halign (Gtk.Align.END);
++            break_time_val.set_width_chars (3);
++
++            work_time_label = new Gtk.Label (_("Work time (min):"));
++            work_time_val = new Gtk.SpinButton.with_range (30, 240, 5);
++            work_time_val.set_halign (Gtk.Align.END);
++            work_time_val.set_width_chars (3);
++
+             var widget_grid = new Gtk.Grid ();
+             widget_grid.halign = Gtk.Align.CENTER;
+             widget_grid.column_spacing = 12;
+             widget_grid.row_spacing = 12;
+-            widget_grid.attach (time_format_label, 0, 0, 1, 1);
+-            widget_grid.attach (time_format, 1, 0, 3, 1);
+-            widget_grid.attach (time_zone_label, 0, 1, 1, 1);
+-            widget_grid.attach (time_zone_button, 1, 1, 3, 1);
+-            widget_grid.attach (network_time_label, 0, 2, 1, 1);
++            widget_grid.attach (time_format_label,   0, 0, 1, 1);
++            widget_grid.attach (time_format,         1, 0, 3, 1);
++            widget_grid.attach (time_zone_label,     0, 1, 1, 1);
++            widget_grid.attach (time_zone_button,    1, 1, 3, 1);
++            widget_grid.attach (network_time_label,  0, 2, 1, 1);
+             widget_grid.attach (network_time_switch, 1, 2, 1, 1);
+-            widget_grid.attach (week_number_label, 0, 3, 1, 1);
+-            widget_grid.attach (week_number_switch, 1, 3, 1, 1);
+-            widget_grid.attach (time_picker, 2, 2, 1, 1);
+-            widget_grid.attach (date_picker, 3, 2, 1, 1);
++            widget_grid.attach (week_number_label,   0, 3, 1, 1);
++            widget_grid.attach (week_number_switch,  1, 3, 1, 1);
++            widget_grid.attach (time_picker,         2, 2, 1, 1);
++            widget_grid.attach (date_picker,         3, 2, 1, 1);
++            widget_grid.attach (break_label,         0, 4, 1, 1);
++            widget_grid.attach (break_switch,        1, 4, 1, 1);
++            widget_grid.attach (break_time_label,    2, 4, 1, 1);
++            widget_grid.attach (work_time_label,     3, 4, 1, 1);
++            widget_grid.attach (postpone_label,      0, 5, 1, 1);
++            widget_grid.attach (postpone_switch,     1, 5, 1, 1);
++            widget_grid.attach (break_time_val,      2, 5, 1, 1);
++            widget_grid.attach (work_time_val,       3, 5, 1, 1);
+ 
+             var source = SettingsSchemaSource.get_default ();
+             var schema = source.lookup ("io.elementary.desktop.wingpanel.datetime", false);
+@@ -99,9 +134,25 @@
+             if (schema == null) {
+                 week_number_label.no_show_all = true;
+                 week_number_switch.no_show_all = true;
++                break_label.no_show_all = true;
++                break_switch.no_show_all = true;
++                postpone_label.no_show_all = true;
++                postpone_switch.no_show_all = true;
++                break_time_label.no_show_all = true;
++                break_time_val.no_show_all = true;
++                work_time_label.no_show_all = true;
++                work_time_val.no_show_all = true;
+             } else {
+                 var week_number_settings = new GLib.Settings ("io.elementary.desktop.wingpanel.datetime");
+                 week_number_settings.bind ("show-weeks", week_number_switch, "active", SettingsBindFlags.DEFAULT);
++                week_number_settings.bind ("enable-time-break", break_switch, "active", SettingsBindFlags.DEFAULT);
++                week_number_settings.bind ("postpone-break", postpone_switch, "active", SettingsBindFlags.DEFAULT);
++                week_number_settings.bind ("break-time-value", break_time_val, "value", SettingsBindFlags.DEFAULT);
++                week_number_settings.bind ("work-time-value", work_time_val, "value", SettingsBindFlags.DEFAULT);
++                break_switch.notify["active"].connect (() => {
++                    breake_ui (break_switch.get_state ());
++                });
++                breake_ui (week_number_settings.get_boolean ("enable-time-break"));
+             }
+ 
+             main_grid = new Gtk.Grid ();
+@@ -232,6 +283,15 @@
+         return main_grid;
+     }
+ 
++    private void breake_ui (bool state) {
++        break_time_label.sensitive = state;
++        work_time_label.sensitive = state;
++        break_time_val.sensitive = state;
++        work_time_val.sensitive = state;
++        postpone_label.sensitive = state;
++        postpone_switch.sensitive = state;
++    }
++
+     private void change_tz (string _tz) {
+         var tz = _(_tz);
+         var english_tz = _tz;
+--- po/datetime-plug.pot	2018-12-11 00:20:43.000000000 +0300
++++ po/datetime-plug.pot	2019-02-13 02:11:04.244257200 +0300
+@@ -3178,51 +3178,67 @@
+ msgid "Africa/Harare"
+ msgstr ""
+ 
+-#: src/Plug.vala:36
++#: src/Plug.vala:41
+ msgid "Date & Time"
+ msgstr ""
+ 
+-#: src/Plug.vala:37
++#: src/Plug.vala:42
+ msgid "Configure date, time, and select time zone"
+ msgstr ""
+ 
+-#: src/Plug.vala:45
++#: src/Plug.vala:50
+ msgid "Network Time:"
+ msgstr ""
+ 
+-#: src/Plug.vala:55
++#: src/Plug.vala:60
+ msgid "Time Format:"
+ msgstr ""
+ 
+-#: src/Plug.vala:59
++#: src/Plug.vala:64
+ msgid "AM/PM"
+ msgstr ""
+ 
+-#: src/Plug.vala:60
++#: src/Plug.vala:65
+ msgid "24h"
+ msgstr ""
+ 
+-#: src/Plug.vala:62
++#: src/Plug.vala:67
+ msgid "Time Zone:"
+ msgstr ""
+ 
+-#: src/Plug.vala:74
++#: src/Plug.vala:79
+ msgid "Show week numbers:"
+ msgstr ""
+ 
+-#: src/Plug.vala:275
++#: src/Plug.vala:86
++msgid "Enable time break:"
++msgstr ""
++
++#: src/Plug.vala:92
++msgid "Be allowed to postpone a break:"
++msgstr ""
++
++#: src/Plug.vala:98
++msgid "Break time (min):"
++msgstr ""
++
++#: src/Plug.vala:103
++msgid "Work time (min):"
++msgstr ""
++
++#: src/Plug.vala:335
+ msgid "Time Format"
+ msgstr ""
+ 
+-#: src/Plug.vala:276
++#: src/Plug.vala:336
+ msgid "Time Zone"
+ msgstr ""
+ 
+-#: src/Plug.vala:277
++#: src/Plug.vala:337
+ msgid "Network Time"
+ msgstr ""
+ 
+-#: src/Plug.vala:278
++#: src/Plug.vala:338
+ msgid "Show week numbers"
+ msgstr ""
+ 
+--- po/ru.po	2018-12-11 00:20:43.000000000 +0300
++++ po/ru.po	2019-02-13 02:14:58.559138400 +0300
+@@ -3188,51 +3188,67 @@
+ msgid "Africa/Harare"
+ msgstr "Африка/Хараре"
+ 
+-#: src/Plug.vala:36
++#: src/Plug.vala:41
+ msgid "Date & Time"
+ msgstr "Дата и время"
+ 
+-#: src/Plug.vala:37
++#: src/Plug.vala:42
+ msgid "Configure date, time, and select time zone"
+ msgstr "Настройка даты, времени, выбор временной зоны"
+ 
+-#: src/Plug.vala:45
++#: src/Plug.vala:50
+ msgid "Network Time:"
+ msgstr "Время сети:"
+ 
+-#: src/Plug.vala:55
++#: src/Plug.vala:60
+ msgid "Time Format:"
+ msgstr "Формат времени:"
+ 
+-#: src/Plug.vala:59
++#: src/Plug.vala:64
+ msgid "AM/PM"
+ msgstr "AM/PM"
+ 
+-#: src/Plug.vala:60
++#: src/Plug.vala:65
+ msgid "24h"
+ msgstr "24-часовой"
+ 
+-#: src/Plug.vala:62
++#: src/Plug.vala:67
+ msgid "Time Zone:"
+ msgstr "Часовой пояс:"
+ 
+-#: src/Plug.vala:74
++#: src/Plug.vala:79
+ msgid "Show week numbers:"
+ msgstr "Показывать номера недель:"
+ 
+-#: src/Plug.vala:275
++#: src/Plug.vala:86
++msgid "Enable time break:"
++msgstr "Включить перерыв"
++
++#: src/Plug.vala:92
++msgid "Be allowed to postpone a break:"
++msgstr "Разрешить отложить перерыв"
++
++#: src/Plug.vala:98
++msgid "Break time (min):"
++msgstr "Перерыв (мин)"
++
++#: src/Plug.vala:103
++msgid "Work time (min):"
++msgstr "Рабочее время (мин)"
++
++#: src/Plug.vala:335
+ msgid "Time Format"
+ msgstr "Формат времени"
+ 
+-#: src/Plug.vala:276
++#: src/Plug.vala:336
+ msgid "Time Zone"
+ msgstr "Часовой пояс"
+ 
+-#: src/Plug.vala:277
++#: src/Plug.vala:337
+ msgid "Network Time"
+ msgstr "Время сети"
+ 
+-#: src/Plug.vala:278
++#: src/Plug.vala:338
+ msgid "Show week numbers"
+ msgstr "Показывать номера недель"
+ 
