@@ -1,7 +1,7 @@
-# Copyright 1999-2019 Gentoo Foundation
+# Copyright 2019 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 VALA_MIN_API_VERSION=0.40
 
@@ -17,7 +17,7 @@ SLOT="0"
 IUSE="nls"
 
 DEPEND="
-	>=dev-lang/vala-0.40
+	$(vala_depend)
 	nls? ( sys-devel/gettext )
 	virtual/pkgconfig
 "
@@ -39,7 +39,7 @@ S="${WORKDIR}/files-${PV}"
 
 src_prepare() {
 	eapply_user
-	vala_src_prepare --vala-api-version 0.40
+	vala_src_prepare
 }
 
 src_configure() {
@@ -50,18 +50,15 @@ src_configure() {
 }
 
 pkg_preinst() {
-	gnome2_icon_savelist
 	gnome2_schemas_savelist
 }
 
 pkg_postinst() {
-	gnome2_icon_cache_update
 	gnome2_schemas_update
 	xdg_desktop_database_update
 }
 
 pkg_postrm() {
-	gnome2_icon_cache_update
 	gnome2_schemas_update
 	xdg_desktop_database_update
 }
