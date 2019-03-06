@@ -14,7 +14,7 @@ SRC_URI="https://github.com/elementary/wingpanel-indicator-sound/archive/${PV}.t
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="nls"
+IUSE="bluetooth nls"
 
 RDEPEND="
 	dev-libs/glib:2
@@ -33,7 +33,17 @@ DEPEND="${RDEPEND}
 
 src_prepare() {
 	eapply_user
+	cp -n "${FILESDIR}/meson_options.txt" "${S}/"
+	epatch "${FILESDIR}/2.1.2-bluetooth_use.patch"
 	vala_src_prepare
+
+}
+
+src_configure() {
+	local emesonargs=(
+		-Dbluetooth=$(usex bluetooth true false)
+	)
+	meson_src_configure
 }
 
 pkg_preinst() {
