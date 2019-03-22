@@ -1,5 +1,5 @@
---- src/Plug.vala	2018-12-11 00:20:43.000000000 +0300
-+++ src/Plug.vala	2019-02-13 02:26:14.188192500 +0300
+--- /src/Plug.vala	2018-12-11 00:20:43.000000000 +0300
++++ /src/Plug.vala	2019-02-13 02:26:14.188192500 +0300
 @@ -26,7 +26,12 @@
      private CurrentTimeManager ct_manager;
      private Settings clock_settings;
@@ -116,8 +116,8 @@
      private void change_tz (string _tz) {
          var tz = _(_tz);
          var english_tz = _tz;
---- po/datetime-plug.pot	2018-12-11 00:20:43.000000000 +0300
-+++ po/datetime-plug.pot	2019-02-13 02:11:04.244257200 +0300
+--- /po/datetime-plug.pot	2018-12-11 00:20:43.000000000 +0300
++++ /po/datetime-plug.pot	2019-02-13 02:11:04.244257200 +0300
 @@ -3178,51 +3178,67 @@
  msgid "Africa/Harare"
  msgstr ""
@@ -198,8 +198,8 @@
  msgid "Show week numbers"
  msgstr ""
  
---- po/ru.po	2018-12-11 00:20:43.000000000 +0300
-+++ po/ru.po	2019-02-13 02:14:58.559138400 +0300
+--- /po/ru.po	2018-12-11 00:20:43.000000000 +0300
++++ /po/ru.po	2019-02-13 02:14:58.559138400 +0300
 @@ -3188,51 +3188,67 @@
  msgid "Africa/Harare"
  msgstr "Африка/Хараре"

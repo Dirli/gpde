@@ -1,9 +1,7 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
-
-VALA_MIN_VERSION=0.40
+EAPI=7
 
 inherit gnome2-utils meson vala
 
@@ -13,14 +11,14 @@ SRC_URI="https://github.com/elementary/wingpanel-indicator-datetime/archive/${PV
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="amd64 ~x86"
+KEYWORDS="amd64"
 IUSE="nls"
 
 RDEPEND="
 	dev-libs/glib:2
 	dev-libs/granite
 	dev-libs/libical
-	gnome-extra/evolution-data-server[vala]
+	=gnome-extra/evolution-data-server-3.28*[vala]
 	net-libs/libsoup:2.4
 	pantheon-base/wingpanel
 	x11-libs/gtk+:3
@@ -33,7 +31,7 @@ DEPEND="${RDEPEND}
 
 src_prepare() {
 	eapply_user
-	vala_src_prepare --vala-api-version 0.40
+	vala_src_prepare
 }
 
 pkg_preinst() {

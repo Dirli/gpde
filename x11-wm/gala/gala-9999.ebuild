@@ -21,14 +21,14 @@ RDEPEND="
 	>=dev-libs/glib-2.44:2
 	dev-libs/granite
 	dev-libs/libgee:0.8
-	gnome-base/gnome-desktop:3
-	>=gnome-base/gnome-settings-daemon-3.15.2
+	=gnome-base/gnome-desktop-3.28*
+	=gnome-base/gnome-settings-daemon-3.28*
 	>=media-libs/clutter-1.12
 	media-libs/clutter-gtk
 	x11-libs/bamf
 	>=x11-libs/gtk+-3.10.0:3
 	>=x11-misc/plank-0.11.0
-	>=x11-wm/mutter-3.18.3
+	=x11-wm/mutter-3.28*
 "
 DEPEND="${RDEPEND}
 	$(vala_depend)

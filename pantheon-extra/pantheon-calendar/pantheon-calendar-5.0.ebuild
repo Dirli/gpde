@@ -5,8 +5,6 @@ EAPI=7
 
 inherit gnome2-utils meson vala xdg-utils
 
-VALA_MIN_API_VERSION=0.40
-
 DESCRIPTION="Desktop calendar app designed for elementary OS"
 HOMEPAGE="https://github.com/elementary/calendar"
 SRC_URI="https://github.com/elementary/calendar/archive/${PV}.tar.gz -> ${P}.tar.gz"

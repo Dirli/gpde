@@ -1,7 +1,7 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 VALA_MIN_API_VERSION=0.20
 
@@ -19,13 +19,13 @@ IUSE="nls"
 RDEPEND="
 	dev-libs/glib:2
 	dev-libs/granite
-	pantheon-base/switchboard	
+	pantheon-base/switchboard
 	x11-libs/gtk+:3
 "
 DEPEND="${RDEPEND}
 	$(vala_depend)
 	nls? ( sys-devel/gettext )
-	virtual/pkgconfig	
+	virtual/pkgconfig
 "
 
 src_prepare() {

@@ -1,5 +1,5 @@
---- src/Application.vala	2018-11-17 18:41:11.000000000 +0300
-+++ src/Application.vala	2018-12-17 23:54:20.739000281 +0300
+--- /src/Application.vala	2018-11-17 18:41:11.000000000 +0300
++++ /src/Application.vala	2018-12-17 23:54:20.739000281 +0300
 @@ -30,7 +30,7 @@
          public string DB_PATH { get; private set; }
          public string COVER_FOLDER { get; private set; }

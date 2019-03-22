@@ -1,9 +1,9 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI="6"
 GNOME2_LA_PUNT="yes"
-PYTHON_COMPAT=( python3_{4,5,6} )
+PYTHON_COMPAT=( python{3_4,3_5,3_6,3_7} pypy )
 VALA_USE_DEPEND="vapigen"
 
 inherit cmake-utils db-use flag-o-matic gnome2 python-any-r1 systemd vala virtualx
@@ -13,22 +13,26 @@ HOMEPAGE="https://wiki.gnome.org/Apps/Evolution"
 
 # Note: explicitly "|| ( LGPL-2 LGPL-3 )", not "LGPL-2+".
 LICENSE="|| ( LGPL-2 LGPL-3 ) BSD Sleepycat"
-SLOT="0/59" # subslot = libcamel-1.2 soname version
+SLOT="0/61" # subslot = libcamel-1.2 soname version
+KEYWORDS="*"
 
-IUSE="gtk-doc berkdb +gnome-online-accounts +gtk google +introspection ipv6 ldap kerberos vala +weather"
+IUSE="api-doc-extras +berkdb +gnome-online-accounts +gtk google +introspection ipv6 ldap kerberos vala +weather"
 REQUIRED_USE="vala? ( introspection )"
-KEYWORDS="~amd64 ~x86"
 
-# sys-libs/db is only required for migrating from <3.13 versions
-# gdata-0.17.7 soft required for new gdata_feed_get_next_page_token API to handle more than 100 google tasks
-# berkdb needed only for migrating old calendar data, bug #519512
-gdata_depend=">=dev-libs/libgdata-0.17.7:="
+# Some tests fail due to missing locales.
+# Also, dbus tests are flaky, bugs #397975 #501834
+# It looks like a nightmare to disable those for now.
+RESTRICT="test"
+
+# gdata-0.17.7 soft required for google tasks (more than 100)
+# berkdb needed only for migrating old addressbook data from <3.13 versions, bug #519512
 RDEPEND="
 	>=app-crypt/gcr-3.4
 	>=app-crypt/libsecret-0.5[crypt]
 	>=dev-db/sqlite-3.7.17:=
-	>=dev-libs/glib-2.53.4:2
-	>=dev-libs/libical-2:=
+	>=dev-libs/glib-2.46:2
+	>=dev-libs/libgdata-0.10:=
+	>=dev-libs/libical-2.0:=
 	>=dev-libs/libxml2-2
 	>=dev-libs/nspr-4.4:=
 	>=dev-libs/nss-3.9:=
@@ -45,12 +49,10 @@ RDEPEND="
 	)
 	google? (
 		>=dev-libs/json-glib-1.0.4
+		>=dev-libs/libgdata-0.17.7:=
 		>=net-libs/webkit-gtk-2.11.91:4
-		${gdata_depend}
 	)
-	gnome-online-accounts? (
-		>=net-libs/gnome-online-accounts-3.8:=
-		${gdata_depend} )
+	gnome-online-accounts? ( >=net-libs/gnome-online-accounts-3.8:= )
 	introspection? ( >=dev-libs/gobject-introspection-0.9.12:= )
 	kerberos? ( virtual/krb5:= )
 	ldap? ( >=net-nds/openldap-2:= )
@@ -58,82 +60,82 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}
 	${PYTHON_DEPS}
+	dev-util/gdbus-codegen
 	dev-util/gperf
 	>=dev-util/gtk-doc-am-1.14
 	>=dev-util/intltool-0.35.5
-	>=gnome-base/gnome-common-2
-	>=sys-devel/gettext-0.17
+	>=sys-devel/gettext-0.18.3
 	virtual/pkgconfig
 	vala? ( $(vala_depend) )
 "
-
-# Some tests fail due to missings locales.
-# Also, dbus tests are flacky, bugs #397975 #501834
-# It looks like a nightmare to disable those for now.
-RESTRICT="test"
 
 pkg_setup() {
 	python-any-r1_pkg_setup
 }
 
 src_prepare() {
+	# Make CMakeLists versioned vala enabled
+	eapply "${FILESDIR}"/${PN}-3.24.2-assume-vala-bindings.patch
+
 	use vala && vala_src_prepare
 	cmake-utils_src_prepare
 }
 
 src_configure() {
-	local mycmakeargs=(
-		-DENABLE_GOA=$(usex gnome-online-accounts)
-		-DENABLE_OAUTH2=ON
-		-DENABLE_GTK=$(usex gtk)
-		-DENABLE_GTK_DOC=$(usex gtk-doc)
-		-DENABLE_INTROSPECTION=$(usex introspection)
-		-DENABLE_IPV6=$(usex ipv6)
-		-DENABLE_VALA_BINDINGS=$(usex vala)
-		-DENABLE_WEATHER=$(usex weather)
-		-DWITH_PRIVATE_DOCS=$(usex gtk-doc "ON" "OFF")
-		-DWITH_LIBDB=$(usex berkdb "${EPREFIX}"/usr "OFF")
-		-DWITH_OPENLDAP=$(usex ldap "ON" "OFF")
-		-DWITH_KRB5=$(usex kerberos "ON" "OFF")
-		-DWITH_KRB5_LIBS=$(usex kerberos "${EPREFIX}"/usr/$(get_libdir) "")
-		-DWITH_CFLAGS=$(usex berkdb "-I$(db_includedir)" "")
-		-DENABLE_LARGEFILE=ON
-		-DENABLE_SMIME=ON
-		-DWITH_SYSTEMDUSERUNITDIR="$(systemd_get_userunitdir)"
-		-DWITH_PHONENUMBER=OFF
-		-DENABLE_EXAMPLES=OFF
-		-DENABLE_UOA=OFF
-	)
+	# /usr/include/db.h is always db-1 on FreeBSD
+	# so include the right dir in CPPFLAGS
+	use berkdb && append-cppflags "-I$(db_includedir)"
 
-	if use google || use gnome-online-accounts; then
-		mycmakeargs+=( -DENABLE_GOOGLE=ON )
-	else
-		mycmakeargs+=( -DENABLE_GOOGLE=OFF )
-	fi
+	local mycmakeargs=(
+		-DWITH_SYSTEMDUSERUNITDIR="$(systemd_get_userunitdir)"
+		-DENABLE_GTK_DOC=$(usex api-doc-extras)
+		-DWITH_PRIVATE_DOCS=$(usex api-doc-extras "ON" "OFF")
+		-DENABLE_SCHEMAS_COMPILE=OFF
+		-DENABLE_INTROSPECTION=$(usex introspection)
+		-DWITH_KRB5=$(usex kerberos "ON" "OFF")
+		-DWITH_KRB5_INCLUDES=$(usex kerberos "${EPREFIX}"/usr "")
+		-DWITH_KRB5_LIBS=$(usex kerberos "${EPREFIX}"/usr/$(get_libdir) "")
+		-DWITH_OPENLDAP=$(usex ldap "ON" "OFF")
+		-DWITH_PHONENUMBER=OFF
+		-DENABLE_SMIME=ON
+		-DENABLE_GTK=$(usex gtk)
+		-DENABLE_EXAMPLES=OFF
+		-DENABLE_GOA=$(usex gnome-online-accounts)
+		-DENABLE_UOA=OFF
+		-DWITH_LIBDB=$(usex berkdb "${EPREFIX}"/usr "OFF")
+		-DENABLE_IPV6=$(usex ipv6)
+		-DENABLE_WEATHER=$(usex weather)
+		-DENABLE_GOOGLE=$(usex google)
+		-DENABLE_LARGEFILE=ON
+		-DENABLE_VALA_BINDINGS=$(usex vala)
+		-DENABLE_OAUTH2=$(usex google "ON" "OFF")
+	)
 
 	cmake-utils_src_configure
 }
 
+src_compile() {
+	cmake-utils_src_compile
+}
+
 src_test() {
-	unset ORBIT_SOCKETDIR
-	unset SESSION_MANAGER
-	virtx emake check
+	virtx cmake-utils_src_test
 }
 
 src_install() {
-	#addwrite /usr/share/glib-2.0/schemas/org.gnome.Evolution.DefaultSources.gschema.xml
-	#addwrite /usr/share/glib-2.0/schemas/org.gnome.evolution-data-server.gschema.xml
-	#addwrite /usr/share/glib-2.0/schemas/org.gnome.evolution-data-server.calendar.gschema.xml
-	#addwrite /usr/share/glib-2.0/schemas/org.gnome.evolution.eds-shell.gschema.xml
-	#addwrite /usr/share/glib-2.0/schemas/org.gnome.evolution-data-server.addressbook.gschema.xml
-	#addwrite /usr/share/glib-2.0/schemas/org.gnome.evolution.shell.network-config.gschema.xml
-	#addwrite /usr/share/glib-2.0/schemas/
-
 	cmake-utils_src_install
 
 	if use ldap; then
 		insinto /etc/openldap/schema
 		doins "${FILESDIR}"/calentry.schema
-		dosym /usr/share/${PN}/evolutionperson.schema /etc/openldap/schema/evolutionperson.schema
+		dosym ../../../usr/share/${PN}/evolutionperson.schema /etc/openldap/schema/evolutionperson.schema
+	fi
+}
+
+pkg_postinst() {
+	gnome2_pkg_postinst
+	if ! use berkdb; then
+		ewarn "You will need to enable berkdb USE for migrating old"
+		ewarn "(pre-3.13 evolution versions) addressbook data"
 	fi
 }

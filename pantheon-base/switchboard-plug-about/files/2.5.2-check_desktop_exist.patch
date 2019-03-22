@@ -1,5 +1,5 @@
---- src/Dialogs/IssueDialog.vala	2018-11-05 16:31:12.476603000 +0300
-+++ src/Dialogs/IssueDialog.vala	2018-11-05 16:44:43.624288435 +0300
+--- /src/Dialogs/IssueDialog.vala	2018-11-05 16:31:12.476603000 +0300
++++ /src/Dialogs/IssueDialog.vala	2018-11-05 16:44:43.624288435 +0300
 @@ -63,8 +63,10 @@
  
          foreach (var app in app_entries) {

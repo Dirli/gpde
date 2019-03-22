@@ -15,7 +15,7 @@ SRC_URI="https://github.com/elementary/wingpanel-indicator-keyboard/archive/${PV
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="amd64"
 IUSE="nls"
 
 RDEPEND="
@@ -26,6 +26,7 @@ RDEPEND="
 "
 
 DEPEND="${RDEPEND}
+	dev-lang/vala
 	dev-libs/libxml2[python]
 	${PYTHON_DEPS}
 	nls? ( sys-devel/gettext )
@@ -34,7 +35,6 @@ DEPEND="${RDEPEND}
 
 src_prepare() {
 	eapply_user
-
 	vala_src_prepare
 }
 

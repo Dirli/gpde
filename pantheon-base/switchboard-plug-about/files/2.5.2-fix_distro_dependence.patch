@@ -1,5 +1,5 @@
---- /home/dirli/switchboard-plug-about-2.5.2/src/Plug.vala	2018-12-04 19:36:36.000000000 +0300
-+++ /home/dirli/Plug.vala	2018-12-05 14:46:07.302733783 +0300
+--- /src/Plug.vala	2018-12-04 19:36:36.000000000 +0300
++++ /src/Plug.vala	2018-12-05 14:46:07.302733783 +0300
 @@ -23,9 +23,8 @@
      private string support_url;
      private string arch;

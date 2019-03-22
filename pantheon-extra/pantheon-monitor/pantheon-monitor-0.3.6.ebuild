@@ -1,7 +1,7 @@
-# Copyright 2019 Gentoo Authors
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 inherit gnome2-utils meson vala xdg-utils
 
@@ -31,7 +31,7 @@ RDEPEND="${DEPEND}
 
 src_prepare() {
 	default
-	vala_src_prepare --vala-api-version 0.40
+	vala_src_prepare
 }
 
 src_configure() {

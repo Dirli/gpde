@@ -1,7 +1,7 @@
-# Copyright 2018 Gentoo Authors
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 inherit meson vala
 
@@ -11,7 +11,7 @@ SRC_URI="https://github.com/Dirli/wingpanel-indicator-sensors/archive/v${PV}.tar
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="amd64"
 IUSE="nls"
 
 DEPEND="
@@ -29,6 +29,5 @@ RDEPEND="${DEPEND}
 
 src_prepare() {
 	eapply_user
-
 	vala_src_prepare
 }

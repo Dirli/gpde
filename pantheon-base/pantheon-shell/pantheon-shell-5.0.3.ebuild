@@ -1,7 +1,7 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 inherit eutils
 
@@ -16,8 +16,8 @@ IUSE=""
 
 DEPEND=""
 RDEPEND="${DEPEND}
-	>=gnome-base/gnome-session-3.0
-	>=gnome-base/gnome-settings-daemon-3.0
+	=gnome-base/gnome-session-3.28*
+	=gnome-base/gnome-settings-daemon-3.28*
 	pantheon-base/applications-menu
 	pantheon-base/cerbere
 	pantheon-base/wingpanel
@@ -35,10 +35,7 @@ S="${WORKDIR}/session-settings-${PV}"
 
 src_prepare() {
 	eapply_user
-	epatch "${FILESDIR}/pantheon.session-${PV}.patch"
-
-	# Use gnome-session wrapper that sets XDG_CURRENT_DESKTOP
-	#sed -i 's/gnome-session --session=pantheon/pantheon-session/' xsessions/pantheon.desktop
+	eapply "${FILESDIR}/pantheon.session-${PV}.patch"
 
 	# Correct paths
 	sed -i 's#/usr/lib/[^/]*/#/usr/libexec/#' autostart/*

@@ -1,7 +1,7 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 VALA_MIN_API_VERSION=0.20
 
@@ -11,7 +11,7 @@ DESCRIPTION="Configure the Pantheon desktop environment using Switchboard"
 HOMEPAGE="https://github.com/elementary/switchboard-plug-pantheon-shell"
 SRC_URI="https://github.com/elementary/switchboard-plug-pantheon-shell/archive/${PV}.tar.gz -> ${P}.tar.gz"
 
-KEYWORDS="~amd64"
+KEYWORDS="amd64"
 LICENSE="GPL-3"
 SLOT="0"
 IUSE="nls"
@@ -20,7 +20,7 @@ RDEPEND="
 	dev-libs/glib:2
 	dev-libs/granite
 	media-libs/gexiv2[vala]
-	gnome-base/gnome-desktop:3
+	=gnome-base/gnome-desktop-3.28*
 	pantheon-base/switchboard
 	pantheon-extra/contractor
 	>=x11-libs/gtk+-3.22:3

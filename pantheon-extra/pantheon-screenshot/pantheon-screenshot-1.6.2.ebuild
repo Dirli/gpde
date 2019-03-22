@@ -10,7 +10,7 @@ inherit gnome2-utils meson vala
 DESCRIPTION="Elementary Screenshot Tool"
 HOMEPAGE="https://github.com/elementary/screenshot"
 SRC_URI="https://github.com/elementary/screenshot/archive/${PV}.tar.gz -> ${P}.tar.gz"
-KEYWORDS="~amd64"
+KEYWORDS="amd64"
 
 LICENSE="GPL-3"
 SLOT="0"

@@ -1,9 +1,7 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
-
-VALA_MIN_API_VERSION=0.40
+EAPI=7
 
 inherit gnome2-utils meson vala xdg-utils
 
@@ -26,7 +24,7 @@ RDEPEND="
 	x11-libs/vte:2.91[vala]
 "
 DEPEND="${RDEPEND}
-	dev-lang/vala:0.40
+	>=dev-lang/vala-0.40
 	nls? ( sys-devel/gettext )
 	virtual/pkgconfig
 "
@@ -35,7 +33,7 @@ S="${WORKDIR}/terminal-${PV}"
 
 src_prepare() {
 	eapply_user
-	vala_src_prepare --vala-api-version 0.40
+	vala_src_prepare
 }
 
 src_configure() {

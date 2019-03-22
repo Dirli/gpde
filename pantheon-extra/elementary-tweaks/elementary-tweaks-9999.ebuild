@@ -1,7 +1,7 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 VALA_MIN_API_VERSION=0.22
 
@@ -13,7 +13,7 @@ EGIT_REPO_URI="https://github.com/elementary-tweaks/elementary-tweaks.git"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="amd64"
+KEYWORDS="~amd64"
 IUSE="nls"
 
 DEPEND="
@@ -53,7 +53,6 @@ pkg_postinst() {
 	gnome2_schemas_update
 	gnome2_icon_cache_update
 }
-
 pkg_postrm() {
 	gnome2_schemas_update
 	gnome2_icon_cache_update

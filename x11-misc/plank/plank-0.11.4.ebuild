@@ -1,7 +1,7 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 VALA_MIN_API_VERSION=0.24
 VALA_USE_DEPEND=vapigen
@@ -14,7 +14,7 @@ SRC_URI="https://launchpad.net/plank/1.0/${PV}/+download/${P}.tar.xz"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="amd64 x86"
+KEYWORDS="amd64"
 IUSE="+dbus debug nls static-libs"
 
 CDEPEND="
@@ -33,7 +33,8 @@ DEPEND="${CDEPEND}
 	$(vala_depend)
 	dev-util/intltool
 	virtual/pkgconfig
-	nls? ( sys-devel/gettext )"
+	nls? ( sys-devel/gettext )
+"
 
 DOCS=( AUTHORS COPYING COPYRIGHT NEWS README )
 

@@ -1,7 +1,7 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 VALA_MIN_API_VERSION=0.34
 
@@ -20,7 +20,7 @@ RDEPEND="
 	app-i18n/ibus[vala]
 	dev-libs/glib:2
 	dev-libs/granite
-	gnome-base/gnome-desktop:3
+	=gnome-base/gnome-desktop-3.28*
 	pantheon-base/switchboard
 	sys-apps/accountsservice
 	>=sys-auth/polkit-0.115
@@ -34,7 +34,7 @@ DEPEND="${RDEPEND}
 
 src_prepare() {
 	eapply_user
-
+	eapply "${FILESDIR}/${PV}-fix_ubuntu_langs.patch"
 	vala_src_prepare
 }
 

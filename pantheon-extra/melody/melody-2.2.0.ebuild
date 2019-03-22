@@ -1,7 +1,7 @@
-# Copyright 2018 Gentoo Authors
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 inherit gnome2-utils meson vala xdg-utils
 
@@ -11,7 +11,7 @@ SRC_URI="https://github.com/artemanufrij/playmymusic/archive/${PV}.tar.gz -> ${P
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="amd64"
 IUSE="nls"
 
 DEPEND="
@@ -35,8 +35,9 @@ S="${WORKDIR}/playmymusic-${PV}"
 
 src_prepare() {
 	eapply_user
-	epatch "${FILESDIR}/2.2.0-const.patch"
-	epatch "${FILESDIR}/2.2.0-desktop_name.patch"
+	eapply "${FILESDIR}/2.2.0-const.patch"
+	eapply "${FILESDIR}/2.2.0-desktop_name.patch"
+	eapply "${FILESDIR}/2.2.0-dark_theme.patch"
 	vala_src_prepare
 }
 

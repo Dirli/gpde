@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -16,12 +16,13 @@ SRC_URI="https://launchpad.net/zeitgeist/${DIR_PV}/${PV}/+download/${P}.tar.xz"
 
 LICENSE="LGPL-2+ LGPL-3+ GPL-2+"
 SLOT="0"
-KEYWORDS="~alpha amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86"
+KEYWORDS="~amd64"
 IUSE="datahub downloads-monitor fts introspection nls sql-debug telepathy"
 
 REQUIRED_USE="
 	${PYTHON_REQUIRED_USE}
-	downloads-monitor? ( datahub )"
+	downloads-monitor? ( datahub )
+"
 
 RDEPEND="
 	${PYTHON_DEPS}
@@ -37,6 +38,7 @@ RDEPEND="
 	introspection? ( dev-libs/gobject-introspection )
 	telepathy? ( net-libs/telepathy-glib )
 "
+
 DEPEND="${RDEPEND}
 	$(vala_depend)
 	sys-devel/automake:1.15
