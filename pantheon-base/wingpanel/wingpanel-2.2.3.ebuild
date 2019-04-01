@@ -30,7 +30,7 @@ DEPEND="${RDEPEND}
 
 src_prepare() {
 	eapply_user
-	eapply "${FILESDIR}/2.2.1-indicator_replace.patch"
+	eapply "${FILESDIR}/${PV}-indicator_replace.patch"
 	vala_src_prepare
 }
 
