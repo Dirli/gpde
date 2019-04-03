@@ -11,7 +11,7 @@ EGIT_REPO_URI="https://github.com/Dirli/wingpanel-indicator-datetime.git"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="amd64"
+KEYWORDS="~amd64"
 IUSE="plugins nls"
 
 RDEPEND="
@@ -32,7 +32,7 @@ DEPEND="${RDEPEND}
 
 src_prepare() {
 	eapply_user
-	vala_src_prepare --vala-api-version 0.40
+	vala_src_prepare
 }
 
 src_configure() {

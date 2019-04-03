@@ -50,7 +50,6 @@ RDEPEND="${DEPEND}
 	pantheon-base/switchboard-plug-security-privacy
 	pantheon-base/switchboard-plug-sharing
 	pantheon-base/switchboard-plug-useraccounts
-	pantheon-base/wingpanel-indicator-ally
 	pantheon-base/wingpanel-indicator-datetime
 	pantheon-base/wingpanel-indicator-keyboard
 	pantheon-base/wingpanel-indicator-notifications
