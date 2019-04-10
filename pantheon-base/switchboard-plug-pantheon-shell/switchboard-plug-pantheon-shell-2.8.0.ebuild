@@ -20,7 +20,7 @@ RDEPEND="
 	dev-libs/glib:2
 	dev-libs/granite
 	media-libs/gexiv2[vala]
-	=gnome-base/gnome-desktop-3.28*
+	gnome-base/gnome-desktop:3
 	pantheon-base/switchboard
 	pantheon-extra/contractor
 	>=x11-libs/gtk+-3.22:3

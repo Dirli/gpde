@@ -21,7 +21,7 @@ RDEPEND="
 	>=dev-libs/granite-0.4.1
 	dev-libs/libgee:0.8
 	dev-libs/libpwquality
-	=gnome-base/gnome-desktop-3.28*
+	gnome-base/gnome-desktop:3
 	pantheon-base/switchboard
 	sys-apps/accountsservice
 	>=sys-auth/polkit-0.115

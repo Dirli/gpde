@@ -1,5 +1,5 @@
 --- /src/Widgets/Panel.vala	2019-03-18 19:38:23.000000000 +0300
-+++ /src/Widgets/Panel.vala	2019-04-01 12:08:14.585385900 +0300
++++ /src/Widgets/Panel.vala	2019-04-03 00:23:52.809295000 +0300
 @@ -83,7 +83,7 @@
          }
  
@@ -9,15 +9,16 @@
  #if HAS_GTK320
          window.get_display ().get_default_seat ().ungrab ();
  #else
-@@ -125,6 +125,7 @@
+@@ -125,6 +125,8 @@
          IndicatorEntry? sibling = null;
  
          switch (current.base_indicator.code_name) {
 +            case "places-indicator":
++            case "workspaces-indicator":
              case Indicator.APP_LAUNCHER:
                  var children = left_menubar.get_children ();
                  int index = children.index (current);
-@@ -140,6 +141,7 @@
+@@ -140,6 +142,7 @@
                  }
  
                  break;
@@ -25,15 +26,16 @@
              case Indicator.DATETIME:
                  var children = center_menubar.get_children ();
                  int index = children.index (current);
-@@ -179,6 +181,7 @@
+@@ -179,6 +182,8 @@
          IndicatorEntry? sibling = null;
  
          switch (current.base_indicator.code_name) {
 +            case "places-indicator":
++            case "workspaces-indicator":
              case Indicator.APP_LAUNCHER:
                  var children = left_menubar.get_children ();
                  int index = children.index (current);
-@@ -194,6 +197,7 @@
+@@ -194,6 +199,7 @@
                  }
  
                  break;
@@ -41,11 +43,12 @@
              case Indicator.DATETIME:
                  var children = center_menubar.get_children ();
                  int index = children.index (current);
-@@ -233,10 +237,12 @@
+@@ -233,10 +239,13 @@
          var indicator_entry = new IndicatorEntry (indicator, popover_manager);
  
          switch (indicator.code_name) {
 +            case "places-indicator":
++            case "workspaces-indicator":
              case Indicator.APP_LAUNCHER:
                  indicator_entry.set_transition_type (Gtk.RevealerTransitionType.SLIDE_RIGHT);
                  left_menubar.add (indicator_entry);

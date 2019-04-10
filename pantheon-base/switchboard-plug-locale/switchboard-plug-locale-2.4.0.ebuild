@@ -20,7 +20,7 @@ RDEPEND="
 	app-i18n/ibus[vala]
 	dev-libs/glib:2
 	dev-libs/granite
-	=gnome-base/gnome-desktop-3.28*
+	gnome-base/gnome-desktop:3
 	pantheon-base/switchboard
 	sys-apps/accountsservice
 	>=sys-auth/polkit-0.115

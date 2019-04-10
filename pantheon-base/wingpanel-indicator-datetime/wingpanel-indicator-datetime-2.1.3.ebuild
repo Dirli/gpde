@@ -18,7 +18,7 @@ RDEPEND="
 	dev-libs/glib:2
 	dev-libs/granite
 	dev-libs/libical
-	=gnome-extra/evolution-data-server-3.28*[vala]
+	gnome-extra/evolution-data-server[vala]
 	net-libs/libsoup:2.4
 	pantheon-base/wingpanel
 	x11-libs/gtk+:3

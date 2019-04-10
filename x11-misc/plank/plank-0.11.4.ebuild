@@ -14,7 +14,7 @@ SRC_URI="https://launchpad.net/plank/1.0/${PV}/+download/${P}.tar.xz"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="amd64"
+KEYWORDS="~amd64"
 IUSE="+dbus debug nls static-libs"
 
 CDEPEND="
@@ -53,19 +53,18 @@ src_configure() {
 }
 
 pkg_preinst() {
-	gnome2_icon_savelist
 	gnome2_schemas_savelist
 }
 
 pkg_postinst() {
 	gnome2_gconf_install
 	gnome2_schemas_update
-	gnome2_icon_cache_upadte
+	xdg_icon_cache_upadte
 }
 
 pkg_postrm() {
 	gnome2_gconf_uninstall
 	gnome2_schemas_update
-	gnome2_icon_cache_update
+	xdg_icon_cache_update
 }
 

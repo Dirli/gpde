@@ -16,8 +16,8 @@ IUSE=""
 
 DEPEND=""
 RDEPEND="${DEPEND}
-	=gnome-base/gnome-session-3.28*
-	=gnome-base/gnome-settings-daemon-3.28*
+	gnome-base/gnome-session
+	gnome-base/gnome-settings-daemon
 	pantheon-base/applications-menu
 	pantheon-base/cerbere
 	pantheon-base/wingpanel

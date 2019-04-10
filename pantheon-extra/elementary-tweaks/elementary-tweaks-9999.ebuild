@@ -5,11 +5,12 @@ EAPI=7
 
 VALA_MIN_API_VERSION=0.22
 
-inherit cmake-utils git-r3 gnome2-utils vala
+inherit git-r3 gnome2-utils meson vala xdg-utils
 
 DESCRIPTION="Elementary OS customization tool"
 HOMEPAGE="https://github.com/elementary-tweaks"
 EGIT_REPO_URI="https://github.com/elementary-tweaks/elementary-tweaks.git"
+EGIT_COMMIT="47574c8b64e1d362db5055b82334717515977a73"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -32,17 +33,8 @@ RDEPEND="${DEPEND}
 "
 
 src_prepare() {
-	use nls || cmake_comment_add_subdirectory po
-
-	cmake-utils_src_prepare
+	eapply_user
 	vala_src_prepare
-}
-
-src_configure() {
-	local mycmakeargs=(
-		-DVALA_EXECUTABLE="${VALAC}"
-	)
-	cmake-utils_src_configure
 }
 
 pkg_preinst() {
@@ -51,9 +43,9 @@ pkg_preinst() {
 
 pkg_postinst() {
 	gnome2_schemas_update
-	gnome2_icon_cache_update
+	xdg_icon_cache_update
 }
 pkg_postrm() {
 	gnome2_schemas_update
-	gnome2_icon_cache_update
+	xdg_icon_cache_update
 }
