@@ -21,7 +21,6 @@ RDEPEND="
 	dev-libs/granite
 	pantheon-base/switchboard
 	x11-libs/gtk+:3
-	=x11-wm/mutter-3.28*
 "
 DEPEND="${RDEPEND}
 	$(vala_depend)

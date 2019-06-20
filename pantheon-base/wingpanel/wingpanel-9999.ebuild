@@ -3,15 +3,15 @@
 
 EAPI=7
 
-inherit gnome2-utils meson vala xdg-utils
+inherit git-r3 gnome2-utils meson vala xdg-utils
 
 DESCRIPTION="Stylish top panel that holds indicators and spawns an application launcher"
 HOMEPAGE="https://github.com/elementary/wingpanel"
-SRC_URI="https://github.com/elementary/wingpanel/archive/${PV}.tar.gz -> ${P}.tar.gz"
+EGIT_REPO_URI="https://github.com/Dirli/wingpanel.git"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="amd64"
+KEYWORDS="~amd64"
 IUSE="nls example"
 
 RDEPEND="
@@ -20,7 +20,8 @@ RDEPEND="
 	dev-libs/granite
 	>=x11-libs/gtk+-3.22:3
 	x11-wm/gala
-	=x11-wm/mutter-3.28*
+	( >=x11-wm/mutter-3.29.2:=
+	<x11-wm/mutter-3.31:= )
 "
 DEPEND="${RDEPEND}
 	dev-lang/vala
@@ -30,7 +31,6 @@ DEPEND="${RDEPEND}
 
 src_prepare() {
 	eapply_user
-	eapply "${FILESDIR}/${PV}-indicator_replace.patch"
 	vala_src_prepare
 }
 
