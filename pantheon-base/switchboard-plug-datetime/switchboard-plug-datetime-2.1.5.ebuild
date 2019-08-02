@@ -14,7 +14,7 @@ SRC_URI="https://github.com/elementary/switchboard-plug-datetime/archive/${PV}.t
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE="+plugins nls"
+IUSE="nls"
 
 DEPEND="${RDEPEND}
 	$(vala_depend)
@@ -26,15 +26,11 @@ RDEPEND="${DEPEND}
 	dev-libs/glib:2
 	dev-libs/granite
 	pantheon-base/switchboard
-	plugins? ( pantheon-base/wingpanel-indicator-datetime[plugins] )
 	x11-libs/gtk+:3
 "
 
 src_prepare() {
 	eapply_user
-	if use plugins; then
-		eapply "${FILESDIR}/2.1.5-add_break.patch"
-	fi
 	vala_src_prepare
 }
 
