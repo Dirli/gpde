@@ -34,6 +34,7 @@ DEPEND="${RDEPEND}
 
 src_prepare() {
 	eapply "${FILESDIR}/${PV}-switchboard-plug-keyboard-schema.patch"
+	eapply "${FILESDIR}/${PV}-layout_pw_switch.patch"
 	eapply_user
 	vala_src_prepare
 }
