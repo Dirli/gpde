@@ -35,9 +35,7 @@ S="${WORKDIR}/playmymusic-${PV}"
 
 src_prepare() {
 	eapply_user
-	eapply "${FILESDIR}/2.2.0-const.patch"
-	eapply "${FILESDIR}/2.2.0-desktop_name.patch"
-	eapply "${FILESDIR}/2.2.0-dark_theme.patch"
+	eapply "${FILESDIR}/${PV}-fixes.patch"
 	vala_src_prepare
 }
 
