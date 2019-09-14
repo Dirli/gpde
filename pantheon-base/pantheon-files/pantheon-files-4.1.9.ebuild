@@ -32,7 +32,7 @@ RDEPEND="${DEPEND}
 	>=x11-libs/gtk+-3.22:3
 	>=x11-libs/libnotify-0.7.2
 	>=x11-libs/pango-1.1.2
-	=xfce-extra/tumbler-0.2.1
+	xfce-extra/tumbler
 "
 
 S="${WORKDIR}/files-${PV}"
