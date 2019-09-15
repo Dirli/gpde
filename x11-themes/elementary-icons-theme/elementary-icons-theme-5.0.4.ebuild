@@ -3,7 +3,7 @@
 
 EAPI=7
 
-inherit gnome2-utils meson
+inherit meson xdg-utils
 
 DESCRIPTION="An original set of vector icons designed specifically for elementary OS"
 HOMEPAGE="https://github.com/elementary/icons"
@@ -19,14 +19,10 @@ RDEPEND="${DEPEND}"
 
 S=${WORKDIR}/icons-${PV}
 
-pkg_preinst() {
-	gnome2_icon_savelist
-}
-
 pkg_postinst() {
-	gnome2_icon_cache_update
+	xdg_icon_cache_update
 }
 
 pkg_postrm() {
-	gnome2_icon_cache_update
+	xdg_icon_cache_update
 }
