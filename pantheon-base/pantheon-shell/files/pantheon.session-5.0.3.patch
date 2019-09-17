@@ -1,5 +1,5 @@
---- gnome-session/pantheon.session	2018-09-14 20:26:37.000000000 +0300
-+++ gnome-session/pantheon.session	2018-10-21 13:35:18.979553166 +0300
+--- /gnome-session/pantheon.session	2018-09-14 20:26:37.000000000 +0300
++++ /gnome-session/pantheon.session	2018-10-21 13:35:18.979553166 +0300
 @@ -1,5 +1,5 @@
  [GNOME Session]
  Name=Pantheon
