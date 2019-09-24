@@ -11,7 +11,7 @@ DESCRIPTION="Pantheon's Window Manager"
 HOMEPAGE="https://github.com/elementary/gala"
 #EGIT_REPO_URI="https://github.com/elementary/gala.git"
 EGIT_REPO_URI="https://github.com/Dirli/gala.git"
-EGIT_COMMIT="a68059469a9d7dd5d0283f5ce27568a631af6fac"
+#EGIT_COMMIT="a68059469a9d7dd5d0283f5ce27568a631af6fac"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -30,7 +30,6 @@ RDEPEND="
 	>=x11-libs/gtk+-3.10.0:3
 	>=x11-misc/plank-0.11.0
 	>=x11-wm/mutter-3.29.0:=
-	<x11-wm/mutter-3.31.0:=
 "
 DEPEND="${RDEPEND}
 	$(vala_depend)
