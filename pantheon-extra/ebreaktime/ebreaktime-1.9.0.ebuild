@@ -21,10 +21,14 @@ DEPEND="
 "
 RDEPEND="${DEPEND}
 	dev-libs/glib:2
+	dev-libs/granite
+	dev-libs/libgee
 	indicator? ( pantheon-base/wingpanel )
 	sys-apps/dbus
+	sys-auth/polkit[introspection]
 	x11-libs/gtk+:3
 	libnotify? ( x11-libs/libnotify )
+	x11-libs/libXScrnSaver
 "
 
 src_prepare() {
