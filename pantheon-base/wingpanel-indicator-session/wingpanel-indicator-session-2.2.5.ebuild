@@ -14,7 +14,7 @@ SRC_URI="https://github.com/elementary/wingpanel-indicator-session/archive/${PV}
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE="nls"
+IUSE="nls +hibernate"
 
 RDEPEND="
 	dev-libs/glib:2
@@ -33,4 +33,7 @@ DEPEND="${RDEPEND}
 src_prepare() {
 	eapply_user
 	vala_src_prepare
+	if use hibernate; then
+		eapply "${FILESDIR}/add_hibernate.patch"
+	fi
 }
