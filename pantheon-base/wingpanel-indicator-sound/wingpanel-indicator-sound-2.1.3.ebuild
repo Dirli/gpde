@@ -33,16 +33,12 @@ DEPEND="${RDEPEND}
 
 src_prepare() {
 	eapply_user
-	cp -n "${FILESDIR}/meson_options.txt" "${S}/"
-	eapply "${FILESDIR}/${PV}-bluetooth_use.patch"
-	vala_src_prepare
-}
 
-src_configure() {
-	local emesonargs=(
-		-Dbluetooth=$(usex bluetooth true false)
-	)
-	meson_src_configure
+	if use !bluetooth; then
+		eapply "${FILESDIR}/${PV}-rm_bluetooth.patch"
+	fi
+
+	vala_src_prepare
 }
 
 pkg_preinst() {
