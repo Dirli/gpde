@@ -1,6 +1,6 @@
 --- /po/ru.po
 +++ /po/ru.po
-@@ -16,75 +16,79 @@ msgstr ""
+@@ -16,75 +16,83 @@ msgstr ""
  "X-Generator: Weblate 2.18\n"
  "X-Launchpad-Export-Date: 2017-02-09 06:03+0000\n"
  
@@ -89,6 +89,10 @@
  msgstr "Перезагрузить"
  
 -#: src/Widgets/UserBox.vala:21
++#: Widgets/EndSessionDialog.vala:125
++msgid "Remember open applications"
++msgstr "Запомнить открытые приложения"
++
 +#: Widgets/UserBox.vala:21
  msgid "Logged in"
  msgstr "Вход выполнен"
@@ -103,7 +107,7 @@
 -msgstr "Гость"
 --- /po/session-indicator.pot
 +++ /po/session-indicator.pot
-@@ -17,74 +17,78 @@ msgstr ""
+@@ -17,74 +17,82 @@ msgstr ""
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
  
@@ -191,18 +195,22 @@
  msgstr ""
  
 -#: src/Widgets/UserBox.vala:21
-+#: Widgets/UserBox.vala:21
- msgid "Logged in"
+-msgid "Logged in"
++#: Widgets/EndSessionDialog.vala:125
++msgid "Remember open applications"
  msgstr ""
  
 -#: src/Widgets/UserBox.vala:22
-+#: Widgets/UserBox.vala:22
- msgid "Logged out"
+-msgid "Logged out"
++#: Widgets/UserBox.vala:21
++msgid "Logged in"
  msgstr ""
--
+ 
 -#: src/Services/UserManager.vala:224
 -msgid "Guest"
--msgstr ""
++#: Widgets/UserBox.vala:22
++msgid "Logged out"
+ msgstr ""
 --- /src/Indicator.vala
 +++ /src/Indicator.vala
 @@ -35,6 +35,7 @@ public class Session.Indicator : Wingpan
@@ -275,3 +283,29 @@
      public abstract void reboot (bool interactive) throws GLib.Error;
      public abstract void power_off (bool interactive) throws GLib.Error;
  
+--- /src/Widgets/EndSessionDialog.vala	2019-07-19 16:47:00.000000000 +0300
++++ /src/Widgets/EndSessionDialog.vala	2019-10-04 10:57:50.271147600 +0300
+@@ -122,14 +122,21 @@
+         action_area.add (cancel);
+         action_area.add (confirm);
+
++        var save_session = new Gtk.CheckButton.with_label (_("Remember open applications"));
++        save_session.margin_top = 16;
++
+         var grid = new Gtk.Grid ();
+         grid.column_spacing = 12;
+         grid.margin = 12;
+         grid.margin_top = 6;
+-        grid.attach (image, 0, 0, 1, 2);
++        grid.attach (image, 0, 0, 1, 3);
+         grid.attach (primary_label, 1, 0);
+         grid.attach (secondary_label, 1, 1);
+-        grid.attach (action_area, 0, 2, 2);
++        grid.attach (save_session, 1, 2);
++        grid.attach (action_area, 0, 3, 2);
++
++        var session_settings = new GLib.Settings ("org.gnome.SessionManager");
++        session_settings.bind ("auto-save-session", save_session, "active", SettingsBindFlags.DEFAULT);
+
+         var titlebar = new Gtk.HeaderBar ();
+         titlebar.custom_title = new Gtk.Grid ();
