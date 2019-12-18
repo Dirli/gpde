@@ -3,7 +3,7 @@
 
 EAPI=7
 
-inherit meson xdg-utils
+inherit meson xdg-utils vala
 
 if [[ ${PV} = *9999* ]]; then
 	inherit git-r3
@@ -11,7 +11,7 @@ if [[ ${PV} = *9999* ]]; then
 else
 	MY_PN="AppStream"
 	SRC_URI="https://www.freedesktop.org/software/appstream/releases/${MY_PN}-${PV}.tar.xz"
-	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
+	KEYWORDS="amd64"
 	S="${WORKDIR}/${MY_PN}-${PV}"
 fi
 
@@ -34,6 +34,7 @@ BDEPEND="
 		qt5? ( dev-qt/qttest:5 )
 	)
 "
+
 DEPEND="
 	dev-db/lmdb:=
 	>=dev-libs/glib-2.54:2
@@ -42,7 +43,9 @@ DEPEND="
 	dev-libs/snowball-stemmer
 	introspection? ( >=dev-libs/gobject-introspection-1.56:= )
 	qt5? ( dev-qt/qtcore:5 )
+	vala? ( $(vala_depend) )
 "
+
 RDEPEND="${DEPEND}"
 
 src_prepare() {
@@ -51,6 +54,7 @@ src_prepare() {
 	if ! use test; then
 		sed -e "/^subdir.*tests/s/^/#DONT /" -i {,qt/}meson.build || die # bug 675944
 	fi
+	vala_src_prepare
 }
 
 src_configure() {

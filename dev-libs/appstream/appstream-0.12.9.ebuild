@@ -11,7 +11,7 @@ if [[ ${PV} = *9999* ]]; then
 else
 	MY_PN="AppStream"
 	SRC_URI="https://www.freedesktop.org/software/appstream/releases/${MY_PN}-${PV}.tar.xz"
-	KEYWORDS="amd64 ~arm arm64 x86"
+	KEYWORDS="~amd64"
 	S="${WORKDIR}/${MY_PN}-${PV}"
 fi
 
@@ -21,11 +21,12 @@ HOMEPAGE="https://www.freedesktop.org/wiki/Distributions/AppStream/"
 LICENSE="LGPL-2.1+ GPL-2+"
 # check as_api_level
 SLOT="0/4"
-IUSE="apt +introspection qt5 test vala"
+IUSE="apti doc +introspection qt5 test vala"
 
 BDEPEND="
-	app-text/docbook-xml-dtd:4.5
+	doc? ( app-text/docbook-xml-dtd:4.5 )
 	dev-libs/appstream-glib
+	dev-libs/libxslt
 	dev-util/itstool
 	>=dev-util/meson-0.42.0
 	>=sys-devel/gettext-0.19.8
@@ -35,6 +36,7 @@ BDEPEND="
 	)
 "
 DEPEND="
+	dev-db/lmdb:=
 	>=dev-libs/glib-2.54:2
 	dev-libs/libxml2:2
 	dev-libs/libyaml
