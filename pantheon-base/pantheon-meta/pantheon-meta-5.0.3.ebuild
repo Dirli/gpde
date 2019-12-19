@@ -42,7 +42,6 @@ RDEPEND="${DEPEND}
 	pantheon-base/switchboard-plug-datetime
 	pantheon-base/switchboard-plug-display
 	pantheon-base/switchboard-plug-keyboard
-	pantheon-base/switchboard-plug-locale
 	pantheon-base/switchboard-plug-mouse-touchpad
 	pantheon-base/switchboard-plug-notifications
 	pantheon-base/switchboard-plug-pantheon-shell
