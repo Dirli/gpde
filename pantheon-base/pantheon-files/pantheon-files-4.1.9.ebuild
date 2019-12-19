@@ -27,6 +27,7 @@ RDEPEND="${DEPEND}
 	>=dev-libs/glib-2.40.0:2
 	>=dev-libs/granite-5.2.0
 	dev-libs/libgee:0.8
+	gnome-base/gvfs
 	>=gnome-extra/zeitgeist-1.0.2
 	>=media-libs/libcanberra-0.30
 	>=x11-libs/gtk+-3.22:3
