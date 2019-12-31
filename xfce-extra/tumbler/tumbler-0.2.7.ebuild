@@ -1,29 +1,22 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-DESCRIPTION="Tumbler is a D-Bus service for applications to request thumbnails"
-HOMEPAGE="https://github.com/xfce-mirror/tumbler"
-SRC_URI="SRC_URI="https://archive.xfce.org/src/apps/${PN}/${PV%.*}/${P}.tar.bz2""
+DESCRIPTION="A thumbnail service for Thunar"
+HOMEPAGE="https://docs.xfce.org/xfce/thunar/start"
+SRC_URI="https://archive.xfce.org/src/apps/${PN}/${PV%.*}/${P}.tar.bz2"
 
-LICENSE="GPL-2"
+LICENSE="GPL-2+"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="amd64"
 IUSE="curl ffmpeg gstreamer jpeg odf pdf raw"
 
-DEPEND="
-	dev-util/gtk-doc-am
-	dev-util/intltool
-	sys-devel/gettext
-	virtual/pkgconfig
-"
-RDEPEND="${DEPEND}
-	>=dev-libs/glib-2.42:2=
+COMMON_DEPEND=">=dev-libs/glib-2.42:2
 	media-libs/freetype:2=
 	media-libs/libpng:0=
-	>=sys-apps/dbus-1.6:=
-	>=x11-libs/gdk-pixbuf-2.14:2=
+	>=sys-apps/dbus-1.6
+	>=x11-libs/gdk-pixbuf-2.14:2
 	curl? ( >=net-misc/curl-7.25:= )
 	ffmpeg? ( >=media-video/ffmpegthumbnailer-2.0.8:= )
 	gstreamer? (
@@ -36,6 +29,16 @@ RDEPEND="${DEPEND}
 	raw? ( >=media-libs/libopenraw-0.0.8:=[gtk] )
 "
 
+RDEPEND="${COMMON_DEPEND}
+	gstreamer? ( media-plugins/gst-plugins-meta:1.0 )
+"
+
+DEPEND="${COMMON_DEPEND}
+	dev-util/gtk-doc-am
+	dev-util/intltool
+	sys-devel/gettext
+	virtual/pkgconfig
+"
 src_configure() {
 	local myconf=(
 		$(use_enable curl cover-thumbnailer)
