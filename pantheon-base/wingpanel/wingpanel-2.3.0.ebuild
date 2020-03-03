@@ -1,17 +1,17 @@
-# Copyright 1999-2019 Gentoo Foundation
+# Copyright 1999-2020 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
-inherit git-r3 gnome2-utils meson vala xdg-utils
+inherit gnome2-utils meson vala xdg-utils
 
 DESCRIPTION="Stylish top panel that holds indicators and spawns an application launcher"
 HOMEPAGE="https://github.com/elementary/wingpanel"
-EGIT_REPO_URI="https://github.com/Dirli/wingpanel.git"
+SRC_URI="https://github.com/elementary/wingpanel/archive/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="amd64"
 IUSE="nls example"
 
 RDEPEND="
@@ -20,8 +20,7 @@ RDEPEND="
 	dev-libs/granite
 	>=x11-libs/gtk+-3.22:3
 	x11-wm/gala
-	( >=x11-wm/mutter-3.29.2:=
-	<x11-wm/mutter-3.31:= )
+	>=x11-wm/mutter-3.27:=
 "
 DEPEND="${RDEPEND}
 	dev-lang/vala
@@ -31,6 +30,7 @@ DEPEND="${RDEPEND}
 
 src_prepare() {
 	eapply_user
+	eapply "${FILESDIR}/${PV}-fixed_vapi.patch"
 	vala_src_prepare
 }
 
