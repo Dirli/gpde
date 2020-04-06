@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -23,7 +23,7 @@ RDEPEND="${DEPEND}
 	dev-libs/glib:2
 	dev-libs/granite
 	dev-libs/json-glib
-	dev-libs/libgweather:2
+	dev-libs/libgweather:2=
 	net-libs/libsoup:2.4
 	sci-geosciences/geocode-glib
 	x11-libs/gtk+:3

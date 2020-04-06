@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Foundation
+# Copyright 1999-2020 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -21,7 +21,7 @@ RDEPEND="
 	>=dev-libs/granite-0.4.1
 	dev-libs/libgee:0.8
 	dev-libs/libpwquality
-	gnome-base/gnome-desktop:3
+	gnome-base/gnome-desktop:3=
 	pantheon-base/switchboard
 	sys-apps/accountsservice
 	>=sys-auth/polkit-0.115
