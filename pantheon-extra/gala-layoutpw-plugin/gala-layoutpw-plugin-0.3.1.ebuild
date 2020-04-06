@@ -22,6 +22,7 @@ RDEPEND="${DEPEND}
 	dev-libs/glib:2
 	dev-libs/libgee:0.8
 	x11-wm/gala
+	>=x11-wm/mutter-3.28.0:=
 "
 
 src_prepare() {
