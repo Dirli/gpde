@@ -1,0 +1,18 @@
+--- /src/Application.vala	2020-04-30 23:47:16.000000000 +0300
++++ /src/Application.vala	2020-05-02 15:20:58.863026720 +0300
+@@ -137,15 +137,6 @@
+                 return;
+             }
+ 
+-            var granite_settings = Granite.Settings.get_default ();
+-            var gtk_settings = Gtk.Settings.get_default ();
+-
+-            gtk_settings.gtk_application_prefer_dark_theme = granite_settings.prefers_color_scheme == Granite.Settings.ColorScheme.DARK;
+-
+-            granite_settings.notify["prefers-color-scheme"].connect (() => {
+-                gtk_settings.gtk_application_prefer_dark_theme = granite_settings.prefers_color_scheme == Granite.Settings.ColorScheme.DARK;
+-            });
+-
+             loaded_plugs = new Gee.LinkedList <string> ();
+             previous_plugs = new Gee.ArrayList <Switchboard.Plug> ();
+ 
