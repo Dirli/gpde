@@ -15,7 +15,7 @@ KEYWORDS="amd64"
 IUSE="nls plugins webkit zeitgeist"
 
 DEPEND="
-	>=dev-lang/vala-0.40
+	>=dev-lang/vala-0.40:=
 	nls? ( sys-devel/gettext )
 	virtual/pkgconfig
 "
