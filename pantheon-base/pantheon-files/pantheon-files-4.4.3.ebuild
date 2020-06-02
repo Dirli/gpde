@@ -14,7 +14,7 @@ KEYWORDS="amd64"
 
 LICENSE="GPL-3"
 SLOT="0"
-IUSE="nls"
+IUSE="nls zeitgeist"
 
 DEPEND="
 	$(vala_depend)
@@ -31,7 +31,7 @@ RDEPEND="${DEPEND}
 	dev-libs/libgit2-glib
 	dev-libs/libcloudproviders
 	gnome-base/gvfs
-	>=gnome-extra/zeitgeist-1.0.2
+	zeitgeist? ( >=gnome-extra/zeitgeist-1.0.2 )
 	>=media-libs/libcanberra-0.30
 	>=x11-libs/gtk+-3.22:3
 	>=x11-libs/libnotify-0.7.2
@@ -48,7 +48,8 @@ src_prepare() {
 
 src_configure() {
 	local emesonargs=(
-		-Dwith-unity=false
+		-Dwith-zeitgeist=$(usex zeitgeist enabled disabled)
+		-Dwith-unity=disabled
 	)
 	meson_src_configure
 }
