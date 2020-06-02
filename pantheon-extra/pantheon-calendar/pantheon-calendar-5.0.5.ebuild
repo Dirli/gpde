@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Foundation
+# Copyright 1999-2020 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -20,13 +20,13 @@ DEPEND="
 	virtual/pkgconfig
 "
 
-# >=gnome-extra/evolution-data-server-3.8
 RDEPEND="${DEPEND}
 	dev-libs/folks
 	dev-libs/glib:2
 	>=dev-libs/granite-5.2.0
 	dev-libs/libgee:0.8
 	dev-libs/libical
+	>=gnome-extra/evolution-data-server-3.8
 	media-libs/clutter:1.0
 	media-libs/clutter-gtk:1.0
 	media-libs/libchamplain:0.12[gtk]
