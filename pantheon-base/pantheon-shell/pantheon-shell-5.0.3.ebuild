@@ -19,7 +19,6 @@ RDEPEND="${DEPEND}
 	gnome-base/gnome-session
 	gnome-base/gnome-settings-daemon
 	pantheon-base/applications-menu
-	pantheon-base/cerbere
 	pantheon-base/wingpanel
 	pantheon-extra/dpms-helper
 	pantheon-extra/pantheon-agent-polkit

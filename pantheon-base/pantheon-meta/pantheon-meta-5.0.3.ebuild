@@ -35,6 +35,7 @@ RDEPEND="${DEPEND}
 		pantheon-base/wingpanel-indicator-network
 	)
 	pantheon-base/pantheon-files
+	pantheon-base/pantheon-greeter
 	pantheon-base/pantheon-shell
 	pantheon-base/switchboard-plug-a11y
 	pantheon-base/switchboard-plug-about
@@ -53,7 +54,6 @@ RDEPEND="${DEPEND}
 	pantheon-base/wingpanel-indicator-keyboard
 	pantheon-base/wingpanel-indicator-notifications
 	pantheon-base/wingpanel-indicator-session
-	pantheon-extra/elementary-tweaks
 	pulseaudio? (
 		pantheon-base/switchboard-plug-sound
 		pantheon-base/wingpanel-indicator-sound
