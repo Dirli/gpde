@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Foundation
+# Copyright 1999-2020 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -29,7 +29,7 @@ RDEPEND="${DEPEND}
 
 src_prepare() {
 	eapply_user
-	eapply "${FILESDIR}/shortcut-overlay-${PV}-oldmutter.patch"
+	eapply "${FILESDIR}/1.1.1-fix_static_initialize.patch"
 	vala_src_prepare
 }
 
