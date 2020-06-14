@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -11,18 +11,21 @@ SRC_URI="https://github.com/Dirli/pantheon-monitor/archive/v${PV}.tar.gz -> ${P}
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="amd64"
 IUSE="+indicator"
 
 DEPEND="
-	>=dev-lang/vala-0.40
+	$(vala_depend)
 	sys-devel/gettext
 	virtual/pkgconfig
 "
 RDEPEND="${DEPEND}
 	dev-libs/glib:2
 	dev-libs/granite
+	dev-libs/libgee
 	gnome-base/libgtop:2
+	indicator? ( pantheon-base/wingpanel )
+	sys-fs/udisks:2
 	x11-libs/bamf
 	x11-libs/cairo
 	x11-libs/gtk+:3
