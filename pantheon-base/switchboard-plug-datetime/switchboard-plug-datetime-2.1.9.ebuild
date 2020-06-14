@@ -31,6 +31,7 @@ RDEPEND="${DEPEND}
 
 src_prepare() {
 	eapply_user
+	eapply "${FILESDIR}/${PV}-manage_date.patch"
 	vala_src_prepare
 }
 
