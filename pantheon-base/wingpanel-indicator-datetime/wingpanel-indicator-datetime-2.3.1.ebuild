@@ -13,7 +13,7 @@ SRC_URI="https://github.com/Dirli/wingpanel-indicator-datetime/archive/${PV}.tar
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE="evolution nls"
+IUSE="evolution"
 
 RDEPEND="
 	dev-libs/glib:2
@@ -28,7 +28,7 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}
 	>=dev-lang/vala-0.40.3
-	nls? ( sys-devel/gettext )
+	sys-devel/gettext
 	virtual/pkgconfig
 "
 
