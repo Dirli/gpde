@@ -1,6 +1,6 @@
---- /src/Services/IndicatorSorter.vala	2020-03-02 22:36:38.000000000 +0300
-+++ /src/Services/IndicatorSorter.vala	2020-03-03 01:51:13.646616000 +0300
-@@ -32,8 +32,14 @@
+--- /src/Services/IndicatorSorter.vala
++++ /src/Services/IndicatorSorter.vala
+@@ -32,8 +32,14 @@ public class Wingpanel.Services.Indicato
      private static Gee.HashMap<string, int> indicator_order = new Gee.HashMap<string,int> ();
      static construct {
          indicator_order[AYATANA_INDICATOR] = 0;
@@ -15,18 +15,9 @@
          indicator_order[Indicator.SOUND] = 3;
          indicator_order[Indicator.NETWORK] = 4;
          indicator_order[Indicator.BLUETOOTH] = 5;
-@@ -76,7 +82,7 @@
-             return indicator_order[AYATANA_INDICATOR];
-         }
- 
--        if (node.base_indicator.code_name in indicator_order) {
-+        if (indicator_order.has_key (node.base_indicator.code_name)) {
-             return indicator_order[node.base_indicator.code_name];
-         }
- 
---- /src/Widgets/Panel.vala	2020-03-02 22:36:38.000000000 +0300
-+++ /src/Widgets/Panel.vala	2020-03-03 02:53:43.055444600 +0300
-@@ -21,8 +21,8 @@
+--- /src/Widgets/Panel.vala
++++ /src/Widgets/Panel.vala
+@@ -21,8 +21,8 @@ public class Wingpanel.Widgets.Panel : G
      public Services.PopoverManager popover_manager { get; construct; }
  
      private IndicatorMenuBar right_menubar;
@@ -37,7 +28,7 @@
  
      private Gtk.StyleContext style_context;
      private Gtk.CssProvider? style_provider = null;
-@@ -39,11 +39,11 @@
+@@ -39,11 +39,11 @@ public class Wingpanel.Widgets.Panel : G
          this.valign = Gtk.Align.START;
          this.get_style_context ().add_class (StyleClass.PANEL);
  
@@ -51,7 +42,7 @@
          center_menubar.get_style_context ().add_provider (resource_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
  
          right_menubar = new IndicatorMenuBar ();
-@@ -132,6 +132,9 @@
+@@ -141,6 +141,9 @@ public class Wingpanel.Widgets.Panel : G
          IndicatorEntry? sibling = null;
  
          switch (current.base_indicator.code_name) {
@@ -61,7 +52,7 @@
              case Indicator.APP_LAUNCHER:
                  var children = left_menubar.get_children ();
                  int index = children.index (current);
-@@ -147,6 +150,7 @@
+@@ -156,6 +159,7 @@ public class Wingpanel.Widgets.Panel : G
                  }
  
                  break;
@@ -69,7 +60,7 @@
              case Indicator.DATETIME:
                  var children = center_menubar.get_children ();
                  int index = children.index (current);
-@@ -186,6 +190,9 @@
+@@ -195,6 +199,9 @@ public class Wingpanel.Widgets.Panel : G
          IndicatorEntry? sibling = null;
  
          switch (current.base_indicator.code_name) {
@@ -79,7 +70,7 @@
              case Indicator.APP_LAUNCHER:
                  var children = left_menubar.get_children ();
                  int index = children.index (current);
-@@ -201,6 +208,7 @@
+@@ -210,6 +217,7 @@ public class Wingpanel.Widgets.Panel : G
                  }
  
                  break;
@@ -87,7 +78,7 @@
              case Indicator.DATETIME:
                  var children = center_menubar.get_children ();
                  int index = children.index (current);
-@@ -240,13 +248,17 @@
+@@ -249,13 +257,17 @@ public class Wingpanel.Widgets.Panel : G
          var indicator_entry = new IndicatorEntry (indicator, popover_manager);
  
          switch (indicator.code_name) {

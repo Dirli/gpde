@@ -12,7 +12,7 @@ SRC_URI="https://github.com/elementary/wingpanel/archive/${PV}.tar.gz -> ${P}.ta
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE="nls example"
+IUSE="example"
 
 RDEPEND="
 	>=dev-libs/glib-2.40:2
@@ -24,13 +24,13 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}
 	dev-lang/vala
-	nls? ( sys-devel/gettext )
+	sys-devel/gettext
 	virtual/pkgconfig
 "
 
 src_prepare() {
 	eapply_user
-	eapply "${FILESDIR}/${PV}-fixed_vapi.patch"
+	eapply "${FILESDIR}/2.3.1-fixed_vapi.patch"
 	vala_src_prepare
 }
 
