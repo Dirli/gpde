@@ -1,0 +1,11 @@
+--- /src/Background/BackgroundSource.vala	2020-05-01 01:23:37.000000000 +0300
++++ /src/Background/BackgroundSource.vala	2020-07-25 16:04:38.000802157 +0300
+@@ -119,7 +119,7 @@
+             screen.monitors_changed.disconnect (monitors_changed);
+ #endif
+ 
+-            foreach (var background in backgrounds) {
++            foreach (var background in backgrounds.values) {
+                 background.changed.disconnect (background_changed);
+                 background.destroy ();
+             }

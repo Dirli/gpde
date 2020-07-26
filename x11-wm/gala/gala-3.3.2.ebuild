@@ -38,6 +38,7 @@ DEPEND="${RDEPEND}
 src_prepare() {
 	eapply_user
 	eapply "${FILESDIR}/${PV}-fix_schema_override.patch"
+	eapply "${FILESDIR}/${PV}-map_replaced_entries.patch"
 	vala_src_prepare
 }
 
