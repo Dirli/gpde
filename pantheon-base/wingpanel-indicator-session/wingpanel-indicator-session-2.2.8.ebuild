@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Foundation
+# Copyright 1999-2020 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -14,7 +14,7 @@ SRC_URI="https://github.com/elementary/wingpanel-indicator-session/archive/${PV}
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE="nls"
+IUSE=""
 
 RDEPEND="
 	dev-libs/glib:2
@@ -26,13 +26,12 @@ RDEPEND="
 
 DEPEND="${RDEPEND}
 	$(vala_depend)
-	nls? ( sys-devel/gettext )
+	sys-devel/gettext
 	virtual/pkgconfig
 "
 
 src_prepare() {
 	eapply_user
+	eapply "${FILESDIR}/${PV}-fix_map_iterator.patch"
 	vala_src_prepare
-
-	eapply "${FILESDIR}/${PV}-mod_indicator.patch"
 }

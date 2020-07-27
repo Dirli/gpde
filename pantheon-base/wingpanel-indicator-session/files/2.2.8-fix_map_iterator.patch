@@ -1,0 +1,11 @@
+--- /src/Services/UserManager.vala	2020-04-02 02:50:50.000000000 +0300
++++ /src/Services/UserManager.vala	2020-07-28 01:23:51.005299696 +0300
+@@ -196,7 +196,7 @@
+     }
+ 
+     public void update_all () {
+-        foreach (var userbox in user_boxes) {
++        foreach (var userbox in user_boxes.values) {
+             userbox.update_state ();
+         }
+     }
