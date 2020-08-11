@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Foundation
+# Copyright 1999-2020 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -9,10 +9,11 @@ SRC_URI="https://archive.xfce.org/src/apps/${PN}/${PV%.*}/${P}.tar.bz2"
 
 LICENSE="GPL-2+"
 SLOT="0"
-KEYWORDS="amd64"
+KEYWORDS="~amd64"
 IUSE="curl ffmpeg gstreamer jpeg odf pdf raw"
 
-COMMON_DEPEND=">=dev-libs/glib-2.42:2
+COMMON_DEPEND="
+	>=dev-libs/glib-2.42:2
 	media-libs/freetype:2=
 	media-libs/libpng:0=
 	>=sys-apps/dbus-1.6
