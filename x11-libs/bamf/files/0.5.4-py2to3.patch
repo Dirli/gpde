@@ -1,0 +1,42 @@
+--- /tests/gtester2xunit.py	2018-11-08 01:39:11.000000000 +0300
++++ /tests/gtester2xunit.py	2020-08-11 21:42:23.105630661 +0300
+@@ -1,18 +1,17 @@
+ #! /usr/bin/python
+ from argparse import ArgumentParser
+-import libxslt
+-import libxml2
++from lxml import etree
+ import sys
+ import os
+ 
+ XSL_TRANSFORM='/usr/share/gtester2xunit/gtester.xsl'
+ 
+ def transform_file(input_filename, output_filename, xsl_file):
+-    gtester = libxml2.parseFile(xsl_file)
+-    style = libxslt.parseStylesheetDoc(gtester)
+-    doc = libxml2.parseFile(input_filename)
+-    result = style.applyStylesheet(doc, None)
+-    result.saveFormatFile(filename=output_filename, format=True)
++    gtester = etree.parse(xsl_file)
++    transform = etree.XSLT(gtester)
++    doc = etree.parse(input_filename)
++    result = transform(doc)
++    result.write(output_filename)
+ 
+ 
+ def get_output_filename(input_filename):
+--- /configure	2018-11-08 01:39:51.000000000 +0300
++++ /configure	2020-08-11 22:11:11.121013055 +0300
+@@ -14653,10 +14653,10 @@
+ 
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking for gtester2xunit dependencies" >&5
+ $as_echo_n "checking for gtester2xunit dependencies... " >&6; }
+-if !($PYTHON -c "import libxslt, libxml2" 2> /dev/null); then
++if !($PYTHON -c "from lxml import etree" 2> /dev/null); then
+   { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+ $as_echo "no" >&6; }
+-  as_fn_error $? "You need to install python-libxslt1 and python-libxml2" "$LINENO" 5;
++  as_fn_error $? "You need to install dev-python/lxml" "$LINENO" 5;
+ fi
+ { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+ $as_echo "yes" >&6; }

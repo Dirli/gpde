@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{2_6,2_7} )
+PYTHON_COMPAT=( python3_{6,7,8,9} )
 VALA_MIN_API_VERSION=0.26
 VALA_USE_DEPEND=vapigen
 
@@ -32,14 +32,13 @@ RDEPEND="
 DEPEND="${RDEPEND}
 	$(vala_depend)
 	${PYTHON_DEPS}
-	dev-libs/libxml2[python]
-	dev-libs/libxslt[python]
 	gtk-doc? ( dev-util/gtk-doc )
 	introspection? ( dev-libs/gobject-introspection )
 	virtual/pkgconfig
 "
 
 src_prepare() {
+	eapply "${FILESDIR}/${PV}-py2to3.patch"
 	sed -i 's/-Werror//' configure
 	vala_src_prepare
 	default
