@@ -7,14 +7,14 @@ VALA_MIN_VERSION=0.40
 
 inherit gnome2-utils meson vala xdg-utils
 
-DESCRIPTION="A tiny, simple calculator written in GTK+ and Vala"
+DESCRIPTION="Video player and library app designed for elementary OS"
 HOMEPAGE="https://github.com/elementary/videos"
 SRC_URI="https://github.com/elementary/videos/archive/${PV}.tar.gz -> ${P}.tar.gz"
 KEYWORDS="amd64"
 
 LICENSE="GPL-3"
 SLOT="0"
-IUSE="nls"
+IUSE=""
 
 RDEPEND="
 	dev-libs/glib:2
@@ -30,7 +30,7 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}
 	$(vala_depend)
-	nls? ( sys-devel/gettext )
+	sys-devel/gettext
 	virtual/pkgconfig
 "
 
