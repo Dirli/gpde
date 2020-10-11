@@ -31,6 +31,7 @@ DEPEND="${RDEPEND}
 "
 
 src_prepare() {
+	eapply "${FILESDIR}/${PV}-fix_accel_labels.patch"
 	eapply_user
 	eapply "${FILESDIR}/${PV}-fix_map_iterator.patch"
 	vala_src_prepare
