@@ -1,0 +1,24 @@
+--- /src/Widgets/SettingsButton.vala
++++ /src/Widgets/SettingsButton.vala
+@@ -39,16 +39,16 @@ public class Network.Widgets.SettingsBut
+             }
+         }
+ 
++        Object (
++            args: "--edit=%s".printf (uuid),
++            label: title
++        );
++
+         check_sensitive (device);
+ 
+         device.state_changed.connect_after (() => {
+             check_sensitive (device);
+         });
+-
+-        Object (
+-            args: "--edit=%s".printf (uuid),
+-            label: title
+-        );
+     }
+ 
+     construct {
