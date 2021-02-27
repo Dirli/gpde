@@ -30,6 +30,9 @@ DEPEND="${RDEPEND}
 
 src_prepare() {
 	eapply_user
+
+	eapply "${FILESDIR}/${PV}-dark_theme_returned.patch"
+
 	vala_src_prepare
 }
 
