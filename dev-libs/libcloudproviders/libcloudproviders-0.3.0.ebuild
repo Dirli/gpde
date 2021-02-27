@@ -1,4 +1,4 @@
-# Copyright 2019 Gentoo Authors
+# Copyright 2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -15,6 +15,7 @@ IUSE="doc introspection vala"
 
 DEPEND="
 	doc? ( dev-util/gdbus-codegen )
+	vala? ( $(vala_depend) )
 	virtual/pkgconfig
 "
 BDEPEND="${DEPEND}
