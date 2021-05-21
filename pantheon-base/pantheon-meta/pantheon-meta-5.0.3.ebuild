@@ -10,15 +10,22 @@ SRC_URI=""
 LICENSE="metapackage"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE="bluetooth cups networkmanager +minimal pulseaudio upower"
+IUSE="archive bluetooth cups networkmanager +minimal pulseaudio upower"
 
+#pantheon-base/switchboard-plug-security-privacy
 DEPEND=""
 RDEPEND="${DEPEND}
+	archive? (
+		pantheon-extra/contract-archive
+	)
 	bluetooth? (
 		pantheon-base/switchboard-plug-bluetooth
 		pantheon-base/wingpanel-indicator-bluetooth
 	)
-	cups? ( pantheon-base/switchboard-plug-printers )
+	cups? (
+		pantheon-base/switchboard-plug-printers
+		pantheon-extra/contract-print
+	)
 	!minimal? (
 		pantheon-extra/pantheon-calculator
 		pantheon-extra/pantheon-calendar
@@ -47,7 +54,6 @@ RDEPEND="${DEPEND}
 	pantheon-base/switchboard-plug-notifications
 	pantheon-base/switchboard-plug-pantheon-shell
 	pantheon-base/switchboard-plug-parental-controls
-	pantheon-base/switchboard-plug-security-privacy
 	pantheon-base/switchboard-plug-sharing
 	pantheon-base/switchboard-plug-useraccounts
 	pantheon-base/wingpanel-indicator-datetime
