@@ -1,4 +1,4 @@
-# Copyright 1999-2020 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -13,8 +13,8 @@ SRC_URI="https://github.com/elementary/gala/archive/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64"
-IUSE="nls"
+KEYWORDS="amd64"
+IUSE=""
 
 RDEPEND="
 	>=dev-libs/glib-2.44:2
@@ -25,13 +25,15 @@ RDEPEND="
 	>=media-libs/clutter-1.12
 	media-libs/clutter-gtk
 	x11-libs/bamf
+	x11-libs/gdk-pixbuf[jpeg]
 	>=x11-libs/gtk+-3.10.0:3
 	>=x11-misc/plank-0.11.0
 	>=x11-wm/mutter-3.34.0:=
+	<x11-wm/mutter-3.37.90:=
 "
 DEPEND="${RDEPEND}
 	$(vala_depend)
-	nls? ( sys-devel/gettext )
+	sys-devel/gettext
 	virtual/pkgconfig
 "
 
