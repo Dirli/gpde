@@ -1,12 +1,12 @@
-# Copyright 1999-2019 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
 
-PYTHON_COMPAT=( python2_7 )
+PYTHON_COMPAT=( python3_{6,7,8,9} )
 VALA_MIN_API_VERSION=0.22
 
-inherit bash-completion-r1 python-r1 vala versionator xdg
+inherit autotools bash-completion-r1 python-r1 vala versionator xdg
 
 DIR_PV=$(get_version_component_range 1-2)
 
@@ -41,7 +41,7 @@ RDEPEND="
 
 DEPEND="${RDEPEND}
 	$(vala_depend)
-	sys-devel/automake:1.15
+	>=sys-devel/automake-1.11
 	>=sys-devel/gettext-0.19
 	virtual/pkgconfig
 "
@@ -57,6 +57,7 @@ src_prepare() {
 
 	vala_src_prepare
 	xdg_src_prepare
+	eautoreconf
 }
 
 src_configure() {
