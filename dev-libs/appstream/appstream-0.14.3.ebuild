@@ -1,4 +1,4 @@
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -10,7 +10,7 @@ if [[ ${PV} = *9999* ]]; then
 	EGIT_REPO_URI="https://github.com/ximion/${PN}"
 else
 	SRC_URI="https://www.freedesktop.org/software/appstream/releases/AppStream-${PV}.tar.xz"
-	KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~x86"
+	KEYWORDS="amd64 ~arm arm64 ~ppc64 x86"
 	S="${WORKDIR}/AppStream-${PV}"
 fi
 
@@ -21,7 +21,7 @@ LICENSE="LGPL-2.1+ GPL-2+"
 # check as_api_level
 SLOT="0/4"
 IUSE="apt doc +introspection qt5 test vala"
-RESTRICT="!test? ( test )"
+RESTRICT="test" # bug 691962
 
 BDEPEND="
 	dev-libs/appstream-glib
@@ -38,7 +38,7 @@ RDEPEND="
 	dev-libs/libxml2:2
 	dev-libs/libyaml
 	dev-libs/snowball-stemmer
-	>=net-libs/libsoup-2.56:2.4
+	net-misc/curl
 	introspection? ( >=dev-libs/gobject-introspection-1.56:= )
 	qt5? ( dev-qt/qtcore:5 )
 "
@@ -47,8 +47,6 @@ DEPEND="${RDEPEND}
 "
 
 PATCHES=(
-	"${FILESDIR}"/${P}-no-highlight.js.patch
-	"${FILESDIR}"/${P}-qt-add-missing-provided-kindid-enum.patch
 	"${FILESDIR}"/${P}-disable-Werror-flags.patch # bug 733774
 )
 
@@ -58,11 +56,6 @@ src_prepare() {
 	if ! use test; then
 		sed -e "/^subdir.*tests/s/^/#DONT /" -i {,qt/}meson.build || die # bug 675944
 	fi
-
-	use vala && vala_src_prepare
-
-	rm docs/html/static/js/HighlightJS.LICENSE \
-		docs/html/static/js/highlight.min.js || die # incompatible license
 }
 
 src_configure() {
@@ -71,6 +64,7 @@ src_configure() {
 	local emesonargs=(
 		-Dapidocs=false
 		-Ddocs=false
+		-Dcompose=false
 		-Dmaintainer=false
 		-Dstemming=true
 		-Dvapi=$(usex vala true false)
