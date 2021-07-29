@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -14,18 +14,18 @@ SRC_URI="https://github.com/elementary/switchboard/archive/${PV}.tar.gz -> ${P}.
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE="nls example"
+IUSE="example"
 
 RDEPEND="
 	>=dev-libs/glib-2.32:2
-	dev-libs/granite
+	>=dev-libs/granite-5.4.0
 	dev-libs/libgee:0.8
-	media-libs/clutter-gtk
+	>=gui-libs/libhandy-0.83.0:1
 	>=x11-libs/gtk+-3.10:3
 "
 DEPEND="${RDEPEND}
 	$(vala_depend)
-	nls? ( sys-devel/gettext )
+	sys-devel/gettext
 	virtual/pkgconfig
 "
 
@@ -37,7 +37,6 @@ src_prepare() {
 src_configure() {
 	local emesonargs=(
 		-Dexample=$(usex example true false)
-		-Dlibunity=false
 	)
 	meson_src_configure
 }
