@@ -1,7 +1,9 @@
-# Copyright 1999-2020 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
+
+VALA_MIN_API_VERSION=0.40
 
 inherit gnome2-utils meson vala xdg-utils
 
@@ -12,21 +14,24 @@ SRC_URI="https://github.com/elementary/terminal/archive/${PV}.tar.gz -> ${P}.tar
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE="nls patched"
+IUSE=""
 
-RDEPEND="
-	dev-libs/appstream
-	dev-libs/glib:2
-	dev-libs/granite
-	x11-libs/libnotify
-	x11-libs/gtk+:3
-	x11-libs/libnotify
-	x11-libs/vte:2.91[vala]
-"
-DEPEND="${RDEPEND}
-	>=dev-lang/vala-0.40
-	nls? ( sys-devel/gettext )
+
+DEPEND="
+	$(vala_depend)
+	dev-util/desktop-file-utils
+	sys-devel/gettext
 	virtual/pkgconfig
+"
+
+RDEPEND="${DEPEND}
+	dev-libs/glib:2
+	>=dev-libs/granite-6.1.0:=
+	dev-libs/libgee
+	dev-libs/libpcre2
+	>=gui-libs/libhandy-0.83.0:1
+	x11-libs/gtk+:3
+	x11-libs/vte:2.91[vala]
 "
 
 S="${WORKDIR}/terminal-${PV}"
@@ -34,13 +39,6 @@ S="${WORKDIR}/terminal-${PV}"
 src_prepare() {
 	eapply_user
 	vala_src_prepare
-}
-
-src_configure() {
-	local emesonargs=(
-		-Dubuntu-bionic-patched-vte=$(usex patched true false)
-	)
-	meson_src_configure
 }
 
 pkg_preinst() {
