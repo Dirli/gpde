@@ -16,31 +16,31 @@ SLOT="0"
 KEYWORDS="amd64"
 IUSE=""
 
-RDEPEND="
-	>=dev-libs/glib-2.44:2
-	dev-libs/granite
-	dev-libs/libgee:0.8
-	gnome-base/gnome-desktop:3
-	gnome-base/gnome-settings-daemon
-	>=media-libs/clutter-1.12
-	media-libs/clutter-gtk
-	x11-libs/bamf
-	x11-libs/gdk-pixbuf[jpeg]
-	>=x11-libs/gtk+-3.10.0:3
-	>=x11-misc/plank-0.11.0
-	>=x11-wm/mutter-3.34.0:=
-	<x11-wm/mutter-3.37.90:=
-"
-DEPEND="${RDEPEND}
+DEPEND="
 	$(vala_depend)
 	sys-devel/gettext
 	virtual/pkgconfig
 "
 
+RDEPEND="${DEPEND}
+	>=dev-libs/glib-2.44:2
+	>=dev-libs/granite-5.4.0:=
+	dev-libs/libgee:0.8
+	gnome-base/gnome-desktop:3
+	gnome-base/gnome-settings-daemon
+	media-libs/libcanberra
+	media-libs/gexiv2
+	x11-libs/gdk-pixbuf[jpeg]
+	>=x11-libs/gtk+-3.10.0:3
+	>=x11-misc/plank-0.11.0
+	>=x11-wm/mutter-3.36.0:=
+	<x11-wm/mutter-3.39.0:=
+"
+
 src_prepare() {
 	eapply_user
-	eapply "${FILESDIR}/${PV}-fix_schema_override.patch"
-	eapply "${FILESDIR}/${PV}-map_replaced_entries.patch"
+#	eapply "${FILESDIR}/${PV}-fix_schema_override.patch"
+#	eapply "${FILESDIR}/${PV}-map_replaced_entries.patch"
 	vala_src_prepare
 }
 
