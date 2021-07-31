@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -14,22 +14,23 @@ SRC_URI="https://github.com/elementary/switchboard-plug-pantheon-shell/archive/$
 KEYWORDS="amd64"
 LICENSE="GPL-3"
 SLOT="0"
-IUSE="nls"
+IUSE=""
 
-RDEPEND="
+DEPEND="
+	$(vala_depend)
+	sys-devel/gettext
+	virtual/pkgconfig
+"
+
+RDEPEND="${DEPEND}
 	dev-libs/glib:2
-	dev-libs/granite
+	>=dev-libs/granite-6.0.0:=
 	media-libs/gexiv2[vala]
 	gnome-base/gnome-desktop:=
 	pantheon-base/switchboard
 	pantheon-extra/contractor
 	>=x11-libs/gtk+-3.22:3
 	>=x11-misc/plank-0.10.9
-"
-DEPEND="${RDEPEND}
-	$(vala_depend)
-	nls? ( sys-devel/gettext )
-	virtual/pkgconfig
 "
 
 src_prepare() {
