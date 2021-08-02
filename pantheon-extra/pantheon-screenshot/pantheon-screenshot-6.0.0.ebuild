@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -14,21 +14,22 @@ KEYWORDS="amd64"
 
 LICENSE="GPL-3"
 SLOT="0"
-IUSE="nls"
+IUSE=""
 
-RDEPEND="
+DEPEND="
+	$(vala_depend)
+	sys-devel/gettext
+	virtual/pkgconfig
+"
+
+RDEPEND="${DEPEND}
 	dev-libs/glib:2
-	>=dev-libs/granite-5.0
-	media-libs/libcanberra
+	>=dev-libs/granite-6.0.0:=
+	>=gui-libs/libhandy-0.83.0:1
 	x11-libs/gdk-pixbuf:2
 	x11-libs/gtk+:3
 "
 
-DEPEND="${RDEPEND}
-	$(vala_depend)
-	nls? ( sys-devel/gettext )
-	virtual/pkgconfig
-"
 
 S=${WORKDIR}/screenshot-${PV}
 
