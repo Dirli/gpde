@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -14,18 +14,18 @@ KEYWORDS="amd64"
 
 LICENSE="GPL-3"
 SLOT="0"
-IUSE="nls"
+IUSE=""
 
-RDEPEND="
-	dev-libs/appstream
-	dev-libs/glib:2
-	dev-libs/granite
-	x11-libs/gtk+:3
-"
-DEPEND="${RDEPEND}
+DEPEND="
 	$(vala_depend)
-	nls? ( sys-devel/gettext )
+	sys-devel/gettext
 	virtual/pkgconfig
+"
+
+RDEPEND="${DEPEND}
+	dev-libs/glib:2
+	>=dev-libs/granite-6.0.0
+	x11-libs/gtk+:3
 "
 
 S=${WORKDIR}/calculator-${PV}
