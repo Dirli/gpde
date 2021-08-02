@@ -16,7 +16,7 @@ SLOT="0"
 KEYWORDS="amd64"
 IUSE=""
 
-DEPEND="${RDEPEND}
+DEPEND="
 	$(vala_depend)
 	sys-devel/gettext
 	virtual/pkgconfig

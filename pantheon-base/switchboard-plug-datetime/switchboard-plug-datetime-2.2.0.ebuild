@@ -16,7 +16,7 @@ SLOT="0"
 KEYWORDS="amd64"
 IUSE=""
 
-DEPEND="${RDEPEND}
+DEPEND="
 	$(vala_depend)
 	sys-devel/gettext
 	virtual/pkgconfig
@@ -24,7 +24,7 @@ DEPEND="${RDEPEND}
 
 RDEPEND="${DEPEND}
 	dev-libs/glib:2
-	>=dev-libs/granite-5.0.0
+	>=dev-libs/granite-5.0.0:=
 	pantheon-base/switchboard
 	x11-libs/gtk+:3
 "

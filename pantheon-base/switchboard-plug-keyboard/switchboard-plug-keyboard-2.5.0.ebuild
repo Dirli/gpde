@@ -16,17 +16,17 @@ SLOT="0"
 KEYWORDS="amd64"
 IUSE=""
 
-DEPEND="${RDEPEND}
+DEPEND="
 	$(vala_depend)
 	sys-devel/gettext
 	virtual/pkgconfig
 	x11-misc/xkeyboard-config
 "
 
-RDEPEND="
+RDEPEND="${DEPEND}
 	app-i18n/ibus
 	dev-libs/glib:2
-	>=dev-libs/granite-6.0.0
+	>=dev-libs/granite-6.0.0:=
 	dev-libs/libxml2
 	gnome-base/libgnomekbd
 	>=gui-libs/libhandy-0.90.0:1
