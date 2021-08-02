@@ -1,4 +1,4 @@
-# Copyright 1999-2020 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -14,17 +14,17 @@ SRC_URI="https://github.com/elementary/switchboard-plug-datetime/archive/${PV}.t
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE="nls"
+IUSE=""
 
 DEPEND="${RDEPEND}
 	$(vala_depend)
-	nls? ( sys-devel/gettext )
+	sys-devel/gettext
 	virtual/pkgconfig
 "
 
 RDEPEND="${DEPEND}
 	dev-libs/glib:2
-	dev-libs/granite
+	>=dev-libs/granite-5.0.0
 	pantheon-base/switchboard
 	x11-libs/gtk+:3
 "
