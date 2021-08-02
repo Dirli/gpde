@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -14,27 +14,28 @@ SRC_URI="https://github.com/elementary/switchboard-plug-keyboard/archive/${PV}.t
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE="nls"
-
-RDEPEND="
-	dev-libs/glib:2
-	dev-libs/granite
-	dev-libs/libxml2
-	gnome-base/libgnomekbd
-	pantheon-base/switchboard
-	x11-libs/gtk+:3
-	x11-libs/libxklavier
-"
+IUSE=""
 
 DEPEND="${RDEPEND}
 	$(vala_depend)
-	nls? ( sys-devel/gettext )
+	sys-devel/gettext
 	virtual/pkgconfig
+	x11-misc/xkeyboard-config
 "
 
+RDEPEND="
+	app-i18n/ibus
+	dev-libs/glib:2
+	>=dev-libs/granite-6.0.0
+	dev-libs/libxml2
+	gnome-base/libgnomekbd
+	>=gui-libs/libhandy-0.90.0:1
+	pantheon-base/switchboard
+	x11-libs/gtk+:3
+"
+
+
 src_prepare() {
-	eapply "${FILESDIR}/${PV}-switchboard-plug-keyboard-schema.patch"
-	eapply "${FILESDIR}/${PV}-layout_pw_switch.patch"
 	eapply_user
 	vala_src_prepare
 }
