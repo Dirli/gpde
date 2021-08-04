@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -14,17 +14,18 @@ SRC_URI="https://github.com/elementary/contractor/archive/${PV}.tar.gz -> ${P}.t
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE="nls"
+IUSE=""
 
-RDEPEND="
+DEPEND="
+	$(vala_depend)
+	sys-devel/gettext
+	virtual/pkgconfig
+"
+
+RDEPEND="${DEPEND}
 	dev-libs/glib:2
 	dev-libs/libgee:0.8
 	sys-apps/dbus
-"
-DEPEND="${RDEPEND}
-	$(vala_depend)
-	nls? ( sys-devel/gettext )
-	virtual/pkgconfig
 "
 
 src_prepare() {
