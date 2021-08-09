@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -14,20 +14,21 @@ SRC_URI="https://github.com/elementary/wingpanel-indicator-session/archive/${PV}
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE="nls"
+IUSE=""
 
-RDEPEND="
-	dev-libs/glib:2
-	>=dev-libs/granite-5.2.0
-	pantheon-base/wingpanel
-	sys-apps/accountsservice:=
-	x11-libs/gtk+:3
+DEPEND="
+	$(vala_depend)
+	sys-devel/gettext
+	virtual/pkgconfig
 "
 
-DEPEND="${RDEPEND}
-	$(vala_depend)
-	nls? ( sys-devel/gettext )
-	virtual/pkgconfig
+RDEPEND="${DEPEND}
+	dev-libs/glib:2
+	>=dev-libs/granite-5.3.0:=
+	>=gui-libs/libhandy-0.90.0:1
+	>=pantheon-base/wingpanel-3.0.0:=
+	sys-apps/accountsservice:=
+	x11-libs/gtk+:3
 "
 
 src_prepare() {
