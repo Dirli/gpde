@@ -1,4 +1,4 @@
-# Copyright 1999-2020 Gentoo Foundation
+# Copyright 2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -24,15 +24,15 @@ DEPEND="
 RDEPEND="${DEPEND}
 	>=dev-libs/appstream-0.10.0[vala]
 	dev-libs/glib:2
-	>=dev-libs/granite-0.5
+	>=dev-libs/granite-6.1.0
 	dev-libs/json-glib
 	dev-libs/libgee:0.8
 	gnome-base/gnome-menus:3
 	zeitgeist? ( gnome-extra/zeitgeist )
-	gui-libs/libhandy:0.0
+	>=gui-libs/libhandy-0.83.0:1
 	net-libs/libsoup:2.4
 	pantheon-base/switchboard
-	pantheon-base/wingpanel
+	>=pantheon-base/wingpanel-3.0.0
 	>=x11-libs/gtk+-3.12.0:3
 "
 
@@ -44,7 +44,6 @@ src_prepare() {
 src_configure() {
 	local emesonargs=(
 		-Dwith-zeitgeist=$(usex zeitgeist true false)
-		-Dwith-unity=false
 	)
 	meson_src_configure
 }
