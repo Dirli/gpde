@@ -1,4 +1,4 @@
-# Copyright 1999-2020 Gentoo Foundation
+# Copyright 2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -16,16 +16,17 @@ SLOT="0"
 KEYWORDS="amd64"
 IUSE=""
 
-RDEPEND="
-	dev-libs/glib:2
-	dev-libs/granite
-	pantheon-base/wingpanel
-	x11-libs/gtk+:3
-"
-DEPEND="${RDEPEND}
+DEPEND="
 	$(vala_depend)
 	sys-devel/gettext
 	virtual/pkgconfig
+"
+
+RDEPEND="${DEPEND}
+	dev-libs/glib:2
+	>=dev-libs/granite-6.0.0
+	>=pantheon-base/wingpanel-3.0.0
+	x11-libs/gtk+:3
 "
 
 src_prepare() {
