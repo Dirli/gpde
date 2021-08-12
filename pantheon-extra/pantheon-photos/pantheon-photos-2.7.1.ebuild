@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Foundation
+# Copyright 2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -6,29 +6,31 @@ EAPI=7
 inherit gnome2-utils meson vala xdg-utils
 
 DESCRIPTION="Photo viewer and organizer designed for elementary OS"
-HOMEPAGE="https://github.com/elementary/photos/archive/0.2.5.tar.gz"
+HOMEPAGE="https://github.com/elementary/photos/"
 SRC_URI="https://github.com/elementary/photos/archive/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE="nls plugins docs"
+IUSE="plugins docs"
 
 DEPEND="
-	>=dev-lang/vala-0.40
+	$(vala_depend)
 	dev-util/intltool
-	nls? ( sys-devel/gettext )
+	sys-devel/gettext
 	virtual/pkgconfig
 "
+
 RDEPEND="${DEPEND}
 	>=dev-db/sqlite-3.5.9:3
 	>=dev-libs/glib-2.30:2
-	dev-libs/granite
+	>=dev-libs/granite-6.0.0
 	dev-libs/json-glib
-	dev-libs/libgudev
+	>=dev-libs/libgudev-145
 	>=dev-libs/libgee-0.8.5:0.8
 	>=dev-libs/libxml2-2.6.32:2[python]
-	>=media-libs/gexiv2-0.4.98
+	gui-libs/libhandy:1
+	>=media-libs/gexiv2-0.4.90
 	>=media-libs/gstreamer-1.0.0:1.0
 	>=media-libs/gst-plugins-base-1.0.0:1.0
 	>=media-libs/libexif-0.6.16
@@ -53,7 +55,6 @@ src_configure() {
 	local emesonargs=(
 		-Dplugins=$(usex plugins true false)
 		-Ddocumentation=$(usex docs true false)
-		-Dlibunity=false
 	)
 	meson_src_configure
 }
