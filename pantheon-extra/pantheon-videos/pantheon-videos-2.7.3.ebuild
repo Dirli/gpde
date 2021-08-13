@@ -1,4 +1,4 @@
-# Copyright 1999-2020 Gentoo Foundation
+# Copyright 2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -16,9 +16,16 @@ LICENSE="GPL-3"
 SLOT="0"
 IUSE=""
 
-RDEPEND="
+DEPEND="
+	$(vala_depend)
+	sys-devel/gettext
+	virtual/pkgconfig
+"
+
+RDEPEND="${DEPEND}
 	dev-libs/glib:2
 	dev-libs/granite
+	dev-libs/libgee:0.8
 	media-libs/clutter-gst:3.0
 	media-libs/clutter-gtk:1.0[gtk]
 	media-plugins/gst-plugins-meta
@@ -27,11 +34,6 @@ RDEPEND="
 	media-libs/libmad
 	media-libs/libsamplerate
 	>=x11-libs/gtk+-3.22:3
-"
-DEPEND="${RDEPEND}
-	$(vala_depend)
-	sys-devel/gettext
-	virtual/pkgconfig
 "
 
 S=${WORKDIR}/videos-${PV}
