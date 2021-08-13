@@ -1,4 +1,4 @@
-# Copyright 1999-2020 Gentoo Foundation
+# Copyright 2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -23,12 +23,14 @@ DEPEND="
 "
 
 RDEPEND="${DEPEND}
+	app-misc/geoclue:2
 	dev-libs/folks
 	dev-libs/glib:2
-	>=dev-libs/granite-5.2.0
+	>=dev-libs/granite-6.0.0
 	dev-libs/libgee:0.8
 	dev-libs/libical
 	>=gnome-extra/evolution-data-server-3.8
+	>=gui-libs/libhandy-0.90.0:1
 	media-libs/clutter:1.0
 	media-libs/clutter-gtk:1.0
 	media-libs/libchamplain:0.12[gtk]
