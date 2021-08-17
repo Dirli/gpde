@@ -1,4 +1,4 @@
-# Copyright 1999-2021 Gentoo Foundation
+# Copyright 2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -9,7 +9,7 @@ inherit gnome2-utils meson vala xdg-utils
 
 DESCRIPTION="A tiny, simple calculator written in GTK+ and Vala"
 HOMEPAGE="https://github.com/elementary/calculator"
-SRC_URI="https://github.com/elementary/calculator/archive/${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/elementary/calculator/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 KEYWORDS="amd64"
 
 LICENSE="GPL-3"
@@ -25,6 +25,7 @@ DEPEND="
 RDEPEND="${DEPEND}
 	dev-libs/glib:2
 	>=dev-libs/granite-6.0.0
+	>=gui-libs/libhandy-0.91.0:1
 	x11-libs/gtk+:3
 "
 
