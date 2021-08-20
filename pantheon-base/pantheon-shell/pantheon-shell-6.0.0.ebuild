@@ -1,9 +1,9 @@
-# Copyright 1999-2019 Gentoo Foundation
+# Copyright 2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
-inherit eutils
+inherit meson
 
 DESCRIPTION="Pantheon DE shell"
 HOMEPAGE="https://github.com/elementary/session-settings"
@@ -12,18 +12,19 @@ SRC_URI="https://github.com/elementary/session-settings/archive/${PV}.tar.gz -> 
 LICENSE="metapackage"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE=""
+IUSE="accessibility"
 
 DEPEND=""
 RDEPEND="${DEPEND}
+	accessibility? ( app-accessibility/orca )
 	gnome-base/gnome-session
 	gnome-base/gnome-settings-daemon
+	gnome-base/gsettings-desktop-schemas
 	pantheon-base/applications-menu
-	pantheon-base/wingpanel
-	pantheon-extra/dpms-helper
+	>=pantheon-base/wingpanel-3.0.0
 	pantheon-extra/pantheon-agent-polkit
 	x11-misc/plank
-	x11-wm/gala
+	>=x11-wm/gala-6.0.0
 "
 
 PDEPEND="
@@ -32,29 +33,17 @@ PDEPEND="
 
 S="${WORKDIR}/session-settings-${PV}"
 
+
 src_prepare() {
 	eapply_user
-	eapply "${FILESDIR}/pantheon.session-${PV}.patch"
 
-	# Correct paths
-	sed -i 's#/usr/lib/[^/]*/#/usr/libexec/#' autostart/*
+	eapply "${FILESDIR}/${PV}-fix_access_deps.patch"
 }
 
-src_install() {
-	insinto /usr/share/gnome-session/sessions
-	doins gnome-session/*
-
-	insinto /usr/share/xsessions
-	doins xsessions/*
-
-	insinto /etc/xdg/autostart
-	doins autostart/*
-
-	insinto /usr/share/pantheon
-	doins -r applications
-
-	exeinto /etc/X11/Sessions
-	doexe "${FILESDIR}/Pantheon"
-
-	dobin "${FILESDIR}/pantheon-session"
+src_configure() {
+	local emesonargs=(
+		-Ddetect-program-prefixes=false
+		-Daccessibility=$(usex accessibility true false)
+	)
+	meson_src_configure
 }
