@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Foundation
+# Copyright 2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -10,11 +10,15 @@ SRC_URI=""
 LICENSE="metapackage"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE="archive bluetooth cups networkmanager +minimal pulseaudio upower"
+IUSE="accessibility archive bluetooth cups networkmanager +minimal pulseaudio upower"
 
 #pantheon-base/switchboard-plug-security-privacy
 DEPEND=""
 RDEPEND="${DEPEND}
+	accessibility? (
+		pantheon-base/switchboard-plug-a11y
+		pantheon-base/wingpanel-indicator-a11y
+	)
 	archive? (
 		pantheon-extra/contract-archive
 	)
@@ -41,10 +45,9 @@ RDEPEND="${DEPEND}
 		pantheon-base/switchboard-plug-network
 		pantheon-base/wingpanel-indicator-network
 	)
-	pantheon-base/pantheon-files
-	pantheon-base/pantheon-greeter
-	pantheon-base/pantheon-shell
-	pantheon-base/switchboard-plug-a11y
+	>=pantheon-base/pantheon-files-6.0.0
+	>=pantheon-base/pantheon-greeter-6.0.0
+	>=pantheon-base/pantheon-shell-6.0.0[accessibility?]
 	pantheon-base/switchboard-plug-about
 	pantheon-base/switchboard-plug-applications
 	pantheon-base/switchboard-plug-datetime
