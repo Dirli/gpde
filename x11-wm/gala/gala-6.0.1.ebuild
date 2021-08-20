@@ -1,4 +1,4 @@
-# Copyright 1999-2021 Gentoo Foundation
+# Copyright 2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -39,8 +39,6 @@ RDEPEND="${DEPEND}
 
 src_prepare() {
 	eapply_user
-#	eapply "${FILESDIR}/${PV}-fix_schema_override.patch"
-#	eapply "${FILESDIR}/${PV}-map_replaced_entries.patch"
 	vala_src_prepare
 }
 
