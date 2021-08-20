@@ -71,6 +71,7 @@ RDEPEND="${DEPEND}
 		pantheon-base/switchboard-plug-power
 		pantheon-base/wingpanel-indicator-power
 	)
+	virtual/notification-daemon[pantheon]
 	x11-misc/lightdm
 	x11-terms/pantheon-terminal
 "
