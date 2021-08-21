@@ -26,6 +26,7 @@ RDEPEND="${DEPEND}
 	dev-libs/glib:2
 	dev-libs/granite:=
 	dev-libs/libxml2
+	gnome-base/gsettings-desktop-schemas:=
 	pantheon-base/switchboard
 	x11-libs/gtk+:3
 "
