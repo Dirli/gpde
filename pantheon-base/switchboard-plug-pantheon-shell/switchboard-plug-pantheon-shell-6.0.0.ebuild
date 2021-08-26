@@ -14,7 +14,6 @@ SRC_URI="https://github.com/elementary/switchboard-plug-pantheon-shell/archive/$
 KEYWORDS="amd64"
 LICENSE="GPL-3"
 SLOT="0"
-IUSE=""
 
 DEPEND="
 	$(vala_depend)
@@ -24,9 +23,10 @@ DEPEND="
 
 RDEPEND="${DEPEND}
 	dev-libs/glib:2
-	>=dev-libs/granite-6.0.0:=
+	>=dev-libs/granite-6.0.0
 	media-libs/gexiv2[vala]
 	gnome-base/gnome-desktop:=
+	pantheon-base/pantheon-settings-daemon
 	pantheon-base/switchboard
 	pantheon-extra/contractor
 	>=x11-libs/gtk+-3.22:3
@@ -39,15 +39,15 @@ src_prepare() {
 }
 
 pkg_preinst() {
-	gnome2_schemas_savelist
+	GNOME2_ECLASS_GLIB_SCHEMAS=1 gnome2_schemas_savelist
 }
 
 pkg_postinst() {
 	xdg_desktop_database_update
-	gnome2_schemas_update
+	GNOME2_ECLASS_GLIB_SCHEMAS=1 gnome2_schemas_update
 }
 
 pkg_postrm() {
 	xdg_desktop_database_update
-	gnome2_schemas_update
+	GNOME2_ECLASS_GLIB_SCHEMAS=1 gnome2_schemas_update
 }
