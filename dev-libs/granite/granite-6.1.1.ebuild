@@ -3,7 +3,7 @@
 
 EAPI=7
 
-VALA_MIN_API_VERSION=0.48
+VALA_MIN_API_VERSION=0.50
 
 inherit meson vala xdg-utils
 
@@ -16,22 +16,20 @@ SLOT="0"
 KEYWORDS="amd64"
 IUSE="doc introspection"
 
-RDEPEND="
-	>=dev-libs/glib-2.50:2
-	dev-libs/libgee:0.8[introspection]
-	>=x11-libs/gtk+-3.22:3[introspection]
-"
-
-DEPEND="${RDEPEND}
+DEPEND="
 	$(vala_depend)
 	sys-devel/gettext
 	virtual/pkgconfig
 "
 
+RDEPEND="${DEPEND}
+	>=dev-libs/glib-2.50:2
+	dev-libs/libgee:0.8[introspection]
+	>=x11-libs/gtk+-3.22:3[introspection]
+"
+
 src_prepare() {
 	eapply_user
-
-	eapply "${FILESDIR}/5.5.0-dark_theme_returned.patch"
 
 	vala_src_prepare
 }
