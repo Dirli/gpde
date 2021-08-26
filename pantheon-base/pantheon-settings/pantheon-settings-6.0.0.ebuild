@@ -16,6 +16,7 @@ IUSE="flatpak"
 
 DEPEND=""
 RDEPEND="${DEPEND}
+	pantheon-base/pantheon-settings-daemon
 	x11-themes/elementary-icons-theme
 	x11-themes/elementary-sound-theme
 	x11-themes/elementary-theme
