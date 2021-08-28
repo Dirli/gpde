@@ -1,0 +1,91 @@
+--- /src/meson.build	2021-07-16 00:58:48.000000000 +0300
++++ /src/meson.build	2021-08-28 16:37:20.119218850 +0300
+@@ -1,3 +1,5 @@
++flatpak_dep = dependency('flatpak', version: '>=1.1.2', required: false)
++
+ plug_files = files(
+     'Plug.vala',
+     'Startup/Utils.vala',
+@@ -12,32 +14,40 @@
+     'Startup/Widgets/AppChooserRow.vala',
+     'Startup/Widgets/AppChooser.vala',
+     'Defaults/Utils.vala',
+-    'Defaults/DefaultPlug.vala',
+-    'Permissions/Backend/App.vala',
+-    'Permissions/Backend/AppManager.vala',
+-    'Permissions/Backend/FlatpakManager.vala',
+-    'Permissions/Backend/PermissionSettings.vala',
+-    'Permissions/Widgets/AppSettingsView.vala',
+-    'Permissions/Widgets/PermissionSettingsWidget.vala',
+-    'Permissions/Widgets/SidebarRow.vala',
+-    'Permissions/PermissionsPlug.vala'
++    'Defaults/DefaultPlug.vala'
+ )
+ 
+ switchboard_dep = dependency('switchboard-2.0')
+ switchboard_plugsdir = switchboard_dep.get_pkgconfig_variable('plugsdir', define_variable: ['libdir', libdir])
+ 
++deps = [
++    dependency('glib-2.0', version: '>=2.34'),
++    dependency('gio-2.0'),
++    dependency('gobject-2.0'),
++    dependency('granite'),
++    dependency('gtk+-3.0'),
++    switchboard_dep
++]
++
++if flatpak_dep.found ()
++    add_project_arguments ('--define=USE_FLATPAK', language: 'vala')
++
++    deps += flatpak_dep
++    plug_files += files(
++        'Permissions/Backend/App.vala',
++        'Permissions/Backend/AppManager.vala',
++        'Permissions/Backend/FlatpakManager.vala',
++        'Permissions/Backend/PermissionSettings.vala',
++        'Permissions/Widgets/AppSettingsView.vala',
++        'Permissions/Widgets/PermissionSettingsWidget.vala',
++        'Permissions/Widgets/SidebarRow.vala',
++        'Permissions/PermissionsPlug.vala')
++endif
++
+ shared_module(
+     meson.project_name(),
+     plug_files,
+-    dependencies: [
+-        dependency('flatpak', version: '>=1.1.2'),
+-        dependency('glib-2.0', version: '>=2.34'),
+-        dependency('gio-2.0'),
+-        dependency('gobject-2.0'),
+-        dependency('granite'),
+-        dependency('gtk+-3.0'),
+-        switchboard_dep
+-    ],
++    dependencies: deps,
+     install: true,
+     install_dir : join_paths(switchboard_plugsdir, 'personal')
+ )
+--- /src/Plug.vala	2021-07-16 00:58:48.000000000 +0300
++++ /src/Plug.vala	2021-08-28 16:26:44.101237708 +0300
+@@ -52,7 +52,9 @@
+             };
+             stack.add_titled (new Defaults.Plug (), DEFAULTS, _("Defaults"));
+             stack.add_titled (new Startup.Plug (), STARTUP, _("Startup"));
++#if USE_FLATPAK
+             stack.add_titled (new Permissions.Plug (), PERMISSIONS, _("Permissions"));
++#endif
+ 
+             var stack_switcher = new Gtk.StackSwitcher () {
+                 halign = Gtk.Align.CENTER,
+@@ -82,9 +84,11 @@
+         switch (location) {
+             case STARTUP:
+             case DEFAULTS:
++#if USE_FLATPAK
+             case PERMISSIONS:
+                 stack.set_visible_child_name (location);
+                 break;
++#endif
+             default:
+                 stack.set_visible_child_name (DEFAULTS);
+                 break;
