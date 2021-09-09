@@ -9,7 +9,7 @@ inherit gnome2-utils meson vala xdg-utils
 
 DESCRIPTION="Desktop calendar app designed for elementary OS"
 HOMEPAGE="https://github.com/elementary/calendar"
-SRC_URI="https://github.com/elementary/calendar/archive/${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/elementary/calendar/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -33,7 +33,7 @@ RDEPEND="${DEPEND}
 	>=gui-libs/libhandy-0.90.0:1
 	media-libs/clutter:1.0
 	media-libs/clutter-gtk:1.0
-	media-libs/libchamplain:0.12[gtk]
+	media-libs/libchamplain:0.12[gtk,vala]
 	net-libs/libsoup:2.4
 	sci-geosciences/geocode-glib
 	>=x11-libs/gtk+-3.22:3
