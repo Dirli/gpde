@@ -3,19 +3,17 @@
 
 EAPI=7
 
-VALA_MIN_API_VERSION=0.28
+VALA_MIN_API_VERSION=0.40
 
-inherit git-r3 gnome2-utils meson vala xdg-utils
+inherit gnome2-utils meson vala xdg-utils
 
 DESCRIPTION="Pantheon's Window Manager"
 HOMEPAGE="https://github.com/elementary/gala"
-
-EGIT_REPO_URI="https://github.com/elementary/gala.git"
-EGIT_COMMIT="737b960ed5e0e23b2dcf00431e6bf4932e1f5d6a"
+SRC_URI="https://github.com/elementary/gala/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="amd64"
 IUSE=""
 
 DEPEND="
@@ -29,7 +27,7 @@ RDEPEND="${DEPEND}
 	>=dev-libs/granite-5.4.0:=
 	dev-libs/libgee:0.8
 	gnome-base/gnome-desktop:3
-	gnome-base/gnome-settings-daemon
+	gnome-base/gnome-settings-daemon:=
 	media-libs/libcanberra
 	media-libs/gexiv2
 	x11-libs/gdk-pixbuf[jpeg]
