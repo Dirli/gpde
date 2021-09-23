@@ -3,17 +3,15 @@
 
 EAPI=7
 
-inherit git-r3 meson vala xdg-utils
+inherit meson vala xdg-utils
 
 DESCRIPTION="LightDM Greeter for Pantheon"
 HOMEPAGE="https://github.com/elementary/greeter"
-
-EGIT_REPO_URI="https://github.com/elementary/greeter.git"
-EGIT_COMMIT="c4f1e7b81addccc39f3f65d5652b965c492800dd"
+SRC_URI="https://github.com/elementary/greeter/archive/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="amd64"
 IUSE=""
 
 DEPEND="
@@ -32,6 +30,8 @@ RDEPEND="${DEPEND}
 	x11-misc/lightdm[introspection,vala]
 	>=x11-wm/mutter-3.36.0:=
 "
+
+S="${WORKDIR}/greeter-${PV}"
 
 src_prepare() {
 	eapply_user
