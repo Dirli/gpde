@@ -3,17 +3,15 @@
 
 EAPI=7
 
-inherit git-r3 gnome2-utils meson vala xdg-utils
+inherit gnome2-utils meson vala xdg-utils
 
 DESCRIPTION="Stylish top panel that holds indicators and spawns an application launcher"
 HOMEPAGE="https://github.com/elementary/wingpanel"
-
-EGIT_REPO_URI="https://github.com/elementary/wingpanel.git"
-EGIT_COMMIT="989cfbd26ca6d80e0f485df829e930f58af9f28f"
+SRC_URI="https://github.com/elementary/wingpanel/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="amd64"
 IUSE="example"
 
 DEPEND="
@@ -26,9 +24,9 @@ RDEPEND="${DEPEND}
 	>=dev-libs/glib-2.40:2
 	dev-libs/libgee:0.8
 	>=dev-libs/granite-5.4.0:=
-	>=x11-libs/gtk+-3.10.0:3
+	>=x11-libs/gtk+-3.10.0:3[X]
 	x11-wm/gala
-	>=x11-wm/mutter-3.35.90:=
+	<=x11-wm/mutter-42.0:=
 "
 
 src_prepare() {
