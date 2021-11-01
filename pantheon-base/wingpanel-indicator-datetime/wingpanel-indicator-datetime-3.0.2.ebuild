@@ -39,13 +39,6 @@ src_prepare() {
 	vala_src_prepare
 }
 
-src_configure() {
-	local emesonargs=(
-		-Devo=$(usex evolution true false)
-	)
-	meson_src_configure
-}
-
 pkg_preinst() {
 	gnome2_schemas_savelist
 }
