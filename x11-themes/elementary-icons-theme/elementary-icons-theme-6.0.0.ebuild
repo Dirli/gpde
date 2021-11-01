@@ -14,7 +14,9 @@ SLOT="0"
 KEYWORDS="amd64"
 IUSE=""
 
-BDEPEND=""
+BDEPEND="
+	x11-apps/xcursorgen
+"
 
 S=${WORKDIR}/icons-${PV}
 
