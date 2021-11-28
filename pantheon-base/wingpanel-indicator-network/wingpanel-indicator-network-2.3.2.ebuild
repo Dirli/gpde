@@ -3,18 +3,17 @@
 
 EAPI=7
 
-VALA_MIN_VERSION=0.22
+VALA_MIN_VERSION=0.40
 
 inherit gnome2-utils meson vala
 
 DESCRIPTION="Network indicator for Wingpanel"
 HOMEPAGE="https://launchpad.net/wingpanel-indicator-network"
-SRC_URI="https://github.com/elementary/wingpanel-indicator-network/archive/${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/elementary/wingpanel-indicator-network/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE=""
 
 DEPEND="
 	$(vala_depend)
@@ -29,7 +28,6 @@ RDEPEND="${DEPEND}
 	net-misc/networkmanager
 	>=pantheon-base/wingpanel-3.0.0
 	x11-libs/gtk+:3
-
 "
 
 src_prepare() {
