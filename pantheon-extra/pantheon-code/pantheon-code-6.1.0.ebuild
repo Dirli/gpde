@@ -9,12 +9,12 @@ inherit gnome2-utils meson vala xdg-utils
 
 DESCRIPTION="Code editor designed for elementary OS"
 HOMEPAGE="https://github.com/elementary/code"
-SRC_URI="https://github.com/elementary/code/archive/${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/elementary/code/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE="plugins"
+IUSE="plugins flatpak"
 
 DEPEND="
 	$(vala_depend)
@@ -43,12 +43,16 @@ S="${WORKDIR}/code-${PV}"
 
 src_prepare() {
 	eapply_user
+
+	eapply "${FILESDIR}/${PV}-optional_portal.patch"
+
 	vala_src_prepare
 }
 
 src_configure() {
 	local emesonargs=(
 		-Dplugins=$(usex plugins true false)
+		-Dflatpak=$(usex flatpak true false)
 	)
 	meson_src_configure
 }

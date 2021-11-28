@@ -1,0 +1,31 @@
+--- /src/Application.vala	2021-11-24 00:06:10.000000000 +0300
++++ /src/Application.vala	2021-11-26 01:45:48.574671935 +0300
+@@ -68,7 +68,9 @@
+             service_settings = new GLib.Settings (Constants.PROJECT_NAME + ".services");
+             privacy_settings = new GLib.Settings ("org.gnome.desktop.privacy");
+ 
++#if USE_FLATPAK
+             Environment.set_variable ("GTK_USE_PORTAL", "1", true);
++#endif
+ 
+             GLib.Intl.setlocale (LocaleCategory.ALL, "");
+             GLib.Intl.bindtextdomain (Constants.GETTEXT_PACKAGE, Constants.LOCALEDIR);
+--- /meson.build	2021-11-24 00:06:10.000000000 +0300
++++ /meson.build	2021-11-26 01:45:10.026670956 +0300
+@@ -19,6 +19,10 @@
+     add_project_arguments('--define=HAVE_PKEXEC', language: 'vala')
+ endif
+ 
++if get_option('flatpak')
++    add_project_arguments ('--define=USE_FLATPAK', language: 'vala')
++endif
++
+ libexecdir = join_paths(get_option('prefix'), get_option('libexecdir'), meson.project_name())
+ pluginsdir = join_paths(get_option('prefix'), get_option('libdir'), meson.project_name(), 'plugins')
+ 
+--- /meson_options.txt	2021-11-24 00:06:10.000000000 +0300
++++ /meson_options.txt	2021-11-26 01:42:54.843667524 +0300
+@@ -1,2 +1,3 @@
+ option ('plugins', type : 'boolean', value : true)
+ option('have_pkexec', type : 'boolean', value : 'true', description : 'Allow launching with pkexec. Should not be used in FlatPak')
++option('flatpak', type : 'boolean', value : 'true', description : 'Optional FlatPak')
