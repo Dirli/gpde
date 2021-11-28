@@ -3,18 +3,17 @@
 
 EAPI=7
 
-VALA_MIN_API_VERSION=0.28
+VALA_MIN_API_VERSION=0.40
 
 inherit gnome2-utils meson vala xdg-utils
 
 DESCRIPTION="Pantheon's Window Manager"
 HOMEPAGE="https://github.com/elementary/gala"
-SRC_URI="https://github.com/elementary/gala/archive/${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/elementary/gala/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE=""
 
 DEPEND="
 	$(vala_depend)
@@ -27,14 +26,13 @@ RDEPEND="${DEPEND}
 	>=dev-libs/granite-5.4.0:=
 	dev-libs/libgee:0.8
 	gnome-base/gnome-desktop:3
-	gnome-base/gnome-settings-daemon
+	gnome-base/gnome-settings-daemon:=
 	media-libs/libcanberra
 	media-libs/gexiv2
 	x11-libs/gdk-pixbuf[jpeg]
 	>=x11-libs/gtk+-3.10.0:3
 	>=x11-misc/plank-0.11.0
 	>=x11-wm/mutter-3.36.0:=
-	<x11-wm/mutter-3.39.0:=
 "
 
 src_prepare() {
