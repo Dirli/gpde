@@ -3,18 +3,17 @@
 
 EAPI=7
 
-VALA_MIN_API_VERSION=0.34
+VALA_MIN_API_VERSION=0.40
 
 inherit meson vala
 
 DESCRIPTION="Switchboard User Accounts Plug."
 HOMEPAGE="https://github.com/elementary/switchboard-plug-useraccounts"
-SRC_URI="https://github.com/elementary/switchboard-plug-useraccounts/archive/${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/elementary/switchboard-plug-useraccounts/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE=""
 
 DEPEND="
 	$(vala_depend)
@@ -37,11 +36,6 @@ RDEPEND="${DEPEND}
 
 src_prepare() {
 	eapply_user
-
-	eapply "${FILESDIR}/${PV}-check_paths.patch"
-	eapply "${FILESDIR}/${PV}-avatar_icon_check.patch"
-	eapply "${FILESDIR}/${PV}-fix_user_lang.patch"
-	eapply "${FILESDIR}/${PV}-fix_create_user.patch"
 
 	vala_src_prepare
 }
