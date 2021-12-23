@@ -9,7 +9,7 @@ inherit gnome2-utils meson vala xdg-utils
 
 DESCRIPTION="Video player and library app designed for elementary OS"
 HOMEPAGE="https://github.com/elementary/videos"
-SRC_URI="https://github.com/elementary/videos/archive/${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/elementary/videos/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 KEYWORDS="amd64"
