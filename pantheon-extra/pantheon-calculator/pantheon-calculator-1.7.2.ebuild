@@ -3,7 +3,7 @@
 
 EAPI=7
 
-VALA_MIN_VERSION=0.26
+VALA_MIN_VERSION=0.40
 
 inherit gnome2-utils meson vala xdg-utils
 
