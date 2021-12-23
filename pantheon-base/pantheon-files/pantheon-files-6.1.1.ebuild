@@ -45,8 +45,7 @@ S="${WORKDIR}/files-${PV}"
 src_prepare() {
 	eapply_user
 
-	eapply "${FILESDIR}/6.0.1-wayland_optional.patch"
-	eapply "${FILESDIR}/6.0.1-drop_test.patch"
+	eapply "${FILESDIR}/${PV}-wayland_optional.patch"
 
 	vala_src_prepare
 }
