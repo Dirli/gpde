@@ -1,9 +1,9 @@
-# Copyright 2021 Gentoo Foundation
+# Copyright 2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
-VALA_MIN_API_VERSION=0.22
+VALA_MIN_API_VERSION=0.40
 
 inherit gnome2-utils meson vala xdg-utils
 
