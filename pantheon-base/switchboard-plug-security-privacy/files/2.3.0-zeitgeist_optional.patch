@@ -1,0 +1,144 @@
+--- /src/meson.build	2021-11-24 00:13:06.000000000 +0300
++++ /src/meson.build	2022-01-15 02:35:55.843916452 +0300
+@@ -5,22 +5,16 @@
+ )
+ 
+ plug_files = files(
+-    'BlackList.vala',
+     'Plug.vala',
+     'UFWHelpers.vala',
+-    'ZGUtilities.vala',
+     'Views/FirewallPanel.vala',
+     'Views/HouseKeepingPanel.vala',
+     'Views/LockPanel.vala',
+-    'Views/TrackPanel.vala',
+     'Views/LocationPanel.vala',
+     'Widgets/AppChooser.vala',
+     'Widgets/AppRow.vala',
+-    'Widgets/ClearUsagePopover.vala',
+-    'Widgets/ExcludeTreeView.vala',
+-    'Widgets/IncludeTreeView.vala',
+     'Widgets/ServiceItem.vala',
+-    'Widgets/ServiceList.vala'
++    'Widgets/ServiceList.vala',
+ )
+ 
+ plug_dependencies = [
+@@ -29,12 +23,27 @@
+         dependency('gobject-2.0'),
+         dependency('granite'),
+         dependency('gtk+-3.0'),
+-        dependency('zeitgeist-2.0'),
+         meson.get_compiler('vala').find_library('posix'),
+         polkit_dep,
+         switchboard_dep
+ ]
+ 
++zeitgeist_dep = dependency('zeitgeist-2.0', required: false)
++if zeitgeist_dep.found()
++  add_project_arguments ('--define=USE_ZEITGEIST', language: 'vala')
++
++  plug_files += files(
++    'BlackList.vala',
++    'ZGUtilities.vala',
++    'Views/TrackPanel.vala',
++    'Widgets/ClearUsagePopover.vala',
++    'Widgets/ExcludeTreeView.vala',
++    'Widgets/IncludeTreeView.vala',
++  )
++
++  plug_dependencies += zeitgeist_dep
++endif
++
+ shared_module(
+     meson.project_name(),
+     pkgdatadir_declaration,
+--- /src/Plug.vala	2021-11-24 00:13:06.000000000 +0300
++++ /src/Plug.vala	2022-01-15 02:18:38.948819960 +0300
+@@ -25,8 +25,9 @@
+     public static LocationPanel location;
+     public static FirewallPanel firewall;
+     public static HouseKeepingPanel housekeeping;
++#if USE_ZEITGEIST
+     public static TrackPanel tracking;
+-
++#endif
+     public class Plug : Switchboard.Plug {
+         Gtk.Grid main_grid;
+         Gtk.Stack stack;
+@@ -56,11 +57,12 @@
+             supported_settings.set ("security", null);
+             supported_settings.set ("security/firewall", FIREWALL);
+             supported_settings.set ("security/locking", LOCKING);
+-            supported_settings.set ("privacy", HISTORY);
+             supported_settings.set ("privacy/trash", HOUSEKEEPING);
+-
++#if USE_ZEITGEIST
++            supported_settings.set ("privacy", HISTORY);
+             // DEPRECATED
+             supported_settings.set ("security/privacy", HISTORY);
++#endif
+             supported_settings.set ("security/housekeeping", HOUSEKEEPING);
+             supported_settings.set ("security/screensaver", LOCKING);
+ 
+@@ -128,12 +130,13 @@
+                 critical (e.message);
+             }
+ 
+-            tracking = new TrackPanel ();
+             var locking = new LockPanel ();
+             firewall = new FirewallPanel ();
+             housekeeping = new HouseKeepingPanel ();
+-
++#if USE_ZEITGEIST
++            tracking = new TrackPanel ();
+             stack.add_titled (tracking, HISTORY, _("Privacy"));
++#endif
+             stack.add_titled (locking, LOCKING, _("Locking"));
+             stack.add_titled (firewall, FIREWALL, _("Firewall"));
+             stack.add_titled (housekeeping, HOUSEKEEPING, _("Housekeeping"));
+--- /src/Widgets/ServiceList.vala	2021-11-24 00:13:06.000000000 +0300
++++ /src/Widgets/ServiceList.vala	2022-01-15 02:44:45.969965785 +0300
+@@ -28,7 +28,9 @@
+     }
+ 
+     construct {
++#if USE_ZEITGEIST
+         var privacy_item = new ServiceItem ("document-open-recent", "tracking", _("History"));
++#endif
+         var lock_item = new ServiceItem ("system-lock-screen", "locking", _("Locking"));
+         var firewall_item = new ServiceItem ("network-firewall", "firewall", _("Firewall"));
+         housekeeping_item = new ServiceItem (
+@@ -37,7 +39,10 @@
+             _("Housekeeping")
+         );
+ 
++#if USE_ZEITGEIST
+         add_service (privacy_item);
++#endif
++
+         add_service (lock_item);
+         add_service (firewall_item);
+         add_service (housekeeping_item);
+@@ -46,7 +51,9 @@
+             update_service_status (firewall_item, SecurityPrivacy.firewall.status_switch.active);
+         });
+ 
++#if USE_ZEITGEIST
+         update_service_status (privacy_item, SecurityPrivacy.tracking.status_switch.active);
++#endif
+ 
+         SecurityPrivacy.housekeeping.notify["status-type"].connect (() => {
+             update_housekeeping_status ();
+@@ -54,9 +61,11 @@
+ 
+         update_housekeeping_status ();
+ 
++#if USE_ZEITGEIST
+         SecurityPrivacy.tracking.status_switch.notify["active"].connect (() => {
+             update_service_status (privacy_item, SecurityPrivacy.tracking.status_switch.active);
+         });
++#endif
+ 
+         if (SecurityPrivacy.LocationPanel.location_agent_installed ()) {
+             var location_item = new ServiceItem ("find-location", "location", _("Location Services"));
