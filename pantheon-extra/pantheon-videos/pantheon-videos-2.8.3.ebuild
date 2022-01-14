@@ -1,4 +1,4 @@
-# Copyright 2021 Gentoo Foundation
+# Copyright 2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -9,12 +9,11 @@ inherit gnome2-utils meson vala xdg-utils
 
 DESCRIPTION="Video player and library app designed for elementary OS"
 HOMEPAGE="https://github.com/elementary/videos"
-SRC_URI="https://github.com/elementary/videos/archive/${PV}.tar.gz -> ${P}.tar.gz"
-KEYWORDS="amd64"
+SRC_URI="https://github.com/elementary/videos/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
+KEYWORDS="amd64"
 SLOT="0"
-IUSE=""
 
 DEPEND="
 	$(vala_depend)
@@ -26,14 +25,14 @@ RDEPEND="${DEPEND}
 	dev-libs/glib:2
 	dev-libs/granite
 	dev-libs/libgee:0.8
+	gui-libs/libhandy
 	media-libs/clutter-gst:3.0
 	media-libs/clutter-gtk:1.0[gtk]
-	media-plugins/gst-plugins-meta
+	media-plugins/gst-plugins-meta[taglib]
 	media-libs/gstreamer:1.0
 	media-libs/libdvbpsi
 	media-libs/libmad
-	media-libs/libsamplerate
-	>=x11-libs/gtk+-3.22:3
+	>=x11-libs/gtk+-3.22:3[X]
 "
 
 S=${WORKDIR}/videos-${PV}
