@@ -1,7 +1,7 @@
-# Copyright 1999-2021 Gentoo Foundation
+# Copyright 1999-2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 VALA_MIN_API_VERSION=0.40
 
@@ -9,13 +9,11 @@ inherit gnome2-utils meson vala xdg-utils
 
 DESCRIPTION="The terminal of the 21st century"
 HOMEPAGE="https://github.com/elementary/terminal"
-SRC_URI="https://github.com/elementary/terminal/archive/${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/elementary/terminal/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE=""
-
 
 DEPEND="
 	$(vala_depend)
@@ -26,7 +24,7 @@ DEPEND="
 
 RDEPEND="${DEPEND}
 	dev-libs/glib:2
-	>=dev-libs/granite-6.1.0:=
+	>=dev-libs/granite-6.1.0
 	dev-libs/libgee
 	dev-libs/libpcre2
 	>=gui-libs/libhandy-0.83.0:1
