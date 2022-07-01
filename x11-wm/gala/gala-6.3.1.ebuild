@@ -1,4 +1,4 @@
-# Copyright 2021 Gentoo Foundation
+# Copyright 2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -14,7 +14,7 @@ SRC_URI="https://github.com/elementary/gala/archive/refs/tags/${PV}.tar.gz -> ${
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE=""
+IUSE="systemd"
 
 DEPEND="
 	$(vala_depend)
@@ -24,7 +24,7 @@ DEPEND="
 
 RDEPEND="${DEPEND}
 	>=dev-libs/glib-2.44:2
-	>=dev-libs/granite-5.4.0:=
+	dev-libs/granite:0
 	dev-libs/libgee:0.8
 	gnome-base/gnome-desktop:3
 	gnome-base/gnome-settings-daemon:=
@@ -32,13 +32,20 @@ RDEPEND="${DEPEND}
 	media-libs/gexiv2
 	x11-libs/gdk-pixbuf[jpeg]
 	>=x11-libs/gtk+-3.10.0:3
-	>=x11-misc/plank-0.11.0
 	>=x11-wm/mutter-3.36.0:=
 "
 
 src_prepare() {
 	eapply_user
 	vala_src_prepare
+}
+
+src_configure() {
+	local emesonargs=(
+		-Dsystemd=$(usex systemd true false)
+		-Dsystemduserunitdir=$(usex systemd $(systemd_get_userunitdir) no)
+	)
+	meson_src_configure
 }
 
 pkg_preinst() {
