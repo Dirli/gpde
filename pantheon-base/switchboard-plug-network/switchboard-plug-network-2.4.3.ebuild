@@ -1,20 +1,19 @@
-# Copyright 1999-2021 Gentoo Foundation
+# Copyright 2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
-VALA_MIN_API_VERSION=0.22
+VALA_MIN_API_VERSION=0.40
 
 inherit meson vala
 
 DESCRIPTION="Configure all available networks"
 HOMEPAGE="https://github.com/elementary/switchboard-plug-network"
-SRC_URI="https://github.com/elementary/switchboard-plug-network/archive/${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/elementary/switchboard-plug-network/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE=""
 
 DEPEND="
 	$(vala_depend)
@@ -24,8 +23,8 @@ DEPEND="
 
 RDEPEND="${DEPEND}
 	dev-libs/glib:2
-	>=dev-libs/granite-5.2.3:=
-	gnome-extra/nm-applet
+	>=dev-libs/granite-5.2.3:0
+	>=gnome-extra/nm-applet-1.20.6
 	>=net-misc/networkmanager-1.8
 	pantheon-base/switchboard
 	sys-auth/polkit
