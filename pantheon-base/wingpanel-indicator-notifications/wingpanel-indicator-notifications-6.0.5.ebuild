@@ -1,4 +1,4 @@
-# Copyright 1999-2021 Gentoo Foundation
+# Copyright 2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -23,7 +23,7 @@ DEPEND="
 
 RDEPEND="${DEPEND}
 	dev-libs/glib:2
-	>=dev-libs/granite-6.0.0:=
+	>=dev-libs/granite-6.0.0:0
 	gui-libs/libhandy:1
 	>=pantheon-base/wingpanel-3.0.0:=
 	x11-libs/gtk+:3
