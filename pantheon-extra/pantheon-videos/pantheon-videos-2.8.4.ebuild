@@ -1,4 +1,4 @@
-# Copyright 2021 Gentoo Foundation
+# Copyright 2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -23,7 +23,7 @@ DEPEND="
 
 RDEPEND="${DEPEND}
 	dev-libs/glib:2
-	dev-libs/granite
+	dev-libs/granite:0
 	dev-libs/libgee:0.8
 	gui-libs/libhandy
 	media-libs/clutter-gst:3.0
