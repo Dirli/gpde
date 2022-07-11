@@ -1,4 +1,4 @@
-# Copyright 2021 Gentoo Foundation
+# Copyright 2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -24,7 +24,7 @@ DEPEND="
 RDEPEND="${DEPEND}
 	>=dev-db/sqlite-3.5.9:3
 	>=dev-libs/glib-2.30:2
-	>=dev-libs/granite-6.0.0
+	>=dev-libs/granite-6.0.0:0
 	dev-libs/json-glib
 	>=dev-libs/libgudev-145
 	>=dev-libs/libgee-0.8.5:0.8
