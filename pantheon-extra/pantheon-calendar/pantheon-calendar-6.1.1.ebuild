@@ -1,4 +1,4 @@
-# Copyright 2021 Gentoo Foundation
+# Copyright 2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -14,7 +14,6 @@ SRC_URI="https://github.com/elementary/calendar/archive/refs/tags/${PV}.tar.gz -
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE=""
 
 DEPEND="
 	$(vala_depend)
@@ -26,7 +25,7 @@ RDEPEND="${DEPEND}
 	app-misc/geoclue:2
 	dev-libs/folks
 	dev-libs/glib:2
-	>=dev-libs/granite-6.0.0
+	>=dev-libs/granite-6.2.0:0
 	dev-libs/libgee:0.8
 	dev-libs/libical
 	>=gnome-extra/evolution-data-server-3.8
