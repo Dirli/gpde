@@ -1,4 +1,4 @@
-# Copyright 2022 Gentoo Authors
+# Copyright 2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -22,7 +22,7 @@ RDEPEND="${DEPEND}
 	dev-libs/glib:2
 	dev-libs/libgee:0.8
 	>=x11-wm/gala-6.0.0
-	<x11-wm/mutter-42:=
+	<x11-wm/mutter-44:=
 "
 
 src_prepare() {
