@@ -1,15 +1,15 @@
-# Copyright 2021 Gentoo Foundation
+# Copyright 2023 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
-VALA_MIN_VERSION=0.22
+VALA_MIN_VERSION=0.40
 
 inherit gnome2-utils meson vala
 
 DESCRIPTION="Keyboard indicator for Wingpanel"
 HOMEPAGE="https://github.com/elementary/wingpanel-indicator-keyboard"
-SRC_URI="https://github.com/elementary/wingpanel-indicator-keyboard/archive/${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/elementary/wingpanel-indicator-keyboard/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -26,7 +26,7 @@ DEPEND="
 RDEPEND="${DEPEND}
 	app-i18n/ibus
 	dev-libs/glib:2
-	dev-libs/granite
+	dev-libs/granite:0
 	dev-libs/libxml2[python]
 	>=pantheon-base/wingpanel-3.0.0
 	x11-libs/gtk+:3
