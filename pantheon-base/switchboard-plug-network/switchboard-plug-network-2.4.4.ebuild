@@ -1,4 +1,4 @@
-# Copyright 2022 Gentoo Foundation
+# Copyright 2023 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -25,7 +25,7 @@ RDEPEND="${DEPEND}
 	dev-libs/glib:2
 	>=dev-libs/granite-5.2.3:0
 	>=gnome-extra/nm-applet-1.20.6
-	>=net-misc/networkmanager-1.8
+	>=net-misc/networkmanager-1.8.0
 	pantheon-base/switchboard
 	sys-auth/polkit
 	x11-libs/gtk+:3
