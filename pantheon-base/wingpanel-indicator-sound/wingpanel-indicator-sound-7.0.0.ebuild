@@ -1,20 +1,19 @@
-# Copyright 1999-2021 Gentoo Foundation
+# Copyright 2023 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
-VALA_MIN_VERSION=0.26
+VALA_MIN_VERSION=0.40
 
 inherit gnome2-utils meson vala
 
 DESCRIPTION="Sound indicator for Wingpanel"
 HOMEPAGE="https://github.com/elementary/wingpanel-indicator-sound"
-SRC_URI="https://github.com/elementary/wingpanel-indicator-sound/archive/${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/elementary/wingpanel-indicator-sound/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE=""
 
 DEPEND="
 	$(vala_depend)
