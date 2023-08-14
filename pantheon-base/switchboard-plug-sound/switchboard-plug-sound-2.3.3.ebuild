@@ -1,4 +1,4 @@
-# Copyright 1999-2022 Gentoo Foundation
+# Copyright 2023 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -23,6 +23,7 @@ DEPEND="
 RDEPEND="${DEPEND}
 	dev-libs/glib:2
 	dev-libs/granite:0
+	gui-libs/libhandy:1
 	media-libs/libcanberra[gtk3]
 	media-sound/pulseaudio
 	pantheon-base/switchboard
