@@ -1,20 +1,19 @@
-# Copyright 1999-2021 Gentoo Foundation
+# Copyright 2023 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
-VALA_MIN_API_VERSION=0.22
+VALA_MIN_API_VERSION=0.40
 
 inherit meson vala
 
 DESCRIPTION="Adjust keyboard settings from Switchboard"
 HOMEPAGE="https://github.com/elementary/switchboard-plug-keyboard"
-SRC_URI="https://github.com/elementary/switchboard-plug-keyboard/archive/${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/elementary/switchboard-plug-keyboard/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE=""
 
 DEPEND="
 	$(vala_depend)
@@ -26,7 +25,7 @@ DEPEND="
 RDEPEND="${DEPEND}
 	app-i18n/ibus
 	dev-libs/glib:2
-	>=dev-libs/granite-6.0.0:=
+	>=dev-libs/granite-6.0.0:0
 	dev-libs/libxml2
 	gnome-base/libgnomekbd
 	>=gui-libs/libhandy-0.90.0:1
