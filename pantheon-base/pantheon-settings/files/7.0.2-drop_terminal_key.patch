@@ -1,0 +1,12 @@
+--- /overrides/default-settings.gschema.override.in	2023-06-01 08:16:58.000000000 +0300
++++ /overrides/default-settings.gschema.override.in	2023-08-16 01:06:28.978201224 +0300
+@@ -121,9 +121,6 @@
+ [org.gnome.settings-daemon.plugins.color:Pantheon]
+ night-light-temperature=4500
+ 
+-[org.gnome.settings-daemon.plugins.media-keys:Pantheon]
+-terminal=['<Super>t']
+-
+ [org.gnome.settings-daemon.plugins.power:Pantheon]
+ idle-dim=false
+ 
