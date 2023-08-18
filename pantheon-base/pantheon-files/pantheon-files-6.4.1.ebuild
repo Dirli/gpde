@@ -1,4 +1,4 @@
-# Copyright 2021 Gentoo Foundation
+# Copyright 2023 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -24,8 +24,8 @@ DEPEND="
 RDEPEND="${DEPEND}
 	dev-db/sqlite:3
 	dev-libs/dbus-glib
-	>=dev-libs/glib-2.40.0:2
-	>=dev-libs/granite-6.1.0
+	>=dev-libs/glib-2.64.6:2
+	>=dev-libs/granite-6.1.0:0
 	dev-libs/libgee:0.8
 	dev-libs/libgit2-glib
 	>=dev-libs/libcloudproviders-0.3.0
@@ -37,7 +37,7 @@ RDEPEND="${DEPEND}
 	>=x11-libs/gtk+-3.22.25:3[X,wayland?]
 	>=x11-libs/libnotify-0.7.2
 	>=x11-libs/pango-1.1.2
-	xfce-extra/tumbler
+	xfce-base/tumbler
 "
 
 S="${WORKDIR}/files-${PV}"
