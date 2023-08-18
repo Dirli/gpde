@@ -1,4 +1,4 @@
-# Copyright 1999-2021 Gentoo Foundation
+# Copyright 2023 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -7,14 +7,14 @@ inherit meson xdg-utils
 
 DESCRIPTION="An original set of vector icons designed specifically for elementary OS"
 HOMEPAGE="https://github.com/elementary/icons"
-SRC_URI="https://github.com/elementary/icons/archive/${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/elementary/icons/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE=""
 
 BDEPEND="
+	gnome-base/librsvg
 	x11-apps/xcursorgen
 "
 
