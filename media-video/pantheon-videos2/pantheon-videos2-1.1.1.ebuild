@@ -1,7 +1,7 @@
-# Copyright 2021 Gentoo Foundation
+# Copyright 2023 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 VALA_MIN_VERSION=0.40
 
@@ -15,27 +15,30 @@ LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="amd64"
 
+
 DEPEND="
+	dev-libs/glib:2
+	dev-libs/granite:0
+	dev-libs/libgee:0.8
+	>=media-plugins/gst-plugins-gtk-1.20.0:1.0
+	>=media-plugins/gst-plugins-meta-1.20.0:1.0[ffmpeg]
+	>=media-libs/gstreamer-1.20.0:1.0
+	>=x11-libs/gtk+-3.22.0:3
+"
+
+RDEPEND="${DEPEND}"
+
+BDEPEND="
 	$(vala_depend)
 	sys-devel/gettext
 	virtual/pkgconfig
-"
-
-RDEPEND="${DEPEND}
-	dev-libs/glib:2
-	dev-libs/granite
-	dev-libs/libgee
-	>=media-plugins/gst-plugins-gtk-1.16.2:1.0
-	>=media-plugins/gst-plugins-meta-1.16.2:1.0[ffmpeg]
-	>=media-libs/gstreamer-1.16.2:1.0
-	>=x11-libs/gtk+-3.22:3
 "
 
 S=${WORKDIR}/videos2-${PV}
 
 src_prepare() {
 	eapply_user
-	vala_src_prepare
+	vala_setup
 }
 
 pkg_preinst() {
