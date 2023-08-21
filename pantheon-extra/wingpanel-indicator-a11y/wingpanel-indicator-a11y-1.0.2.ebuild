@@ -1,7 +1,7 @@
 # Copyright 2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 inherit gnome2-utils meson vala
 
@@ -11,24 +11,28 @@ SRC_URI="https://github.com/elementary/wingpanel-indicator-a11y/archive/refs/tag
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="amd64"
 
 DEPEND="
-	$(vala_depend)
-	sys-devel/gettext
-	virtual/pkgconfig
-"
-
-RDEPEND="${DEPEND}
 	dev-libs/glib:2
 	dev-libs/granite:0
 	>=pantheon-base/wingpanel-3.0.0:=
 	x11-libs/gtk+:3
 "
 
+#app-accessibility/onboard
+RDEPEND="${DEPEND}
+	app-accessibility/orca
+"
+
+BDEPEND="
+	$(vala_depend)
+	sys-devel/gettext
+	virtual/pkgconfig
+"
 src_prepare() {
 	eapply_user
-	vala_src_prepare
+	vala_setup
 }
 
 pkg_preinst() {
