@@ -1,7 +1,7 @@
 # Copyright 2023 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 VALA_MIN_API_VERSION=0.48
 
@@ -17,11 +17,6 @@ SLOT="0"
 IUSE="wayland zeitgeist"
 
 DEPEND="
-	$(vala_depend)
-	sys-devel/gettext
-	virtual/pkgconfig
-"
-RDEPEND="${DEPEND}
 	dev-db/sqlite:3
 	dev-libs/dbus-glib
 	>=dev-libs/glib-2.64.6:2
@@ -29,7 +24,6 @@ RDEPEND="${DEPEND}
 	dev-libs/libgee:0.8
 	dev-libs/libgit2-glib
 	>=dev-libs/libcloudproviders-0.3.0
-	gnome-base/gvfs
 	zeitgeist? ( >=gnome-extra/zeitgeist-1.0.2 )
 	>=gui-libs/libhandy-0.83.0:1
 	>=media-libs/libcanberra-0.30
@@ -37,7 +31,17 @@ RDEPEND="${DEPEND}
 	>=x11-libs/gtk+-3.22.25:3[X,wayland?]
 	>=x11-libs/libnotify-0.7.2
 	>=x11-libs/pango-1.1.2
+"
+
+RDEPEND="${DEPEND}
+	gnome-base/gvfs
 	xfce-base/tumbler
+"
+
+DEPEND="
+	$(vala_depend)
+	sys-devel/gettext
+	virtual/pkgconfig
 "
 
 S="${WORKDIR}/files-${PV}"
@@ -45,9 +49,9 @@ S="${WORKDIR}/files-${PV}"
 src_prepare() {
 	eapply_user
 
-	eapply "${FILESDIR}/${PV}-wayland_optional.patch"
+	eapply "${FILESDIR}/6.4.1-wayland_optional.patch"
 
-	vala_src_prepare
+	vala_setup
 }
 
 src_configure() {
