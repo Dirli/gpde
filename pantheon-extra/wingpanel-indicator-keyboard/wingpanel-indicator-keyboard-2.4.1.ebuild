@@ -1,7 +1,7 @@
 # Copyright 2023 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 VALA_MIN_VERSION=0.40
 
@@ -17,13 +17,6 @@ KEYWORDS="amd64"
 IUSE=""
 
 DEPEND="
-	$(vala_depend)
-	sys-devel/gettext
-	virtual/pkgconfig
-	x11-misc/xkeyboard-config
-"
-
-RDEPEND="${DEPEND}
 	app-i18n/ibus
 	dev-libs/glib:2
 	dev-libs/granite:0
@@ -32,9 +25,18 @@ RDEPEND="${DEPEND}
 	x11-libs/gtk+:3
 "
 
+RDEPEND="${DEPEND}"
+
+BDEPEND="
+	$(vala_depend)
+	sys-devel/gettext
+	virtual/pkgconfig
+	x11-misc/xkeyboard-config
+"
+
 src_prepare() {
 	eapply_user
-	vala_src_prepare
+	vala_setup
 }
 
 pkg_preinst() {
