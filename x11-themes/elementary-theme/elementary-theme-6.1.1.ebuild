@@ -1,7 +1,7 @@
-# Copyright 1999-2021 Gentoo Foundation
+# Copyright 2023 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 inherit meson
 
@@ -13,9 +13,10 @@ LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="amd64"
 
-DEPEND="
+DEPEND=""
+RDEPEND="${DEPEND}"
+BDEPEND="
 	dev-lang/sassc
 "
-RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/stylesheet-${PV}"
