@@ -1,7 +1,7 @@
 # Copyright 2023 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 VALA_MIN_API_VERSION=0.40
 
@@ -16,24 +16,27 @@ SLOT="0"
 KEYWORDS="amd64"
 
 DEPEND="
+	dev-libs/glib:2
+	>=dev-libs/granite-5.2.3:0
+	gnome-extra/nm-applet
+	>=net-misc/networkmanager-1.20.6
+	pantheon-base/switchboard
+	x11-libs/gtk+:3
+"
+
+RDEPEND="${DEPEND}
+	sys-auth/polkit
+"
+
+BDEPEND="
 	$(vala_depend)
 	sys-devel/gettext
 	virtual/pkgconfig
 "
 
-RDEPEND="${DEPEND}
-	dev-libs/glib:2
-	>=dev-libs/granite-5.2.3:0
-	>=gnome-extra/nm-applet-1.20.6
-	>=net-misc/networkmanager-1.8.0
-	pantheon-base/switchboard
-	sys-auth/polkit
-	x11-libs/gtk+:3
-"
-
 src_prepare() {
 	eapply_user
 
-	vala_src_prepare
+	vala_setup
 }
 
