@@ -1,7 +1,7 @@
 # Copyright 2023 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 VALA_MIN_VERSION=0.40
 
@@ -16,24 +16,26 @@ SLOT="0"
 KEYWORDS="amd64"
 
 DEPEND="
+	dev-libs/glib:2
+	>=dev-libs/granite-6.0.0:0
+	media-libs/libcanberra[gtk3]
+	media-libs/libpulse[glib]
+	>=pantheon-base/wingpanel-3.0.0
+	x11-libs/gtk+:3
+	x11-libs/libnotify
+"
+
+RDEPEND="${DEPEND}"
+
+BDEPEND="
 	$(vala_depend)
 	sys-devel/gettext
 	virtual/pkgconfig
 "
 
-RDEPEND="${DEPEND}
-	dev-libs/glib:2
-	>=dev-libs/granite-6.0.0:=
-	media-libs/libcanberra[gtk3]
-	media-sound/pulseaudio[glib]
-	>=pantheon-base/wingpanel-3.0.0:=
-	x11-libs/gtk+:3
-	x11-libs/libnotify
-"
-
 src_prepare() {
 	eapply_user
-	vala_src_prepare
+	vala_setup
 }
 
 pkg_preinst() {
