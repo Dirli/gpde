@@ -1,7 +1,7 @@
-# Copyright 2022 Gentoo Foundation
+# Copyright 2023 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 inherit gnome2-utils meson vala xdg-utils
 
@@ -15,20 +15,11 @@ KEYWORDS="amd64"
 IUSE="plugins docs"
 
 DEPEND="
-	$(vala_depend)
-	dev-util/intltool
-	sys-devel/gettext
-	virtual/pkgconfig
-"
-
-RDEPEND="${DEPEND}
 	>=dev-db/sqlite-3.5.9:3
 	>=dev-libs/glib-2.30:2
 	>=dev-libs/granite-6.0.0:0
-	dev-libs/json-glib
 	>=dev-libs/libgudev-145
 	>=dev-libs/libgee-0.8.5:0.8
-	>=dev-libs/libxml2-2.6.32:2[python]
 	gui-libs/libhandy:1
 	>=media-libs/gexiv2-0.4.90
 	>=media-libs/gstreamer-1.0.0:1.0
@@ -37,19 +28,24 @@ RDEPEND="${DEPEND}
 	>=media-libs/libgphoto2-2.4.2
 	>=media-libs/libraw-0.13.2
 	>=media-libs/libwebp-0.4.4
-	>=net-libs/libsoup-2.26:2.4
-	>=net-libs/rest-0.7:0.7
-	plugins? ( >=net-libs/webkit-gtk-2.0.0:4 )
-	sci-geosciences/geocode-glib
+	sci-geosciences/geocode-glib:2
 	>=x11-libs/gtk+-3.6.0:3
+"
+
+RDEPEND="${DEPEND}"
+
+BDEPEND="
+	$(vala_depend)
+	sys-devel/gettext
+	virtual/pkgconfig
 "
 
 S="${WORKDIR}/photos-${PV}"
 
 src_prepare() {
 	eapply_user
-	eapply "${FILESDIR}/2.7.2-webkit_optional.patch"
-	vala_src_prepare
+	eapply "${FILESDIR}/${PV}-drop_pub_plugs.patch"
+	vala_setup
 }
 
 src_configure() {
