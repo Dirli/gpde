@@ -1,7 +1,7 @@
-# Copyright 1999-2019 Gentoo Foundation
+# Copyright 2023 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 inherit meson
 
@@ -14,11 +14,14 @@ LICENSE="GPL-3"
 SLOT="0"
 IUSE=""
 
-RDEPEND="
+DEPEND=""
+
+RDEPEND="${DEPEND}
 	app-arch/file-roller
-	pantheon-extra/contractor
+	pantheon-base/contractor
 "
-DEPEND="${RDEPEND}
+
+BDEPEND="
 	sys-devel/gettext
 "
 
