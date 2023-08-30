@@ -1,19 +1,18 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
-VALA_USE_DEPEND="vapigen"
-
 inherit meson vala xdg-utils
 
-if [[ ${PV} = *9999* ]]; then
+if [[ ${PV} == *9999* ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/ximion/${PN}"
 else
-	SRC_URI="https://www.freedesktop.org/software/appstream/releases/AppStream-${PV}.tar.xz"
-	S="${WORKDIR}/AppStream-${PV}"
-	KEYWORDS="amd64 ~arm arm64 ~ppc ~ppc64 ~riscv x86"
+	MY_PN="AppStream"
+	SRC_URI="https://www.freedesktop.org/software/appstream/releases/${MY_PN}-${PV}.tar.xz"
+	KEYWORDS="amd64"
+	S="${WORKDIR}/${MY_PN}-${PV}"
 fi
 
 DESCRIPTION="Cross-distro effort for providing metadata for software in the Linux ecosystem"
@@ -26,12 +25,12 @@ IUSE="apt doc +introspection qt5 test vala"
 RESTRICT="test" # bug 691962
 
 RDEPEND="
-	dev-db/lmdb:=
-	>=dev-libs/glib-2.58:2
+	>=dev-libs/glib-2.62:2
 	dev-libs/libxml2:2
+	>=dev-libs/libxmlb-0.3.6:=
 	dev-libs/libyaml
 	dev-libs/snowball-stemmer:=
-	net-misc/curl
+	>=net-misc/curl-7.62
 	introspection? ( >=dev-libs/gobject-introspection-1.56:= )
 	qt5? ( dev-qt/qtcore:5 )
 "
@@ -48,9 +47,7 @@ BDEPEND="
 	vala? ( $(vala_depend) )
 "
 
-PATCHES=(
-	"${FILESDIR}"/${PN}-0.14.3-disable-Werror-flags.patch # bug 733774
-)
+PATCHES=( "${FILESDIR}"/${P}-disable-Werror-flags.patch ) # bug 733774
 
 src_prepare() {
 	default
@@ -58,6 +55,7 @@ src_prepare() {
 	if ! use test; then
 		sed -e "/^subdir.*tests/s/^/#DONT /" -i {,qt/}meson.build || die # bug 675944
 	fi
+	vala_setup
 }
 
 src_configure() {
@@ -68,6 +66,7 @@ src_configure() {
 		-Ddocs=false
 		-Dcompose=false
 		-Dmaintainer=false
+		-Dstatic-analysis=false
 		-Dstemming=true
 		-Dvapi=$(usex vala true false)
 		-Dapt-support=$(usex apt true false)
