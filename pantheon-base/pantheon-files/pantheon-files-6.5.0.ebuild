@@ -38,7 +38,7 @@ RDEPEND="${DEPEND}
 	xfce-base/tumbler
 "
 
-DEPEND="
+BDEPEND="
 	$(vala_depend)
 	sys-devel/gettext
 	virtual/pkgconfig

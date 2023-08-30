@@ -1,24 +1,19 @@
 # Copyright 2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 inherit meson vala xdg-utils
 
 DESCRIPTION="LightDM Greeter for Pantheon"
 HOMEPAGE="https://github.com/elementary/greeter"
-SRC_URI="https://github.com/elementary/greeter/archive/${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/elementary/greeter/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="amd64"
 
 DEPEND="
-	$(vala_depend)
-	sys-devel/gettext
-	virtual/pkgconfig
-"
-RDEPEND="${DEPEND}
 	dev-libs/glib:2
 	>=dev-libs/granite-5.5.0:0
 	dev-libs/libgee:0.8
@@ -30,12 +25,18 @@ RDEPEND="${DEPEND}
 	<x11-wm/mutter-45
 "
 
+RDEPEND="${DEPEND}"
+
+BDEPEND="
+	$(vala_depend)
+	sys-devel/gettext
+	virtual/pkgconfig
+"
 S="${WORKDIR}/greeter-${PV}"
 
 src_prepare() {
 	eapply_user
-
-	vala_src_prepare
+	vala_setup
 }
 
 pkg_postinst() {
