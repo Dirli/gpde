@@ -1,7 +1,7 @@
-# Copyright 2021 Gentoo Foundation
+# Copyright 2023 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 inherit gnome2-utils meson vala xdg-utils
 
@@ -17,14 +17,8 @@ KEYWORDS="amd64"
 IUSE="zeitgeist"
 
 DEPEND="
-	$(vala_depend)
-	sys-devel/gettext
-	virtual/pkgconfig
-"
-RDEPEND="${DEPEND}
->=dev-libs/appstream-0.10.0[vala]
 	dev-libs/glib:2
-	>=dev-libs/granite-6.1.0
+	>=dev-libs/granite-6.1.0:0
 	dev-libs/json-glib
 	dev-libs/libgee:0.8
 	gnome-base/gnome-menus:3
@@ -36,9 +30,19 @@ RDEPEND="${DEPEND}
 	>=x11-libs/gtk+-3.12.0:3
 "
 
+RDEPEND="${DEPEND}
+	>=dev-libs/appstream-0.10.0[vala]
+"
+
+BDEPEND="
+	$(vala_depend)
+	sys-devel/gettext
+	virtual/pkgconfig
+"
+
 src_prepare() {
 	eapply_user
-	vala_src_prepare
+	vala_setup
 }
 
 src_configure() {
