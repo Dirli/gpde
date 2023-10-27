@@ -1,7 +1,7 @@
-# Copyright 2021 Gentoo Authors
+# Copyright 2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 inherit meson vala
 
@@ -15,19 +15,22 @@ KEYWORDS="amd64"
 IUSE=""
 
 DEPEND="
-	$(vala_depend)
-	sys-devel/gettext
-	virtual/pkgconfig
-"
-RDEPEND="${DEPEND}
 	dev-libs/glib:2
-	dev-libs/granite
+	dev-libs/granite:0
 	>=pantheon-base/wingpanel-3.0.0
 	x11-libs/gtk+:3
 "
 
+RDEPEND="${DEPEND}"
+
+BDEPEND="
+	$(vala_depend)
+	sys-devel/gettext
+	virtual/pkgconfig
+"
+
 src_prepare() {
 	eapply_user
-	vala_src_prepare
+	vala_setup
 }
 
