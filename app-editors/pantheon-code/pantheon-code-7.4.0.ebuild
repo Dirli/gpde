@@ -1,11 +1,11 @@
-# Copyright 2023 Gentoo Foundation
+# Copyright 1999-2025 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
 VALA_MIN_API_VERSION=0.50
 
-inherit gnome2-utils meson vala xdg-utils
+inherit gnome2 meson vala xdg-utils
 
 DESCRIPTION="Code editor designed for elementary OS"
 HOMEPAGE="https://github.com/elementary/code"
@@ -14,7 +14,7 @@ SRC_URI="https://github.com/elementary/code/archive/refs/tags/${PV}.tar.gz -> ${
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE="plugins policykit -portal"
+IUSE="plugins policykit"
 
 DEPEND="
 	plugins? (
@@ -23,7 +23,7 @@ DEPEND="
 		net-libs/libsoup:2.4
 	)
 	>=dev-libs/glib-2.30:2
-	>=dev-libs/granite-6.0.0:0
+	>=dev-libs/granite-6.0.0:0/6
 	>=dev-libs/libgee-0.8.5:0.8
 	dev-libs/libgit2-glib
 	dev-libs/libpeas[gtk]
@@ -48,9 +48,6 @@ S="${WORKDIR}/code-${PV}"
 
 src_prepare() {
 	eapply_user
-
-	use portal || eapply "${FILESDIR}/${PV}-optional_portal.patch"
-
 	vala_setup
 }
 
