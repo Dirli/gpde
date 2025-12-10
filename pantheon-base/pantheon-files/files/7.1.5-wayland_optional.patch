@@ -1,0 +1,120 @@
+diff --git a/filechooser-portal/ExternalWindow.vala b/filechooser-portal/ExternalWindow.vala
+index 351e646..6f6660e 100644
+--- a/filechooser-portal/ExternalWindow.vala
++++ b/filechooser-portal/ExternalWindow.vala
+@@ -34,6 +34,7 @@ public interface ExternalWindow : GLib.Object {
+                 warning ("Error getting external X11 window: %s", e.message);
+                 return null;
+             }
++#if WAYLAND
+         } else if (handle.has_prefix (WAYLAND_PREFIX)) {
+             try {
+                 external_window = new ExternalWindowWayland (handle.substring (WAYLAND_PREFIX.length));
+@@ -41,6 +42,7 @@ public interface ExternalWindow : GLib.Object {
+                 warning ("Error getting external Wayland window: %s", e.message);
+                 return null;
+             }
++#endif
+         } else {
+             warning ("Unhandled parent window type %s", handle);
+         }
+@@ -91,7 +93,7 @@ public class ExternalWindowX11 : ExternalWindow, GLib.Object {
+         child_window.set_transient_for (foreign_gdk_window);
+     }
+ }
+-
++#if WAYLAND
+ public class ExternalWindowWayland : ExternalWindow, GLib.Object {
+     private static Gdk.Display? wayland_display = null;
+ 
+@@ -128,3 +130,4 @@ public class ExternalWindowWayland : ExternalWindow, GLib.Object {
+         }
+     }
+ }
++#endif
+diff --git a/filechooser-portal/meson.build b/filechooser-portal/meson.build
+index 043b22a..410c81a 100644
+--- a/filechooser-portal/meson.build
++++ b/filechooser-portal/meson.build
+@@ -1,5 +1,15 @@
+ libexec_dir = join_paths(get_option('prefix'), get_option ('libexecdir'))
+ 
++fc_deps = [
++    pantheon_files_core_dep,
++    dependency('gdk-x11-3.0'),
++    handy_dep,
++    project_config_dep
++]
++if wayland_dep.found ()
++    fc_deps += wayland_dep
++endif
++
+ executable(
+     'io.elementary.files.xdg-desktop-portal',
+     'ExternalWindow.vala',
+@@ -7,13 +17,7 @@ executable(
+     'FileChooserDialog.vala',
+     'Main.vala',
+ 
+-    dependencies : [
+-        pantheon_files_core_dep,
+-        dependency('gdk-x11-3.0'),
+-        dependency('gdk-wayland-3.0'),
+-        handy_dep,
+-        project_config_dep
+-    ],
++    dependencies : fc_deps,
+     install: true,
+     install_dir: libexec_dir,
+ )
+diff --git a/meson.build b/meson.build
+index d984202..8b76a8d 100644
+--- a/meson.build
++++ b/meson.build
+@@ -80,6 +80,10 @@ add_project_arguments(
+     language: 'vala'
+ )
+ 
++wayland_dep = dependency('gdk-wayland-3.0', required: false)
++if wayland_dep.found()
++    add_project_arguments('--define=WAYLAND', language: 'vala')
++endif
+ 
+ #Configuration file
+ 
+diff --git a/plugins/send-by-email/meson.build b/plugins/send-by-email/meson.build
+index 71be144..528b28f 100644
+--- a/plugins/send-by-email/meson.build
++++ b/plugins/send-by-email/meson.build
+@@ -1,6 +1,10 @@
+ send_by_email_plugin_dir = join_paths(plugin_dir, 'core')
+ 
+-gdk_dep = [ dependency('gdk-x11-3.0'), dependency('gdk-wayland-3.0') ]
++gdk_dep = [ dependency('gdk-x11-3.0') ]
++
++if wayland_dep.found ()
++    gdk_dep += dependency('gdk-wayland-3.0')
++endif
+ 
+ shared_module(
+     'pantheon-files-send-by-email',
+diff --git a/plugins/send-by-email/plugin.vala b/plugins/send-by-email/plugin.vala
+index 0bd8a62..adde151 100644
+--- a/plugins/send-by-email/plugin.vala
++++ b/plugins/send-by-email/plugin.vala
+@@ -81,6 +81,7 @@ public class Files.Plugins.SendByEmailMenuItem : Gtk.MenuItem {
+         if (window is Gdk.X11.Window) {
+             var xid = ((Gdk.X11.Window) window).get_xid ();
+             return "x11:%x".printf ((uint) xid);
++#if WAYLAND
+         } else if (window is Gdk.Wayland.Window) {
+             var handle = "wayland:";
+             ((Gdk.Wayland.Window) window).export_handle ((w, h) => {
+@@ -95,6 +96,7 @@ public class Files.Plugins.SendByEmailMenuItem : Gtk.MenuItem {
+ 
+             return "";
+ 
++#endif
+         } else {
+             warning ("Unknown windowing system, not exporting window");
+             return "";

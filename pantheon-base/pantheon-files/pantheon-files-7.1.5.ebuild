@@ -3,9 +3,9 @@
 
 EAPI=8
 
-VALA_MIN_API_VERSION=0.48
+VALA_MIN_API_VERSION=0.50
 
-inherit gnome2-utils meson vala xdg-utils
+inherit gnome2 meson systemd vala xdg-utils
 
 DESCRIPTION="A simple, powerful, sexy file manager for the Pantheon desktop"
 HOMEPAGE="https://github.com/elementary/files"
@@ -14,22 +14,21 @@ KEYWORDS="amd64"
 
 LICENSE="GPL-3"
 SLOT="0"
-IUSE="wayland zeitgeist"
+IUSE="systemd wayland zeitgeist"
 
 DEPEND="
 	dev-db/sqlite:3
-	dev-libs/dbus-glib
 	>=dev-libs/glib-2.64.6:2
-	>=dev-libs/granite-6.1.0:0
+	>=dev-libs/granite-6.1.0:0/6
 	dev-libs/libgee:0.8
 	dev-libs/libgit2-glib
-	>=dev-libs/libcloudproviders-0.3.0
+	dev-libs/libportal[gtk,wayland?]
 	zeitgeist? ( >=gnome-extra/zeitgeist-1.0.2 )
 	>=gui-libs/libhandy-0.83.0:1
 	>=media-libs/libcanberra-0.30
-	>=x11-misc/plank-0.10.9
+	>=net-libs/libcloudproviders-0.3.0[vala]
+	systemd? ( sys-apps/systemd )
 	>=x11-libs/gtk+-3.22.25:3[X,wayland?]
-	>=x11-libs/libnotify-0.7.2
 	>=x11-libs/pango-1.1.2
 "
 
@@ -49,7 +48,7 @@ S="${WORKDIR}/files-${PV}"
 src_prepare() {
 	eapply_user
 
-	eapply "${FILESDIR}/6.4.1-wayland_optional.patch"
+	eapply "${FILESDIR}/${PV}-wayland_optional.patch"
 
 	vala_setup
 }
@@ -57,6 +56,7 @@ src_prepare() {
 src_configure() {
 	local emesonargs=(
 		-Dwith-zeitgeist=$(usex zeitgeist enabled disabled)
+		-Dsystemduserunitdir=$(usex systemd $(systemd_get_userunitdir) no)
 	)
 	meson_src_configure
 }
