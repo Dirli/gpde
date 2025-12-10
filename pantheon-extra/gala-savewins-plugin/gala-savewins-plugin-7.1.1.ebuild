@@ -1,7 +1,7 @@
-# Copyright 2023 Gentoo Authors
+# Copyright 1999-2025 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 inherit meson vala
 
@@ -14,17 +14,19 @@ SLOT="0"
 KEYWORDS="amd64"
 
 DEPEND="
+	dev-libs/glib:2
+	dev-libs/libgee:0.8
+	<=x11-wm/gala-8.0.0
+	<x11-wm/mutter-46:=
+"
+
+RDEPEND="${DEPEND}"
+
+DEPEND="
 	$(vala_depend)
 	virtual/pkgconfig
 "
-RDEPEND="${DEPEND}
-	dev-libs/glib:2
-	dev-libs/libgee:0.8
-	>=x11-wm/gala-7.0.0
-	<x11-wm/mutter-44.0:=
-"
-
 src_prepare() {
 	default
-	vala_src_prepare
+	vala_setup
 }
