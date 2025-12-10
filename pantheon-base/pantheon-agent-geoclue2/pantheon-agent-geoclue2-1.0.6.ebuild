@@ -1,11 +1,11 @@
-# Copyright 2021 Gentoo Authors
+# Copyright 1999-2025 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 VALA_MIN_API_VERSION=0.22
 
-inherit gnome2-utils meson vala xdg-utils
+inherit gnome2 meson vala xdg-utils
 
 DESCRIPTION="Location services agent"
 HOMEPAGE="https://github.com/elementary/pantheon-agent-geoclue2"
@@ -16,20 +16,22 @@ SLOT="0"
 KEYWORDS="amd64"
 
 DEPEND="
-	$(vala_depend)
-	sys-devel/gettext
-	virtual/pkgconfig
-"
-
-RDEPEND="${DEPEND}
 	app-misc/geoclue
 	dev-libs/glib:2
 	x11-libs/gtk+:3
 "
 
+RDEPEND="${DEPEND}"
+
+DEPEND="
+	$(vala_depend)
+	sys-devel/gettext
+	virtual/pkgconfig
+"
+
 src_prepare() {
 	eapply_user
-	vala_src_prepare
+	vala_setup
 }
 
 pkg_preinst() {
