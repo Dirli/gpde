@@ -1,9 +1,9 @@
-# Copyright 2022 Gentoo Authors
+# Copyright 1999-2025 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
-inherit gnome2-utils meson vala
+inherit gnome2 meson vala
 
 DESCRIPTION="Gala plugin to switch layouts per window"
 HOMEPAGE="https://github.com/Dirli/gala-layoutpw-plugin"
@@ -14,20 +14,22 @@ SLOT="0"
 KEYWORDS="amd64"
 
 DEPEND="
+	dev-libs/glib:2
+	dev-libs/libgee:0.8
+	<=x11-wm/gala-8.0.0
+	<x11-wm/mutter-46:=
+"
+
+RDEPEND="${DEPEND}"
+
+DEPEND="
 	$(vala_depend)
 	virtual/pkgconfig
 "
 
-RDEPEND="${DEPEND}
-	dev-libs/glib:2
-	dev-libs/libgee:0.8
-	>=x11-wm/gala-6.0.0
-	<x11-wm/mutter-42:=
-"
-
 src_prepare() {
 	default
-	vala_src_prepare
+	vala_setup
 }
 
 pkg_preinst() {
