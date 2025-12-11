@@ -1,0 +1,138 @@
+diff --git a/meson.build b/meson.build
+index 62b58ce..929f89c 100644
+--- a/meson.build
++++ b/meson.build
+@@ -12,6 +12,10 @@ prefix = get_option('prefix')
+ datadir = join_paths(prefix, get_option('datadir'))
+ libdir = join_paths(prefix, get_option('libdir'))
+ 
++glib_dep = dependency('glib-2.0', version: '>=2.64.0')
++fwupd_dep = dependency('fwupd')
++appstream_dep = dependency ('appstream', version: '>=0.12.10')
++
+ add_project_arguments(
+     '-DGETTEXT_PACKAGE="@0@"'.format(gettext_name),
+     language:'c'
+@@ -26,6 +30,18 @@ if get_option('wallpaper')
+     vala_flags += ['--define', 'WALLPAPER']
+ endif
+ 
++if glib_dep.version().version_compare ('>=2.73.0')
++    vala_flags += ['--define', 'HAS_GLIB_2_73']
++endif
++
++if fwupd_dep.version().version_compare ('>=2.0.0')
++    vala_flags += ['--define', 'HAS_FWUPD_2_0']
++endif
++
++if appstream_dep.version().version_compare('>=1.0')
++    vala_flags += ['--define', 'HAS_APPSTREAM_1_0']
++endif
++
+ add_project_arguments(vala_flags, language: 'vala')
+ 
+ subdir('data')
+diff --git a/src/Views/FirmwareReleaseView.vala b/src/Views/FirmwareReleaseView.vala
+index 8e03207..f9d61b8 100644
+--- a/src/Views/FirmwareReleaseView.vala
++++ b/src/Views/FirmwareReleaseView.vala
+@@ -204,7 +204,11 @@ public class About.FirmwareReleaseView : Gtk.Grid {
+         content.visible_child = scrolled_window;
+ 
+         var release_version = release.get_version ();
++#if HAS_FWUPD_2_0
++        if (release.get_flags () == Fwupd.ReleaseFlags.IS_UPGRADE && release_version != device.get_version ()) {
++#else
+         if (release.get_flags () == Fwupd.RELEASE_FLAG_IS_UPGRADE && release_version != device.get_version ()) {
++#endif
+             update_button.label = _("Update");
+             update_button.sensitive = true;
+         } else {
+@@ -214,7 +218,11 @@ public class About.FirmwareReleaseView : Gtk.Grid {
+ 
+         summary_label.label = release.get_summary ();
+         try {
++#if HAS_APPSTREAM_1_0
++            description_label.label = AppStream.markup_convert (release.get_description (), AppStream.MarkupKind.XML);
++#else
+             description_label.label = AppStream.markup_convert_simple (release.get_description ());
++#endif
+         } catch (Error e) {
+             description_label.label = "";
+             warning ("Could not convert markup of release: %s", e.message);
+diff --git a/src/Views/FirmwareView.vala b/src/Views/FirmwareView.vala
+index 5a4dfe4..a551e6c 100644
+--- a/src/Views/FirmwareView.vala
++++ b/src/Views/FirmwareView.vala
+@@ -130,7 +130,11 @@ public class About.FirmwareView : Granite.SimpleSettingsPage {
+     }
+ 
+     private void add_device (Fwupd.Device device) {
++#if HAS_FWUPD_2_0
++        if (device.has_flag (Fwupd.DeviceFlags.UPDATABLE)) {
++#else
+         if (device.has_flag (Fwupd.DEVICE_FLAG_UPDATABLE)) {
++#endif
+             FirmwareClient.get_upgrades.begin (fwupd_client, device.get_id (), (obj, res) => {
+                 Fwupd.Release? release = null;
+ 
+@@ -255,18 +259,35 @@ public class About.FirmwareView : Granite.SimpleSettingsPage {
+             }
+         }
+ 
++#if HAS_FWUPD_2_0
++        var locations = release.get_locations ();
++        // Typically the first URI will be the main HTTP mirror,
++        // it's unlikely that we'll be using IPFS/IPNS URLs anyway.
++        var path = yield download_file (device, locations.length > 0 ? locations[0] : "");
++#else
+         var path = yield download_file (device, release.get_uri ());
++#endif
+ 
+         try {
+             var install_flags = Fwupd.InstallFlags.NONE;
++#if !HAS_FWUPD_2_0
+             if (device.has_flag (Fwupd.DEVICE_FLAG_ONLY_OFFLINE)) {
+                 install_flags = Fwupd.InstallFlags.OFFLINE;
+             }
++#endif
+ 
+             if (yield FirmwareClient.install (fwupd_client, device.get_id (), path, install_flags)) {
++#if HAS_FWUPD_2_0
++                if (device.has_flag (Fwupd.DeviceFlags.NEEDS_REBOOT)) {
++#else
+                 if (device.has_flag (Fwupd.DEVICE_FLAG_NEEDS_REBOOT)) {
++#endif
+                     show_reboot_dialog ();
++#if HAS_FWUPD_2_0
++                } else if (device.has_flag (Fwupd.DeviceFlags.NEEDS_SHUTDOWN)) {
++#else
+                 } else if (device.has_flag (Fwupd.DEVICE_FLAG_NEEDS_SHUTDOWN)) {
++#endif
+                     show_shutdown_dialog ();
+                 }
+             }
+diff --git a/src/meson.build b/src/meson.build
+index 818af5a..55177bc 100644
+--- a/src/meson.build
++++ b/src/meson.build
+@@ -28,8 +28,8 @@ shared_module(
+     config_vala,
+     css_gresource,
+     dependencies: [
+-        dependency('fwupd'),
+-        dependency('glib-2.0', version: '>=2.64.0'),
++        fwupd_dep,
++        glib_dep,
+         dependency('gio-2.0'),
+         dependency('gobject-2.0'),
+         dependency('granite'),
+@@ -38,7 +38,7 @@ shared_module(
+         dependency('gudev-1.0'),
+         dependency('udisks2'),
+         dependency('libhandy-1'),
+-        dependency ('appstream', version: '>=0.12.10'),
++        appstream_dep,
+         meson.get_compiler('vala').find_library('posix'),
+         switchboard_dep
+     ],
