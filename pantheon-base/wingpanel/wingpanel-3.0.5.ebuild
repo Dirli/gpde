@@ -1,4 +1,4 @@
-# Copyright 2023 Gentoo Foundation
+# Copyright 2025 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -17,10 +17,10 @@ IUSE="example"
 DEPEND="
 	>=dev-libs/glib-2.40:2
 	dev-libs/libgee:0.8
-	>=dev-libs/granite-5.4.0:0
+	>=dev-libs/granite-5.4.0:0/6
 	>=x11-libs/gtk+-3.10.0:3[X]
 	x11-wm/gala
-	<x11-wm/mutter-45
+	<x11-wm/mutter-47
 "
 
 RDEPEND="${DEPEND}"
@@ -32,13 +32,16 @@ BDEPEND="
 "
 
 src_prepare() {
+	eapply "${FILESDIR}/${PV}-add_mutter_46_1.patch"
+	eapply "${FILESDIR}/${PV}-add_mutter_46_2.patch"
+
 	eapply_user
 	vala_setup
 }
 
 src_configure() {
 	local emesonargs=(
-		-Dexample=$(usex example true false)
+		$(meson_use example)
 	)
 	meson_src_configure
 }

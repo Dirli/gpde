@@ -1,0 +1,16 @@
+diff --git a/wingpanel-interface/FocusManager.vala b/wingpanel-interface/FocusManager.vala
+index 461661b..1c29d12 100644
+--- a/wingpanel-interface/FocusManager.vala
++++ b/wingpanel-interface/FocusManager.vala
+@@ -112,7 +112,10 @@ public class WingpanelInterface.FocusManager : Object {
+         }
+ 
+         if (window != null) {
+-#if HAS_MUTTER44
++#if HAS_MUTTER46
++            Graphene.Point pos_hint = {x, y};
++            window.begin_grab_op (Meta.GrabOp.MOVING, null, null, time, pos_hint);
++#elif HAS_MUTTER44
+             window.begin_grab_op (Meta.GrabOp.MOVING, null, null, time);
+ #else
+             display.begin_grab_op (window, Meta.GrabOp.MOVING, false, true, button, state, time, x, y);
