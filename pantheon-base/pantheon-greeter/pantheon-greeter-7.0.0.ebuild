@@ -1,4 +1,4 @@
-# Copyright 2023 Gentoo Authors
+# Copyright 2025 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -22,7 +22,7 @@ DEPEND="
 	x11-libs/gdk-pixbuf:2
 	x11-libs/gtk+:3
 	x11-misc/lightdm[introspection,vala]
-	<x11-wm/mutter-45
+	<x11-wm/mutter-47
 "
 
 RDEPEND="${DEPEND}"
@@ -35,6 +35,7 @@ BDEPEND="
 S="${WORKDIR}/greeter-${PV}"
 
 src_prepare() {
+	eapply "${FILESDIR}/${PV}-add_mutter_46.patch"
 	eapply_user
 	vala_setup
 }
