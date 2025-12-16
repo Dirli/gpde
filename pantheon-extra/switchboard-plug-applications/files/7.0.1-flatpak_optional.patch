@@ -1,0 +1,121 @@
+diff --git a/src/Plug.vala b/src/Plug.vala
+index caee00c..b81bb58 100644
+--- a/src/Plug.vala
++++ b/src/Plug.vala
+@@ -23,7 +23,9 @@
+ public class ApplicationsPlug : Switchboard.Plug {
+     private const string DEFAULTS = "defaults";
+     private const string STARTUP = "startup";
++#if USE_FLATPAK
+     private const string PERMISSIONS = "permissions";
++#endif
+ 
+     private Gtk.Grid grid;
+     private Gtk.Stack stack;
+@@ -36,7 +38,9 @@ public class ApplicationsPlug : Switchboard.Plug {
+         settings.set ("applications", null);
+         settings.set ("applications/defaults", DEFAULTS);
+         settings.set ("applications/startup", STARTUP);
++#if USE_FLATPAK
+         settings.set ("applications/permissions", PERMISSIONS);
++#endif
+ 
+         Object (
+             category: Category.PERSONAL,
+@@ -55,7 +59,9 @@ public class ApplicationsPlug : Switchboard.Plug {
+             };
+             stack.add_titled (new Defaults.Plug (), DEFAULTS, _("Defaults"));
+             stack.add_titled (new Startup.Plug (), STARTUP, _("Startup"));
++#if USE_FLATPAK
+             stack.add_titled (new Permissions.Plug (), PERMISSIONS, _("Permissions"));
++#endif
+ 
+             var stack_switcher = new Gtk.StackSwitcher () {
+                 halign = Gtk.Align.CENTER,
+@@ -85,7 +91,9 @@ public class ApplicationsPlug : Switchboard.Plug {
+         switch (location) {
+             case STARTUP:
+             case DEFAULTS:
++#if USE_FLATPAK
+             case PERMISSIONS:
++#endif
+                 stack.set_visible_child_name (location);
+                 break;
+             default:
+@@ -101,9 +109,11 @@ public class ApplicationsPlug : Switchboard.Plug {
+         );
+         search_results.set ("%s → %s".printf (display_name, _("Startup")), STARTUP);
+         search_results.set ("%s → %s".printf (display_name, _("Default Apps")), DEFAULTS);
++#if USE_FLATPAK
+         search_results.set ("%s → %s".printf (display_name, _("Permissions")), PERMISSIONS);
+         search_results.set ("%s → %s".printf (display_name, _("Sandboxing")), PERMISSIONS);
+         search_results.set ("%s → %s".printf (display_name, _("Confinement")), PERMISSIONS);
++#endif
+         search_results.set ("%s → %s → %s".printf (display_name, _("Default"), _("Web Browser")), DEFAULTS);
+         search_results.set ("%s → %s → %s".printf (display_name, _("Default"), _("Email Client")), DEFAULTS);
+         search_results.set ("%s → %s → %s".printf (display_name, _("Default"), _("Calendar")), DEFAULTS);
+diff --git a/src/meson.build b/src/meson.build
+index 053281a..776fec4 100644
+--- a/src/meson.build
++++ b/src/meson.build
+@@ -12,33 +12,42 @@ plug_files = files(
+     'Startup/Widgets/AppChooserRow.vala',
+     'Startup/Widgets/AppChooser.vala',
+     'Defaults/DefaultPlug.vala',
+-    'Permissions/Backend/App.vala',
+-    'Permissions/Backend/AppManager.vala',
+-    'Permissions/Backend/FlatpakManager.vala',
+-    'Permissions/Backend/PermissionSettings.vala',
+-    'Permissions/Widgets/AppSettingsView.vala',
+-    'Permissions/Widgets/PermissionSettingsWidget.vala',
+-    'Permissions/Widgets/SidebarRow.vala',
+-    'Permissions/PermissionsPlug.vala'
+ )
+ 
+ switchboard_dep = dependency('switchboard-2.0')
+ switchboard_plugsdir = switchboard_dep.get_pkgconfig_variable('plugsdir', define_variable: ['libdir', libdir])
+ 
++deps = [
++    dependency('glib-2.0', version: '>=2.34'),
++    dependency('gio-2.0'),
++    dependency('gobject-2.0'),
++    dependency('granite'),
++    dependency('gtk+-3.0'),
++    dependency('libhandy-1'),
++    switchboard_dep
++]
++
++flatpak_dep = dependency('flatpak', version: '>=1.1.2', required: false)
++if flatpak_dep.found ()
++    add_project_arguments ('--define=USE_FLATPAK', language: 'vala')
++
++    deps += flatpak_dep
++    plug_files += files(
++        'Permissions/Backend/App.vala',
++        'Permissions/Backend/AppManager.vala',
++        'Permissions/Backend/FlatpakManager.vala',
++        'Permissions/Backend/PermissionSettings.vala',
++        'Permissions/Widgets/AppSettingsView.vala',
++        'Permissions/Widgets/PermissionSettingsWidget.vala',
++        'Permissions/Widgets/SidebarRow.vala',
++        'Permissions/PermissionsPlug.vala')
++endif
++
+ shared_module(
+     meson.project_name(),
+     plug_files,
+     conf_file,
+-    dependencies: [
+-        dependency('flatpak', version: '>=1.1.2'),
+-        dependency('glib-2.0', version: '>=2.34'),
+-        dependency('gio-2.0'),
+-        dependency('gobject-2.0'),
+-        dependency('granite'),
+-        dependency('gtk+-3.0'),
+-        dependency('libhandy-1'),
+-        switchboard_dep
+-    ],
++    dependencies: deps,
+     install: true,
+     install_dir : join_paths(switchboard_plugsdir, 'personal')
+ )
